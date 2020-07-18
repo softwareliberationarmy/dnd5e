@@ -3,7 +3,7 @@ using DnD_5e.Domain;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace DnD_5e.Test.Domain
+namespace DnD_5e.Test.UnitTests.Domain
 {
     public class DiceRollingTest
     {
