@@ -1,4 +1,4 @@
-﻿namespace DnD_5e.Domain
+﻿namespace DnD_5e.Domain.DiceRolls
 {
     internal class DiceRollRequest
     {

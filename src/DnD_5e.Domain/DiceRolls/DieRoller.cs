@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace DnD_5e.Domain
+namespace DnD_5e.Domain.DiceRolls
 {
     public class DieRoller
     {
