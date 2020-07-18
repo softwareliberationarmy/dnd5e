@@ -14,6 +14,13 @@ namespace DnD_5e.Api.Controllers
     [ApiController]
     public class RollController : ControllerBase
     {
+        private readonly DieRoller _roller;
+
+        public RollController(DieRoller roller)
+        {
+            _roller = roller;
+        }
+
         //// GET: api/<RollController>
         //[HttpGet]
         //public IEnumerable<string> Get()
@@ -25,8 +32,7 @@ namespace DnD_5e.Api.Controllers
         [HttpGet("{rollRequest}")]
         public async Task<int> Get(string rollRequest)
         {
-            var roller = new DieRoller();
-            return await roller.Roll(rollRequest);
+            return await _roller.Roll(rollRequest);
         }
 
         //// POST api/<RollController>
