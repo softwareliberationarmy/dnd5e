@@ -23,15 +23,15 @@ namespace DnD_5e.Api.Controllers
 
         // GET: api/<RollController>
         [HttpGet]
-        public async Task<int> Get()
+        public async Task<int> Roll1d20()
         {
             //if no roll request is provided, assume the user wants a 1d20 roll
-            return await Get("1d20");
+            return await RollDice("1d20");
         }
 
         // GET api/<RollController>/1d20
         [HttpGet("{rollRequest}")]
-        public async Task<int> Get(string rollRequest)
+        public async Task<int> RollDice(string rollRequest)
         {
             return await _roller.Roll(rollRequest);
         }
