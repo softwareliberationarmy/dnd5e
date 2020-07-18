@@ -27,10 +27,20 @@ namespace DnD_5e.Test.IntegrationTests
             var response = await client.GetAsync($"api/roll/{input}");
 
             response.EnsureSuccessStatusCode();
-
             var roll = JsonSerializer.Deserialize<int>(await response.Content.ReadAsStringAsync());
-
             Assert.True(roll <= maxReturnValue && roll >= minReturnValue);
+        }
+
+        [Fact]
+        public async Task GetWithoutRequestStringReturns1d20Roll()
+        {
+            var client = _factory.CreateClient();
+
+            var response = await client.GetAsync("api/roll");
+
+            response.EnsureSuccessStatusCode();
+            var roll = JsonSerializer.Deserialize<int>(await response.Content.ReadAsStringAsync());
+            Assert.True(roll <= 20 && roll >= 1);
         }
     }
 }

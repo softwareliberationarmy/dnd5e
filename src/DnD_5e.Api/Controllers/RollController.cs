@@ -21,12 +21,13 @@ namespace DnD_5e.Api.Controllers
             _roller = roller;
         }
 
-        //// GET: api/<RollController>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+        // GET: api/<RollController>
+        [HttpGet]
+        public async Task<int> Get()
+        {
+            //if no roll request is provided, assume the user wants a 1d20 roll
+            return await Get("1d20");
+        }
 
         // GET api/<RollController>/1d20
         [HttpGet("{rollRequest}")]
@@ -34,23 +35,5 @@ namespace DnD_5e.Api.Controllers
         {
             return await _roller.Roll(rollRequest);
         }
-
-        //// POST api/<RollController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-        //// PUT api/<RollController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE api/<RollController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }
