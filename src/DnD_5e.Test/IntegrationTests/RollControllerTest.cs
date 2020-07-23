@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System.Net;
+using Xunit;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Threading.Tasks;
 using System.Text.Json;
@@ -41,6 +42,17 @@ namespace DnD_5e.Test.IntegrationTests
             response.EnsureSuccessStatusCode();
             var roll = JsonSerializer.Deserialize<int>(await response.Content.ReadAsStringAsync());
             Assert.True(roll <= 20 && roll >= 1);
+        }
+
+        [Fact]
+        public async Task GetWithInvalidStringReturnsErrorCode()
+        {
+            var client = _factory.CreateClient();
+
+            var response = await client.GetAsync("api/roll/tide");
+
+            Assert.False(response.IsSuccessStatusCode);
+            Assert.NotEqual(HttpStatusCode.InternalServerError, response.StatusCode);
         }
     }
 }
