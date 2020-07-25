@@ -3,7 +3,6 @@ using Xunit;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Threading.Tasks;
 using System.Text.Json;
-using Microsoft.AspNetCore.Identity;
 
 namespace DnD_5e.Test.IntegrationTests
 {
