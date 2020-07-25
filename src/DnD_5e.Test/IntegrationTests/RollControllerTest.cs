@@ -52,7 +52,7 @@ namespace DnD_5e.Test.IntegrationTests
             var response = await client.GetAsync("api/roll/tide");
 
             Assert.False(response.IsSuccessStatusCode);
-            Assert.NotEqual(HttpStatusCode.InternalServerError, response.StatusCode);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
     }
 }

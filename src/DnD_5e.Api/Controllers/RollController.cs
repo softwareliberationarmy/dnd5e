@@ -24,7 +24,7 @@ namespace DnD_5e.Api.Controllers
 
         // GET: api/<RollController>
         [HttpGet]
-        public async Task<int> Roll1d20()
+        public async Task<ActionResult<int>> Roll1d20()
         {
             //if no roll request is provided, assume the user wants a 1d20 roll
             return await RollDice("1d20");
@@ -32,9 +32,16 @@ namespace DnD_5e.Api.Controllers
 
         // GET api/<RollController>/1d20
         [HttpGet("{rollRequest}")]
-        public async Task<int> RollDice(string rollRequest)
+        public async Task<ActionResult<int>> RollDice(string rollRequest)
         {
-            return await _roller.Roll(rollRequest);
+            try
+            {
+                return await _roller.Roll(rollRequest);
+            }
+            catch (FormatException)
+            {
+                return BadRequest();
+            }
         }
     }
 }
