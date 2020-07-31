@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using DnD_5e.Domain.DiceRolls;
+using DnD_5e.Infrastructure.DataAccess;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -15,16 +16,6 @@ using Xunit;
 
 namespace DnD_5e.Test.IntegrationTests
 {
-    public class CharacterDbContext : DbContext
-    {
-        public CharacterDbContext(DbContextOptions<CharacterDbContext> options) :
-            base(options)
-        {
-        }
-
-        public DbSet<CharacterEntity> Characters { get; set; }
-    }
-
     public class CustomWebApplicationFactory<TStartup>
         : WebApplicationFactory<TStartup> where TStartup : class
     {
@@ -74,17 +65,11 @@ namespace DnD_5e.Test.IntegrationTests
         }
     }
 
-    public class CharacterEntity
-    {
-        public int Id { get; set; }
-        public int Strength { get; set; }
-    }
-
-    public class CharacterControllerTest : IClassFixture<CustomWebApplicationFactory<Api.Startup>>
+    public class CharactersControllerTest : IClassFixture<CustomWebApplicationFactory<Api.Startup>>
     {
         private readonly CustomWebApplicationFactory<Api.Startup> _factory;
 
-        public CharacterControllerTest(CustomWebApplicationFactory<Api.Startup> factory)
+        public CharactersControllerTest(CustomWebApplicationFactory<Api.Startup> factory)
         {
             _factory = factory;
         }
@@ -111,10 +96,5 @@ namespace DnD_5e.Test.IntegrationTests
             Assert.True(roll <= maxReturnValue && roll >= minReturnValue);
         }
 
-    }
-
-    public enum Ability
-    {
-        Strength
     }
 }
