@@ -3,15 +3,16 @@ using Xunit;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Threading.Tasks;
 using System.Text.Json;
+using DnD_5e.Test.Helpers;
 
 namespace DnD_5e.Test.IntegrationTests
 {
 
-    public class RollControllerTest: IClassFixture<WebApplicationFactory<Api.Startup>>
+    public class RollControllerTest: IClassFixture<TestClientFactory>
     {
-        private readonly WebApplicationFactory<Api.Startup> _factory;
+        private readonly TestClientFactory _factory;
 
-        public RollControllerTest(WebApplicationFactory<Api.Startup> factory)
+        public RollControllerTest(TestClientFactory factory)
         {
             _factory = factory;
         }

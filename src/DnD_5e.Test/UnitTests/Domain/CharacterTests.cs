@@ -20,7 +20,7 @@ namespace DnD_5e.Test.UnitTests.Domain
         [InlineData(17, "1d20+3")]
         [InlineData(18, "1d20+4")]
         [InlineData(19, "1d20+4")]
-        public async void Returns_ability_check_roll_based_on_score(int score, string expectedRoll)
+        public void Returns_ability_check_roll_based_on_score(int score, string expectedRoll)
         {
             var target = new Character
             {
@@ -37,7 +37,7 @@ namespace DnD_5e.Test.UnitTests.Domain
         [InlineData(10, 12, 14, 16, 18, 20, "intelligence", "1d20+3")]
         [InlineData(10, 12, 14, 16, 18, 20, "wisdom", "1d20+4")]
         [InlineData(10, 12, 14, 16, 18, 20, "charisma", "1d20+5")]
-        public async Task Checks_the_correct_ability_score(int strength, int dexterity,
+        public void Checks_the_correct_ability_score(int strength, int dexterity,
             int constitution, int intelligence, int wisdom, int charisma,
             string requestedAbility, string expectedRoll)
         {
@@ -52,6 +52,14 @@ namespace DnD_5e.Test.UnitTests.Domain
             };
 
             Assert.Equal(expectedRoll, target.GetAbilityRoll(requestedAbility));
+        }
+
+        [Fact]
+        public void Throws_exception_if_invalid_ability_score_given()
+        {
+            var target = new Character();
+            Assert.Throws<ArgumentOutOfRangeException>(
+                () => target.GetAbilityRoll("jumproping"));
         }
     }
 }

@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace DnD_5e.Domain.Roleplay
 {
     public class Character
     {
-        private Dictionary<string,Func<Character,int>> _abilities = new Dictionary<string, Func<Character, int>>
+        private readonly Dictionary<string,Func<Character,int>> _abilities = 
+            new Dictionary<string, Func<Character, int>>
         {
             {"strength", c => c.Strength},
             {"dexterity", c => c.Dexterity},
@@ -38,11 +40,10 @@ namespace DnD_5e.Domain.Roleplay
             {
                 return _abilities[input](this);
             }
-            //TODO: add a unit test
-            //else
-            //{
-            //    throw new ArgumentOutOfRangeException(nameof(ability));
-            //}
+            else
+            {
+                throw new ArgumentOutOfRangeException(nameof(ability));
+            }
         }
     }
 }

@@ -1,27 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using DnD_5e.Api;
 using DnD_5e.Domain.DiceRolls;
 using DnD_5e.Infrastructure.DataAccess;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
+using DnD_5e.Test.Helpers;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Xunit;
 
 namespace DnD_5e.Test.IntegrationTests
 {
-    public class CharactersControllerTest : IClassFixture<CustomWebApplicationFactory<Api.Startup>>
+    public class CharactersControllerTest : IClassFixture<TestClientFactory>
     {
-        private readonly CustomWebApplicationFactory<Api.Startup> _factory;
+        private readonly TestClientFactory _factory;
 
-        public CharactersControllerTest(CustomWebApplicationFactory<Api.Startup> factory)
+        public CharactersControllerTest(TestClientFactory factory)
         {
             _factory = factory;
         }
@@ -63,59 +58,55 @@ namespace DnD_5e.Test.IntegrationTests
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
 
-    }
-
-    public class CustomWebApplicationFactory<TStartup>
-        : WebApplicationFactory<TStartup> where TStartup : class
-    {
-        private readonly string DatabaseName = Guid.NewGuid().ToString();
-
-        protected override void ConfigureWebHost(IWebHostBuilder builder)
+        [Theory]
+        [InlineData(10, 12, 14, 16, 18, 20, "strength", 0)]
+        [InlineData(10, 12, 14, 16, 18, 20, "dexterity", 1)]
+        [InlineData(10, 12, 14, 16, 18, 20, "constitution", 2)]
+        [InlineData(10, 12, 14, 16, 18, 20, "intelligence", 3)]
+        [InlineData(10, 12, 14, 16, 18, 20, "wisdom", 4)]
+        [InlineData(10, 12, 14, 16, 18, 20, "charisma", 5)]
+        public async Task Checks_all_abilities(int strength, int dexterity,
+            int constitution, int intelligence, int wisdom, int charisma,
+            string abilityToTest, int expectedModifier)
         {
-            builder.ConfigureServices(services =>
+            await _factory.SetupCharacters(new CharacterEntity
             {
-                RegisterInMemoryDatabase(services);
-
-                var sp = services.BuildServiceProvider();
-
-                using (var scope = sp.CreateScope())
-                {
-                    var scopedServices = scope.ServiceProvider;
-                    var db = scopedServices.GetRequiredService<CharacterDbContext>();
-                    var logger = scopedServices
-                        .GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
-
-                    db.Database.EnsureCreated();
-                }
+                Id = 1,
+                Strength = strength,
+                Dexterity = dexterity,
+                Constitution = constitution,
+                Intelligence = intelligence,
+                Wisdom = wisdom,
+                Charisma = charisma
             });
+
+            var client = _factory.CreateClient();
+
+            var response = await client.GetAsync($"api/characters/1/roll/{abilityToTest}");
+
+            var minReturnValue = 1 + expectedModifier;
+            var maxReturnValue = 20 + expectedModifier;
+
+            response.EnsureSuccessStatusCode();
+            var roll = JsonSerializer.Deserialize<int>(await response.Content.ReadAsStringAsync());
+            Assert.True(roll <= maxReturnValue && roll >= minReturnValue, $"{abilityToTest} roll was outside the expected bounds");
+
         }
 
-        private void RegisterInMemoryDatabase(IServiceCollection services)
+        [Fact]
+        public async Task Returns_404_for_invalid_ability_name()
         {
-            var descriptor = services.SingleOrDefault(
-                d => d.ServiceType ==
-                     typeof(DbContextOptions<CharacterDbContext>));
-
-            services.Remove(descriptor);
-
-            services.AddDbContext<CharacterDbContext>(options => { options.UseInMemoryDatabase(DatabaseName); });
-        }
-
-        public async Task SetupCharacters(params CharacterEntity[] characters)
-        {
-            var options = new DbContextOptionsBuilder<CharacterDbContext>()
-                .UseInMemoryDatabase(DatabaseName).Options;
-
-            using (var context = new CharacterDbContext(options))
+            await _factory.SetupCharacters(new CharacterEntity
             {
-                var existing = context.Characters.ToList();
-                foreach (var character in existing)
-                {
-                    context.Characters.Remove(character);
-                }
-                context.Characters.AddRange(characters);
-                await context.SaveChangesAsync();
-            }
+                Id = 1, Strength = 15, Dexterity = 15, Constitution = 15, 
+                Intelligence = 15, Wisdom = 15, Charisma = 15
+            });
+
+            var client = _factory.CreateClient();
+
+            var response = await client.GetAsync($"api/characters/1/roll/efficiency");
+
+            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
     }
 }

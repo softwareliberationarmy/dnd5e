@@ -1,5 +1,6 @@
 using DnD_5e.Domain;
 using DnD_5e.Domain.DiceRolls;
+using DnD_5e.Infrastructure.DataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +23,7 @@ namespace DnD_5e.Api
         {
             services.AddControllers();
             services.AddSingleton<DieRoller>();
+            services.AddTransient<CharacterRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -17,13 +17,36 @@ namespace DnD_5e.Api.Controllers
     [ApiController]
     public class CharactersController : ControllerBase
     {
-        private readonly CharacterDbContext _db;
+        private readonly CharacterRepository _repository;
         private readonly DieRoller _roller;
 
-        public CharactersController(CharacterDbContext db, DieRoller roller)
+        public CharactersController(CharacterRepository repository, DieRoller roller)
         {
-            _db = db;
+            _repository = repository;
             _roller = roller;
+        }
+
+        // GET api/<CharactersController>/5/roll/strength
+        [HttpGet("{id}/roll/{ability}")]
+        public async Task<ActionResult<int>> MakeAbilityCheck(int id, string ability)
+        {
+            var character = _repository.GetById(id);
+
+            if (character == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                var roll = character.GetAbilityRoll(ability);
+
+                return await _roller.Roll(roll);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return NotFound($"Ability {ability} not found");
+            }
         }
 
         //// GET: api/<CharactersController>
@@ -39,21 +62,6 @@ namespace DnD_5e.Api.Controllers
         //{
         //    return "value";
         //}
-
-        // GET api/<CharactersController>/5/roll/strength
-        [HttpGet("{id}/roll/{ability}")]
-        public async Task<ActionResult<int>> MakeAbilityCheck(int id, string ability)
-        {
-            var character = _db.Characters.FirstOrDefault(c => c.Id == id);
-            if (character == null)
-            {
-                return NotFound();
-            }
-            var strength = character.Strength;
-            var modifier = (strength - 10) / 2;
-            var roll = "1d20" + (modifier > 0 ? "+" + modifier : modifier < 0 ? "-" + modifier: "");
-            return await _roller.Roll(roll);
-        }
 
         //// POST api/<CharactersController>
         //[HttpPost]

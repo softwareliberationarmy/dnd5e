@@ -8,4 +8,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DnD_5e.Domain\DnD_5e.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
