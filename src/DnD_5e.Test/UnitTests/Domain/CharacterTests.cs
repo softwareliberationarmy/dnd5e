@@ -29,5 +29,29 @@ namespace DnD_5e.Test.UnitTests.Domain
 
             Assert.Equal(expectedRoll, target.GetAbilityRoll("strength"));
         }
+
+        [Theory]
+        [InlineData(10, 12, 14, 16, 18, 20, "strength", "1d20")]
+        [InlineData(10, 12, 14, 16, 18, 20, "dexterity", "1d20+1")]
+        [InlineData(10, 12, 14, 16, 18, 20, "constitution", "1d20+2")]
+        [InlineData(10, 12, 14, 16, 18, 20, "intelligence", "1d20+3")]
+        [InlineData(10, 12, 14, 16, 18, 20, "wisdom", "1d20+4")]
+        [InlineData(10, 12, 14, 16, 18, 20, "charisma", "1d20+5")]
+        public async Task Checks_the_correct_ability_score(int strength, int dexterity,
+            int constitution, int intelligence, int wisdom, int charisma,
+            string requestedAbility, string expectedRoll)
+        {
+            var target = new Character
+            {
+                Strength = strength,
+                Dexterity = dexterity,
+                Constitution = constitution,
+                Intelligence = intelligence,
+                Wisdom = wisdom,
+                Charisma = charisma
+            };
+
+            Assert.Equal(expectedRoll, target.GetAbilityRoll(requestedAbility));
+        }
     }
 }
