@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using DnD_5e.Domain.DiceRolls;
 using DnD_5e.Infrastructure.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -17,10 +18,12 @@ namespace DnD_5e.Api.Controllers
     public class CharactersController : ControllerBase
     {
         private readonly CharacterDbContext _db;
+        private readonly DieRoller _roller;
 
-        public CharactersController(CharacterDbContext db)
+        public CharactersController(CharacterDbContext db, DieRoller roller)
         {
             _db = db;
+            _roller = roller;
         }
 
         //// GET: api/<CharactersController>
@@ -39,9 +42,17 @@ namespace DnD_5e.Api.Controllers
 
         // GET api/<CharactersController>/5/roll/strength
         [HttpGet("{id}/roll/{ability}")]
-        public async Task<ActionResult<int>> Get(int id, string ability)
+        public async Task<ActionResult<int>> MakeAbilityCheck(int id, string ability)
         {
-            return 0;
+            var character = _db.Characters.FirstOrDefault(c => c.Id == id);
+            if (character == null)
+            {
+                return NotFound();
+            }
+            var strength = character.Strength;
+            var modifier = (strength - 10) / 2;
+            var roll = "1d20" + (modifier > 0 ? "+" + modifier : modifier < 0 ? "-" + modifier: "");
+            return await _roller.Roll(roll);
         }
 
         //// POST api/<CharactersController>
