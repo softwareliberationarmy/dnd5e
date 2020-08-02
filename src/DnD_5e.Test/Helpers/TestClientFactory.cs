@@ -12,7 +12,7 @@ namespace DnD_5e.Test.Helpers
 {
     public class TestClientFactory : WebApplicationFactory<Api.Startup>
     {
-        private readonly string DatabaseName = Guid.NewGuid().ToString();
+        private readonly string _databaseName = Guid.NewGuid().ToString();
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -42,13 +42,13 @@ namespace DnD_5e.Test.Helpers
 
             services.Remove(descriptor);
 
-            services.AddDbContext<CharacterDbContext>(options => { options.UseInMemoryDatabase(DatabaseName); });
+            services.AddDbContext<CharacterDbContext>(options => { options.UseInMemoryDatabase(_databaseName); });
         }
 
         public async Task SetupCharacters(params CharacterEntity[] characters)
         {
             var options = new DbContextOptionsBuilder<CharacterDbContext>()
-                .UseInMemoryDatabase(DatabaseName).Options;
+                .UseInMemoryDatabase(_databaseName).Options;
 
             using (var context = new CharacterDbContext(options))
             {
