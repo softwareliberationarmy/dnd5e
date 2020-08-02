@@ -7,6 +7,7 @@ using DnD_5e.Api;
 using DnD_5e.Domain.DiceRolls;
 using DnD_5e.Infrastructure.DataAccess;
 using DnD_5e.Test.Helpers;
+using FluentAssertions;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Xunit;
 
@@ -43,7 +44,7 @@ namespace DnD_5e.Test.IntegrationTests
 
             response.EnsureSuccessStatusCode();
             var roll = JsonSerializer.Deserialize<int>(await response.Content.ReadAsStringAsync());
-            Assert.True(roll <= maxReturnValue && roll >= minReturnValue, "Strength roll was outside the expected bounds");
+            roll.Should().BeInRange(minReturnValue, maxReturnValue, "Expected strength roll to be within bounds");
         }
 
         [Fact]
@@ -55,7 +56,7 @@ namespace DnD_5e.Test.IntegrationTests
 
             var response = await client.GetAsync($"api/characters/1/roll/strength");
 
-            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [Theory]
@@ -89,8 +90,8 @@ namespace DnD_5e.Test.IntegrationTests
 
             response.EnsureSuccessStatusCode();
             var roll = JsonSerializer.Deserialize<int>(await response.Content.ReadAsStringAsync());
-            Assert.True(roll <= maxReturnValue && roll >= minReturnValue, $"{abilityToTest} roll was outside the expected bounds");
-
+            roll.Should().BeInRange(minReturnValue, maxReturnValue,
+                $"{abilityToTest} roll must be within the expected bounds");
         }
 
         [Fact]
@@ -106,7 +107,7 @@ namespace DnD_5e.Test.IntegrationTests
 
             var response = await client.GetAsync($"api/characters/1/roll/efficiency");
 
-            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using System.Threading.Tasks;
 using System.Text.Json;
 using DnD_5e.Test.Helpers;
+using FluentAssertions;
 
 namespace DnD_5e.Test.IntegrationTests
 {
@@ -29,7 +30,7 @@ namespace DnD_5e.Test.IntegrationTests
 
             response.EnsureSuccessStatusCode();
             var roll = JsonSerializer.Deserialize<int>(await response.Content.ReadAsStringAsync());
-            Assert.True(roll <= maxReturnValue && roll >= minReturnValue);
+            roll.Should().BeInRange(minReturnValue, maxReturnValue);
         }
 
         [Fact]
@@ -41,7 +42,7 @@ namespace DnD_5e.Test.IntegrationTests
 
             response.EnsureSuccessStatusCode();
             var roll = JsonSerializer.Deserialize<int>(await response.Content.ReadAsStringAsync());
-            Assert.True(roll <= 20 && roll >= 1);
+            roll.Should().BeInRange(1, 20);
         }
 
         [Fact]
@@ -51,8 +52,8 @@ namespace DnD_5e.Test.IntegrationTests
 
             var response = await client.GetAsync("api/roll/tide");
 
-            Assert.False(response.IsSuccessStatusCode);
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            response.IsSuccessStatusCode.Should().BeFalse();
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using DnD_5e.Domain.DiceRolls;
+using FluentAssertions;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -26,7 +27,7 @@ namespace DnD_5e.Test.UnitTests.Domain
             var target = new DieRoller();
             var roll = await target.Roll(diceRollRequest);
             _testOutputHelper.WriteLine($"Rolls a {roll}");
-            Assert.True(roll >= minValue && roll <= maxValue);
+            roll.Should().BeInRange(minValue, maxValue, "Roll must fall within expected roll range");
         }
     }
 }

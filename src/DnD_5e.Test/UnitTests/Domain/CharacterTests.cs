@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using DnD_5e.Domain.Roleplay;
+using FluentAssertions;
 using Xunit;
 
 namespace DnD_5e.Test.UnitTests.Domain
@@ -27,7 +28,7 @@ namespace DnD_5e.Test.UnitTests.Domain
                 Strength = score
             };
 
-            Assert.Equal(expectedRoll, target.GetAbilityRoll("strength"));
+            target.GetAbilityRoll("strength").Should().Be(expectedRoll);
         }
 
         [Theory]
@@ -51,7 +52,7 @@ namespace DnD_5e.Test.UnitTests.Domain
                 Charisma = charisma
             };
 
-            Assert.Equal(expectedRoll, target.GetAbilityRoll(requestedAbility));
+            target.GetAbilityRoll(requestedAbility).Should().Be(expectedRoll);
         }
 
         [Fact]
