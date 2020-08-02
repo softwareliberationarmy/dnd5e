@@ -50,14 +50,14 @@ namespace DnD_5e.Test.Helpers
             var options = new DbContextOptionsBuilder<CharacterDbContext>()
                 .UseInMemoryDatabase(_databaseName).Options;
 
-            using (var context = new CharacterDbContext(options))
+            await using (var context = new CharacterDbContext(options))
             {
                 var existing = context.Characters.ToList();
                 foreach (var character in existing)
                 {
                     context.Characters.Remove(character);
                 }
-                context.Characters.AddRange(characters);
+                await context.Characters.AddRangeAsync(characters);
                 await context.SaveChangesAsync();
             }
         }

@@ -5,7 +5,7 @@ namespace DnD_5e.Infrastructure.DataAccess
     public class CharacterDbContext : DbContext
     {
         public CharacterDbContext(DbContextOptions<CharacterDbContext> options) :
-            base((DbContextOptions) options)
+            base(options)
         {
         }
 

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using DnD_5e.Domain.Roleplay;
 using FluentAssertions;
 using Xunit;
@@ -60,7 +57,7 @@ namespace DnD_5e.Test.UnitTests.Domain
         {
             var target = new Character();
             Assert.Throws<ArgumentOutOfRangeException>(
-                () => target.GetAbilityRoll("jumproping"));
+                () => target.GetAbilityRoll("jump roping"));
         }
     }
 }

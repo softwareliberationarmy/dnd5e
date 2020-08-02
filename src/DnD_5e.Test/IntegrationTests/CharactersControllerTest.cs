@@ -1,14 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Net;
-using System.Text;
+﻿using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using DnD_5e.Api;
-using DnD_5e.Domain.DiceRolls;
 using DnD_5e.Infrastructure.DataAccess;
 using DnD_5e.Test.Helpers;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Xunit;
 
 namespace DnD_5e.Test.IntegrationTests
@@ -37,7 +32,7 @@ namespace DnD_5e.Test.IntegrationTests
 
             var client = _factory.CreateClient();
 
-            var response = await client.GetAsync($"api/characters/1/roll/strength");
+            var response = await client.GetAsync("api/characters/1/roll/strength");
 
             var minReturnValue = 1 + expectedModifier;
             var maxReturnValue = 20 + expectedModifier;
@@ -54,7 +49,7 @@ namespace DnD_5e.Test.IntegrationTests
 
             var client = _factory.CreateClient();
 
-            var response = await client.GetAsync($"api/characters/1/roll/strength");
+            var response = await client.GetAsync("api/characters/1/roll/strength");
 
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
@@ -105,7 +100,7 @@ namespace DnD_5e.Test.IntegrationTests
 
             var client = _factory.CreateClient();
 
-            var response = await client.GetAsync($"api/characters/1/roll/efficiency");
+            var response = await client.GetAsync("api/characters/1/roll/efficiency");
 
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }

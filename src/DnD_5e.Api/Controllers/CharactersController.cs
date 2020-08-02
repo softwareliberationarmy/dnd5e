@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using DnD_5e.Domain.DiceRolls;
 using DnD_5e.Infrastructure.DataAccess;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -43,7 +38,7 @@ namespace DnD_5e.Api.Controllers
 
                 return await _roller.Roll(roll);
             }
-            catch (ArgumentOutOfRangeException ex)
+            catch (ArgumentOutOfRangeException)
             {
                 return NotFound($"Ability {ability} not found");
             }
