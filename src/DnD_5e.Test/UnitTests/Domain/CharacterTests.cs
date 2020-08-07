@@ -22,7 +22,7 @@ namespace DnD_5e.Test.UnitTests.Domain
         {
             var target = new Character
             {
-                Strength = score
+                Strength = new Ability(score, false)
             };
 
             target.GetAbilityRoll("strength").Should().Be(expectedRoll);
@@ -41,7 +41,7 @@ namespace DnD_5e.Test.UnitTests.Domain
         {
             var target = new Character
             {
-                Strength = strength,
+                Strength = new Ability(strength, false),
                 Dexterity = dexterity,
                 Constitution = constitution,
                 Intelligence = intelligence,

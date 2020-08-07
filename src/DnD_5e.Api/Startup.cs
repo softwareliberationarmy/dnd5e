@@ -23,7 +23,7 @@ namespace DnD_5e.Api
         {
             services.AddControllers();
             services.AddSingleton<DieRoller>();
-            services.AddTransient<CharacterRepository>();
+            services.AddScoped<CharacterRepository>();
             services.AddDbContext<CharacterDbContext>(options => { options.UseInMemoryDatabase("DnD"); });
         }
 
@@ -45,6 +45,7 @@ namespace DnD_5e.Api
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }

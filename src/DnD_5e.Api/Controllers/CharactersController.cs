@@ -44,6 +44,29 @@ namespace DnD_5e.Api.Controllers
             }
         }
 
+        // GET api/<CharactersController>/5/roll/strength
+        [HttpGet("{id}/rollsave/{ability}")]
+        public async Task<ActionResult<int>> MakeSavingThrow(int id, string ability)
+        {
+            var character = _repository.GetById(id);
+
+            if (character == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                var roll = character.GetSavingThrow(ability);
+
+                return await _roller.Roll(roll);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                return NotFound($"Ability {ability} not found");
+            }
+        }
+
         //// GET: api/<CharactersController>
         //[HttpGet]
         //public IEnumerable<string> Get()

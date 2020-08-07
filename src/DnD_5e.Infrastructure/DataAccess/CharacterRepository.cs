@@ -23,7 +23,7 @@ namespace DnD_5e.Infrastructure.DataAccess
             {
                 return new Character
                 {
-                    Strength = record.Strength,
+                    Strength = new Ability(record.Strength, true),
                     Dexterity = record.Dexterity,
                     Constitution = record.Constitution,
                     Intelligence = record.Intelligence,
