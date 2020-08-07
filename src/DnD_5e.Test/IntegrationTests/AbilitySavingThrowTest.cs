@@ -39,6 +39,12 @@ namespace DnD_5e.Test.IntegrationTests
             roll.Should().BeInRange(minReturnValue, maxReturnValue, "Expected strength saving throw to be within bounds");
         }
 
+        //TODO: test out character not found scenario
+        //TODO: test out ability not found
+        //TODO: add support for other abilities
+        //TODO: add unit tests for character 
+        //TODO: move logic for getting the modifier from the character to ability
+
         //[Fact]
         //public async Task Returns_404_When_Character_Id_Not_Valid()
         //{
