@@ -42,11 +42,11 @@ namespace DnD_5e.Test.UnitTests.Domain
             var target = new Character
             {
                 Strength = new Ability(strength, false),
-                Dexterity = dexterity,
-                Constitution = constitution,
-                Intelligence = intelligence,
-                Wisdom = wisdom,
-                Charisma = charisma
+                Dexterity = new Ability(dexterity, false),
+                Constitution = new Ability(constitution, false),
+                Intelligence = new Ability(intelligence, false),
+                Wisdom = new Ability(wisdom, false),
+                Charisma = new Ability(charisma, false)
             };
 
             target.GetAbilityRoll(requestedAbility).Should().Be(expectedRoll);

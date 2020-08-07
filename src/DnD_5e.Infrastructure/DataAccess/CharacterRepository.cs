@@ -23,12 +23,12 @@ namespace DnD_5e.Infrastructure.DataAccess
             {
                 return new Character
                 {
-                    Strength = new Ability(record.Strength, true),
-                    Dexterity = record.Dexterity,
-                    Constitution = record.Constitution,
-                    Intelligence = record.Intelligence,
-                    Wisdom = record.Wisdom,
-                    Charisma = record.Charisma
+                    Strength = new Ability(record.Strength, record.StrengthSaveProficiency),
+                    Dexterity = new Ability(record.Dexterity,record.DexteritySaveProficiency),
+                    Constitution = new Ability(record.Constitution, record.ConstitutionSaveProficiency),
+                    Intelligence = new Ability(record.Intelligence, record.IntelligenceSaveProficiency),
+                    Wisdom = new Ability(record.Wisdom, record.WisdomSaveProficiency),
+                    Charisma = new Ability(record.Charisma, record.CharismaSaveProficiency)
                 };
             }
         }

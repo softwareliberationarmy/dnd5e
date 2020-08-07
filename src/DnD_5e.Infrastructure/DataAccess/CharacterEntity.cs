@@ -9,5 +9,11 @@
         public int Intelligence { get; set; }
         public int Wisdom { get; set; }
         public int Charisma { get; set; }
+        public bool StrengthSaveProficiency { get; set; }
+        public bool DexteritySaveProficiency { get; set; }
+        public bool ConstitutionSaveProficiency { get; set; }
+        public bool IntelligenceSaveProficiency { get; set; }
+        public bool WisdomSaveProficiency { get; set; }
+        public bool CharismaSaveProficiency { get; set; }
     }
 }

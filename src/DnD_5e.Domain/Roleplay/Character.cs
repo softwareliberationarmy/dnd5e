@@ -9,30 +9,30 @@ namespace DnD_5e.Domain.Roleplay
             new Dictionary<string, Func<Character, int>>
         {
             {"strength", c => c.Strength.Score},
-            {"dexterity", c => c.Dexterity},
-            {"constitution", c => c.Constitution},
-            {"intelligence", c => c.Intelligence},
-            {"wisdom", c => c.Wisdom},
-            {"charisma", c => c.Charisma}
+            {"dexterity", c => c.Dexterity.Score},
+            {"constitution", c => c.Constitution.Score},
+            {"intelligence", c => c.Intelligence.Score},
+            {"wisdom", c => c.Wisdom.Score},
+            {"charisma", c => c.Charisma.Score}
         };
         private readonly Dictionary<string, Func<Character, Ability>> _abilities =
             new Dictionary<string, Func<Character, Ability>>
             {
                 {"strength", c => c.Strength},
-                {"dexterity", c => new Ability(c.Dexterity, false)},
-                {"constitution", c => new Ability(c.Constitution, false)},
-                {"intelligence", c => new Ability(c.Intelligence, false)},
-                {"wisdom", c => new Ability(c.Wisdom, false)},
-                {"charisma", c => new Ability(c.Charisma, false)}
+                {"dexterity", c => c.Dexterity},
+                {"constitution", c => c.Constitution},
+                {"intelligence", c => c.Intelligence},
+                {"wisdom", c => c.Wisdom},
+                {"charisma", c => c.Charisma}
             };
 
 
         public Ability Strength { get; set; }
-        public int Dexterity { get; set; }
-        public int Constitution { get; set; }
-        public int Intelligence { get; set; }
-        public int Wisdom { get; set; }
-        public int Charisma { get; set; }
+        public Ability Dexterity { get; set; }
+        public Ability Constitution { get; set; }
+        public Ability Intelligence { get; set; }
+        public Ability Wisdom { get; set; }
+        public Ability Charisma { get; set; }
 
         public int Proficiency { get; } = 2;
 
