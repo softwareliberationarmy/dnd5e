@@ -2,6 +2,7 @@ using DnD_5e.Domain.DiceRolls;
 using DnD_5e.Infrastructure.DataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,6 +24,7 @@ namespace DnD_5e.Api
             services.AddControllers();
             services.AddSingleton<DieRoller>();
             services.AddTransient<CharacterRepository>();
+            services.AddDbContext<CharacterDbContext>(options => { options.UseInMemoryDatabase("DnD"); });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
