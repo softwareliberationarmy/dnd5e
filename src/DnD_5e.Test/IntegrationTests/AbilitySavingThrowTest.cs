@@ -62,11 +62,6 @@ namespace DnD_5e.Test.IntegrationTests
             roll.Should().BeInRange(minReturnValue, maxReturnValue, "Expected strength saving throw to be within bounds");
         }
 
-        //TODO: test out ability not found
-        //TODO: add support for other abilities
-        //TODO: add unit tests for character 
-        //TODO: move logic for getting the modifier from the character to ability
-
         [Fact]
         public async Task Returns_404_When_Character_Id_Not_Valid()
         {
@@ -126,20 +121,29 @@ namespace DnD_5e.Test.IntegrationTests
                 $"{abilityToTest} saving roll must be within the expected bounds");
         }
 
-        //[Fact]
-        //public async Task Returns_404_for_invalid_ability_name()
-        //{
-        //    await _factory.SetupCharacters(new CharacterEntity
-        //    {
-        //        Id = 1, Strength = 15, Dexterity = 15, Constitution = 15, 
-        //        Intelligence = 15, Wisdom = 15, Charisma = 15
-        //    });
+        [Fact]
+        public async Task Returns_404_for_invalid_ability_name()
+        {
+            await _factory.SetupCharacters(new CharacterEntity
+            {
+                Id = 1,
+                Strength = 15,
+                Dexterity = 15,
+                Constitution = 15,
+                Intelligence = 15,
+                Wisdom = 15,
+                Charisma = 15
+            });
 
-        //    var client = _factory.CreateClient();
+            var client = _factory.CreateClient();
 
-        //    var response = await client.GetAsync("api/characters/1/roll/efficiency");
+            var response = await client.GetAsync("api/characters/1/rollsave/efficiency");
 
-        //    response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        //}
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
+        //TODO: add unit tests for character 
+        //TODO: move logic for getting the modifier from the character to ability
+
     }
 }
