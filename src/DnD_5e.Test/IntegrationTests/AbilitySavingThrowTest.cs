@@ -39,23 +39,22 @@ namespace DnD_5e.Test.IntegrationTests
             roll.Should().BeInRange(minReturnValue, maxReturnValue, "Expected strength saving throw to be within bounds");
         }
 
-        //TODO: test out character not found scenario
         //TODO: test out ability not found
         //TODO: add support for other abilities
         //TODO: add unit tests for character 
         //TODO: move logic for getting the modifier from the character to ability
 
-        //[Fact]
-        //public async Task Returns_404_When_Character_Id_Not_Valid()
-        //{
-        //    await _factory.SetupCharacters();   //clears out all characters and inserts none
+        [Fact]
+        public async Task Returns_404_When_Character_Id_Not_Valid()
+        {
+            await _factory.SetupCharacters();   //clears out all characters and inserts none
 
-        //    var client = _factory.CreateClient();
+            var client = _factory.CreateClient();
 
-        //    var response = await client.GetAsync("api/characters/1/roll/strength");
+            var response = await client.GetAsync("api/characters/1/rollsave/strength");
 
-        //    response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        //}
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
 
         //[Theory]
         //[InlineData(10, 12, 14, 16, 18, 20, "strength", 0)]
