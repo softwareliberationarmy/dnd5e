@@ -5,16 +5,6 @@ namespace DnD_5e.Domain.Roleplay
 {
     public class Character
     {
-        private readonly Dictionary<string,Func<Character,int>> _abilityScores = 
-            new Dictionary<string, Func<Character, int>>
-        {
-            {"strength", c => c.Strength.Score},
-            {"dexterity", c => c.Dexterity.Score},
-            {"constitution", c => c.Constitution.Score},
-            {"intelligence", c => c.Intelligence.Score},
-            {"wisdom", c => c.Wisdom.Score},
-            {"charisma", c => c.Charisma.Score}
-        };
         private readonly Dictionary<string, Func<Character, Ability>> _abilities =
             new Dictionary<string, Func<Character, Ability>>
             {
@@ -25,7 +15,6 @@ namespace DnD_5e.Domain.Roleplay
                 {"wisdom", c => c.Wisdom},
                 {"charisma", c => c.Charisma}
             };
-
 
         public Ability Strength { get; set; }
         public Ability Dexterity { get; set; }

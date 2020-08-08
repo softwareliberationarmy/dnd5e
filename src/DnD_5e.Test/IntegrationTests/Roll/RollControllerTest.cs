@@ -1,11 +1,11 @@
 ﻿using System.Net;
-using Xunit;
-using System.Threading.Tasks;
 using System.Text.Json;
+using System.Threading.Tasks;
 using DnD_5e.Test.Helpers;
 using FluentAssertions;
+using Xunit;
 
-namespace DnD_5e.Test.IntegrationTests
+namespace DnD_5e.Test.IntegrationTests.Roll
 {
 
     public class RollControllerTest: IClassFixture<TestClientFactory>

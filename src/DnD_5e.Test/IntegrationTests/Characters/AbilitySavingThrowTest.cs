@@ -137,7 +137,7 @@ namespace DnD_5e.Test.IntegrationTests
 
             var client = _factory.CreateClient();
 
-            var response = await client.GetAsync("api/characters/1/rollsave/efficiency");
+            var response = await client.GetAsync("api/characters/1/rollsave/excellence");
 
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
