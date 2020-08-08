@@ -8,11 +8,11 @@ using Xunit;
 
 namespace DnD_5e.Test.IntegrationTests
 {
-    public class AbilityRollTest : IClassFixture<TestClientFactory>
+    public class AbilityRollApiTest : IClassFixture<TestClientFactory>
     {
         private readonly TestClientFactory _factory;
 
-        public AbilityRollTest(TestClientFactory factory)
+        public AbilityRollApiTest(TestClientFactory factory)
         {
             _factory = factory;
         }

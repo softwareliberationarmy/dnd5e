@@ -9,11 +9,11 @@ using Xunit;
 
 namespace DnD_5e.Test.IntegrationTests
 {
-    public class AbilitySavingThrowTest : IClassFixture<TestClientFactory>
+    public class AbilitySavingThrowApiTest : IClassFixture<TestClientFactory>
     {
         private readonly TestClientFactory _factory;
 
-        public AbilitySavingThrowTest(TestClientFactory factory)
+        public AbilitySavingThrowApiTest(TestClientFactory factory)
         {
             _factory = factory;
         }
