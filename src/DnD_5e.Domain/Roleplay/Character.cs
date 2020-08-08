@@ -28,7 +28,7 @@ namespace DnD_5e.Domain.Roleplay
         public string GetAbilityRoll(string abilityName)
         {
             var modifier = GetAbility(abilityName).GetAbilityModifier();
-            return "1d20" + (modifier > 0 ? "+" + modifier : modifier < 0 ? "-" + modifier : "");
+            return D20RollWithModifier(modifier);
         }
 
         public string GetSavingThrow(string abilityName)
@@ -39,7 +39,7 @@ namespace DnD_5e.Domain.Roleplay
             {
                 modifier += this.Proficiency;
             }
-            return "1d20" + (modifier > 0 ? "+" + modifier : modifier < 0 ? "-" + modifier : "");
+            return D20RollWithModifier(modifier);
         }
 
         private Ability GetAbility(string ability)
@@ -53,6 +53,11 @@ namespace DnD_5e.Domain.Roleplay
             {
                 throw new ArgumentOutOfRangeException(nameof(ability));
             }
+        }
+
+        private static string D20RollWithModifier(int modifier)
+        {
+            return "1d20" + (modifier > 0 ? "+" + modifier : modifier < 0 ? "-" + modifier : "");
         }
     }
 }
