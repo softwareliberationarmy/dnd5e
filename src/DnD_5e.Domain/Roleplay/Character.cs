@@ -27,15 +27,14 @@ namespace DnD_5e.Domain.Roleplay
 
         public string GetAbilityRoll(string abilityName)
         {
-            var abilityScore = GetAbility(abilityName).Score;
-            var modifier = (abilityScore - 10) / 2;
+            var modifier = GetAbility(abilityName).GetAbilityModifier();
             return "1d20" + (modifier > 0 ? "+" + modifier : modifier < 0 ? "-" + modifier : "");
         }
 
         public string GetSavingThrow(string abilityName)
         {
             var ability = GetAbility(abilityName);
-            var modifier = (ability.Score - 10) / 2;
+            var modifier = ability.GetAbilityModifier();
             if (ability.ProficientAtSaves)
             {
                 modifier += this.Proficiency;
