@@ -16,14 +16,14 @@ namespace DnD_5e.Domain.Roleplay
                 {"charisma", c => c.Charisma}
             };
 
+        private readonly int _proficiency = 2;
+
         public Ability Strength { get; set; }
         public Ability Dexterity { get; set; }
         public Ability Constitution { get; set; }
         public Ability Intelligence { get; set; }
         public Ability Wisdom { get; set; }
         public Ability Charisma { get; set; }
-
-        public int Proficiency { get; } = 2;
 
         public string GetAbilityRoll(string abilityName)
         {
@@ -37,7 +37,7 @@ namespace DnD_5e.Domain.Roleplay
             var modifier = ability.GetAbilityModifier();
             if (ability.ProficientAtSaves)
             {
-                modifier += this.Proficiency;
+                modifier += _proficiency;
             }
             return D20RollWithModifier(modifier);
         }
