@@ -21,15 +21,14 @@ namespace DnD_5e.Infrastructure.DataAccess
             }
             else
             {
-                return new Character
-                {
-                    Strength = new Ability(record.Strength, record.StrengthSaveProficiency),
-                    Dexterity = new Ability(record.Dexterity,record.DexteritySaveProficiency),
-                    Constitution = new Ability(record.Constitution, record.ConstitutionSaveProficiency),
-                    Intelligence = new Ability(record.Intelligence, record.IntelligenceSaveProficiency),
-                    Wisdom = new Ability(record.Wisdom, record.WisdomSaveProficiency),
-                    Charisma = new Ability(record.Charisma, record.CharismaSaveProficiency)
-                };
+                return new Character(
+                    new Ability(record.Strength, record.StrengthSaveProficiency),
+                    new Ability(record.Dexterity, record.DexteritySaveProficiency),
+                    new Ability(record.Constitution, record.ConstitutionSaveProficiency),
+                    new Ability(record.Intelligence, record.IntelligenceSaveProficiency),
+                    new Ability(record.Wisdom, record.WisdomSaveProficiency),
+                    new Ability(record.Charisma, record.CharismaSaveProficiency)
+                );
             }
         }
     }

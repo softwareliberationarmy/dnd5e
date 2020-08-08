@@ -8,22 +8,31 @@ namespace DnD_5e.Domain.Roleplay
         private readonly Dictionary<string, Func<Character, Ability>> _abilities =
             new Dictionary<string, Func<Character, Ability>>
             {
-                {"strength", c => c.Strength},
-                {"dexterity", c => c.Dexterity},
-                {"constitution", c => c.Constitution},
-                {"intelligence", c => c.Intelligence},
-                {"wisdom", c => c.Wisdom},
-                {"charisma", c => c.Charisma}
+                {"strength", c => c._strength},
+                {"dexterity", c => c._dexterity},
+                {"constitution", c => c._constitution},
+                {"intelligence", c => c._intelligence},
+                {"wisdom", c => c._wisdom},
+                {"charisma", c => c._charisma}
             };
-
+        private readonly Ability _strength;
+        private readonly Ability _dexterity;
+        private readonly Ability _constitution;
+        private readonly Ability _intelligence;
+        private readonly Ability _wisdom;
+        private readonly Ability _charisma;
         private readonly int _proficiency = 2;
 
-        public Ability Strength { get; set; }
-        public Ability Dexterity { get; set; }
-        public Ability Constitution { get; set; }
-        public Ability Intelligence { get; set; }
-        public Ability Wisdom { get; set; }
-        public Ability Charisma { get; set; }
+        public Character(Ability strength, Ability dexterity, Ability constitution,
+            Ability intelligence, Ability wisdom, Ability charisma)
+        {
+            _strength = strength;
+            _dexterity = dexterity;
+            _constitution = constitution;
+            _intelligence = intelligence;
+            _wisdom = wisdom;
+            _charisma = charisma;
+        }
 
         public string GetAbilityRoll(string abilityName)
         {
