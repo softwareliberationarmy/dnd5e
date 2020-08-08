@@ -141,9 +141,5 @@ namespace DnD_5e.Test.IntegrationTests
 
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
-
-        //TODO: add unit tests for character 
-        //TODO: move logic for getting the modifier from the character to ability
-
     }
 }
