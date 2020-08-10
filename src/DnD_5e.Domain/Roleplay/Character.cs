@@ -5,33 +5,21 @@ namespace DnD_5e.Domain.Roleplay
 {
     public class Character
     {
-        private readonly Dictionary<string, Func<Character, Ability>> _abilities =
-            new Dictionary<string, Func<Character, Ability>>
-            {
-                {"strength", c => c._strength},
-                {"dexterity", c => c._dexterity},
-                {"constitution", c => c._constitution},
-                {"intelligence", c => c._intelligence},
-                {"wisdom", c => c._wisdom},
-                {"charisma", c => c._charisma}
-            };
-        private readonly Ability _strength;
-        private readonly Ability _dexterity;
-        private readonly Ability _constitution;
-        private readonly Ability _intelligence;
-        private readonly Ability _wisdom;
-        private readonly Ability _charisma;
+        private readonly Dictionary<Ability.Type, Ability> _abilityDictionary;
         private readonly int _proficiency = 2;
 
         public Character(Ability strength, Ability dexterity, Ability constitution,
             Ability intelligence, Ability wisdom, Ability charisma)
         {
-            _strength = strength;
-            _dexterity = dexterity;
-            _constitution = constitution;
-            _intelligence = intelligence;
-            _wisdom = wisdom;
-            _charisma = charisma;
+            _abilityDictionary = new Dictionary<Ability.Type, Ability>
+            {
+                {Ability.Type.Strength, strength},
+                {Ability.Type.Dexterity, dexterity},
+                {Ability.Type.Constitution, constitution},
+                {Ability.Type.Intelligence, intelligence},
+                {Ability.Type.Wisdom, wisdom},
+                {Ability.Type.Charisma, charisma}
+            };
         }
 
         public string GetAbilityRoll(string abilityName)
@@ -54,9 +42,10 @@ namespace DnD_5e.Domain.Roleplay
         private Ability GetAbility(string ability)
         {
             var input = ability.ToLower().Trim();
-            if (_abilities.ContainsKey(input))
+            if (Enum.TryParse(input, true, out Ability.Type abilityType)
+                && _abilityDictionary.ContainsKey(abilityType))
             {
-                return _abilities[input](this);
+                return _abilityDictionary[abilityType];
             }
             else
             {

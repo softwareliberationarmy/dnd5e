@@ -20,5 +20,15 @@ namespace DnD_5e.Domain.Roleplay
         {
             return (_score - 10) / 2;
         }
+
+        public enum Type
+        {
+            Strength,
+            Dexterity,
+            Constitution,
+            Intelligence,
+            Wisdom,
+            Charisma
+        }
     }
 }
