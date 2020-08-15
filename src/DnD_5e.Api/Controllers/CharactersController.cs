@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
+using DnD_5e.Api.Services;
 using DnD_5e.Domain.DiceRolls;
-using DnD_5e.Domain.Roleplay;
 using DnD_5e.Infrastructure.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,11 +15,13 @@ namespace DnD_5e.Api.Controllers
     {
         private readonly CharacterRepository _repository;
         private readonly DieRoller _roller;
+        private readonly RollTypeParser _rollParser;
 
-        public CharactersController(CharacterRepository repository, DieRoller roller)
+        public CharactersController(CharacterRepository repository, DieRoller roller, RollTypeParser rollParser)
         {
             _repository = repository;
             _roller = roller;
+            _rollParser = rollParser;
         }
 
         // GET api/<CharactersController>/5/roll/strength
@@ -32,17 +34,17 @@ namespace DnD_5e.Api.Controllers
             {
                 return NotFound();
             }
-            
-            if (Ability.Type.TryParse(rollType, true, out Ability.Type abilityType))
+
+            try
             {
-                var roll = character.GetRoll(new CharacterRollRequest(abilityType));
+                var request = _rollParser.ParseRequest(rollType);
+                var roll = character.GetRoll(request);
                 return await _roller.Roll(roll);
             }
-            else
+            catch (ArgumentOutOfRangeException)
             {
                 return NotFound($"Ability {rollType} not found");
             }
-            throw new NotImplementedException("TODO: implement skill checks");
         }
 
         // GET api/<CharactersController>/5/roll/strength
@@ -99,6 +101,5 @@ namespace DnD_5e.Api.Controllers
         //public void Delete(int id)
         //{
         //}
-
     }
 }

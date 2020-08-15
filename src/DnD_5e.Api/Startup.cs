@@ -1,3 +1,4 @@
+using DnD_5e.Api.Services;
 using DnD_5e.Domain.DiceRolls;
 using DnD_5e.Infrastructure.DataAccess;
 using Microsoft.AspNetCore.Builder;
@@ -23,6 +24,7 @@ namespace DnD_5e.Api
         {
             services.AddControllers();
             services.AddSingleton<DieRoller>();
+            services.AddSingleton<RollTypeParser>();
             services.AddScoped<CharacterRepository>();
             services.AddDbContext<CharacterDbContext>(options => { options.UseInMemoryDatabase("DnD"); });
         }
