@@ -22,12 +22,6 @@ namespace DnD_5e.Domain.Roleplay
             };
         }
 
-        //public string GetAbilityRoll(string abilityName)
-        //{
-        //    var modifier = GetAbility(abilityName).GetAbilityModifier();
-        //    return D20RollWithModifier(modifier);
-        //}
-
         public string GetSavingThrow(string abilityName)
         {
             var ability = GetAbility(abilityName);
