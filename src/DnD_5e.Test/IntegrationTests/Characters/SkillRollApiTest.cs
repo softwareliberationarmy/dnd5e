@@ -42,67 +42,84 @@ namespace DnD_5e.Test.IntegrationTests
             roll.Should().BeInRange(minReturnValue, maxReturnValue, "Expected athletics roll to be within bounds of strength");
         }
 
-        //[Fact]
-        //public async Task Returns_404_When_Character_Id_Not_Valid()
-        //{
-        //    await _factory.SetupCharacters();   //clears out all characters and inserts none
+        [Fact]
+        public async Task Returns_404_When_Character_Id_Not_Valid()
+        {
+            await _factory.SetupCharacters();   //clears out all characters and inserts none
 
-        //    var client = _factory.CreateClient();
+            var client = _factory.CreateClient();
 
-        //    var response = await client.GetAsync("api/characters/1/roll/athletics");
+            var response = await client.GetAsync("api/characters/1/roll/athletics");
 
-        //    response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        //}
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
 
-        //[Theory]
-        //[InlineData(10, 12, 14, 16, 18, 20, "strength", 0)]
-        //[InlineData(10, 12, 14, 16, 18, 20, "dexterity", 1)]
-        //[InlineData(10, 12, 14, 16, 18, 20, "constitution", 2)]
-        //[InlineData(10, 12, 14, 16, 18, 20, "intelligence", 3)]
-        //[InlineData(10, 12, 14, 16, 18, 20, "wisdom", 4)]
-        //[InlineData(10, 12, 14, 16, 18, 20, "charisma", 5)]
-        //public async Task Checks_all_abilities(int strength, int dexterity,
-        //    int constitution, int intelligence, int wisdom, int charisma,
-        //    string abilityToTest, int expectedModifier)
-        //{
-        //    await _factory.SetupCharacters(new CharacterEntity
-        //    {
-        //        Id = 1,
-        //        Strength = strength,
-        //        Dexterity = dexterity,
-        //        Constitution = constitution,
-        //        Intelligence = intelligence,
-        //        Wisdom = wisdom,
-        //        Charisma = charisma
-        //    });
+        [Theory]
+        [InlineData(10, 12, 14, 16, 18, 20, "athletics", 0)]
+        [InlineData(10, 12, 14, 16, 18, 20, "acrobatics", 1)]
+        [InlineData(10, 12, 14, 16, 18, 20, "sleight of hand", 1)]
+        [InlineData(10, 12, 14, 16, 18, 20, "stealth", 1)]
+        [InlineData(10, 12, 14, 16, 18, 20, "arcana", 3)]
+        [InlineData(10, 12, 14, 16, 18, 20, "history", 3)]
+        [InlineData(10, 12, 14, 16, 18, 20, "INVESTIGATION", 3)]
+        [InlineData(10, 12, 14, 16, 18, 20, "Nature", 3)]
+        [InlineData(10, 12, 14, 16, 18, 20, "Religion", 3)]
+        [InlineData(10, 12, 14, 16, 18, 20, "animal HANDLING", 4)]
+        [InlineData(10, 12, 14, 16, 18, 20, "insight", 4)]
+        [InlineData(10, 12, 14, 16, 18, 20, "MEDIcine", 4)]
+        [InlineData(10, 12, 14, 16, 18, 20, "perception", 4)]
+        [InlineData(10, 12, 14, 16, 18, 20, "survival", 4)]
+        [InlineData(10, 12, 14, 16, 18, 20, "deception", 5)]
+        [InlineData(10, 12, 14, 16, 18, 20, "persuasion", 5)]
+        [InlineData(10, 12, 14, 16, 18, 20, "performance", 5)]
+        [InlineData(10, 12, 14, 16, 18, 20, "intimidation", 5)]
+        public async Task Checks_all_skills(int strength, int dexterity,
+            int constitution, int intelligence, int wisdom, int charisma,
+            string skillToTest, int expectedModifier)
+        {
+            await _factory.SetupCharacters(new CharacterEntity
+            {
+                Id = 1,
+                Strength = strength,
+                Dexterity = dexterity,
+                Constitution = constitution,
+                Intelligence = intelligence,
+                Wisdom = wisdom,
+                Charisma = charisma
+            });
 
-        //    var client = _factory.CreateClient();
+            var client = _factory.CreateClient();
 
-        //    var response = await client.GetAsync($"api/characters/1/roll/{abilityToTest}");
+            var response = await client.GetAsync($"api/characters/1/roll/{skillToTest}");
 
-        //    var minReturnValue = 1 + expectedModifier;
-        //    var maxReturnValue = 20 + expectedModifier;
+            var minReturnValue = 1 + expectedModifier;
+            var maxReturnValue = 20 + expectedModifier;
 
-        //    response.EnsureSuccessStatusCode();
-        //    var roll = JsonSerializer.Deserialize<int>(await response.Content.ReadAsStringAsync());
-        //    roll.Should().BeInRange(minReturnValue, maxReturnValue,
-        //        $"{abilityToTest} roll must be within the expected bounds");
-        //}
+            response.EnsureSuccessStatusCode();
+            var roll = JsonSerializer.Deserialize<int>(await response.Content.ReadAsStringAsync());
+            roll.Should().BeInRange(minReturnValue, maxReturnValue,
+                $"{skillToTest} roll must be within the expected bounds");
+        }
 
-        //[Fact]
-        //public async Task Returns_404_for_invalid_ability_name()
-        //{
-        //    await _factory.SetupCharacters(new CharacterEntity
-        //    {
-        //        Id = 1, Strength = 15, Dexterity = 15, Constitution = 15, 
-        //        Intelligence = 15, Wisdom = 15, Charisma = 15
-        //    });
+        [Fact]
+        public async Task Returns_404_for_invalid_skill_name()
+        {
+            await _factory.SetupCharacters(new CharacterEntity
+            {
+                Id = 1,
+                Strength = 15,
+                Dexterity = 15,
+                Constitution = 15,
+                Intelligence = 15,
+                Wisdom = 15,
+                Charisma = 15
+            });
 
-        //    var client = _factory.CreateClient();
+            var client = _factory.CreateClient();
 
-        //    var response = await client.GetAsync("api/characters/1/roll/efficiency");
+            var response = await client.GetAsync("api/characters/1/roll/small talk");
 
-        //    response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        //}
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
     }
 }

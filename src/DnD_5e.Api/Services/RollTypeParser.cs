@@ -12,6 +12,10 @@ namespace DnD_5e.Api.Services
             {
                 return new CharacterRollRequest(abilityType);
             }
+            else if (Enum.TryParse(input.Replace(" ", ""), true, out Skill.Type skillType))
+            {
+                return new CharacterRollRequest(skillType, skillType.GetParentAbility());
+            }
             throw new ArgumentOutOfRangeException(nameof(input));
         }
     }

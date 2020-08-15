@@ -23,7 +23,7 @@ namespace DnD_5e.Domain.Roleplay
 
         public enum Type
         {
-            Strength,
+            Strength = 1,
             Dexterity,
             Constitution,
             Intelligence,
