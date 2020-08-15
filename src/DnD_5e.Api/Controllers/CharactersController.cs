@@ -28,16 +28,15 @@ namespace DnD_5e.Api.Controllers
         [HttpGet("{id}/roll/{rollType}")]
         public async Task<ActionResult<int>> MakeAbilityCheck(int id, string rollType)
         {
-            var character = _repository.GetById(id);
-
-            if (character == null)
-            {
-                return NotFound();
-            }
-
             try
             {
                 var request = _rollParser.ParseRequest(rollType);
+                var character = _repository.GetById(id);
+
+                if (character == null)
+                {
+                    return NotFound();
+                }
                 var roll = character.GetRoll(request);
                 return await _roller.Roll(roll);
             }
@@ -51,16 +50,16 @@ namespace DnD_5e.Api.Controllers
         [HttpGet("{id}/rollsave/{ability}")]
         public async Task<ActionResult<int>> MakeSavingThrow(int id, string ability)
         {
-            var character = _repository.GetById(id);
-
-            if (character == null)
-            {
-                return NotFound();
-            }
-
             try
             {
-                var roll = character.GetSavingThrow(ability);
+                var request = _rollParser.ParseRequest(ability, isSave: true);
+                var character = _repository.GetById(id);
+
+                if (character == null)
+                {
+                    return NotFound();
+                }
+                var roll = character.GetRoll(request);
 
                 return await _roller.Roll(roll);
             }

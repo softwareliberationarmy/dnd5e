@@ -2,9 +2,10 @@
 {
     public class CharacterRollRequest
     {
-        public CharacterRollRequest(Ability.Type abilityType)
+        public CharacterRollRequest(Ability.Type abilityType, bool isSave = false)
         {
             AbilityType = abilityType;
+            IsSavingThrow = isSave;
         }
 
         public CharacterRollRequest(Skill.Type skillType, Ability.Type abilityType)
@@ -15,5 +16,6 @@
 
         public Ability.Type AbilityType { get; }
         public Skill.Type SkillType { get; }
+        public bool IsSavingThrow { get; }
     }
 }

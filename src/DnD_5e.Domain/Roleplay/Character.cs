@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace DnD_5e.Domain.Roleplay
 {
@@ -22,38 +21,20 @@ namespace DnD_5e.Domain.Roleplay
             };
         }
 
-        public string GetSavingThrow(string abilityName)
+        public string GetRoll(CharacterRollRequest characterRollRequest)
         {
-            var ability = GetAbility(abilityName);
-            var modifier = ability.GetAbilityModifier();
-            if (ability.ProficientAtSaves)
+            var ability = _abilityDictionary[characterRollRequest.AbilityType];
+            var abilityModifier = ability.GetAbilityModifier();
+            if (characterRollRequest.IsSavingThrow && ability.ProficientAtSaves)
             {
-                modifier += _proficiency;
+                abilityModifier += _proficiency;
             }
-            return D20RollWithModifier(modifier);
-        }
-
-        private Ability GetAbility(string ability)
-        {
-            var input = ability.ToLower().Trim();
-            if (Enum.TryParse(input, true, out Ability.Type abilityType)
-                && _abilityDictionary.ContainsKey(abilityType))
-            {
-                return _abilityDictionary[abilityType];
-            }
-
-            throw new ArgumentOutOfRangeException(nameof(ability));
+            return D20RollWithModifier(abilityModifier);
         }
 
         private static string D20RollWithModifier(int modifier)
         {
             return "1d20" + (modifier > 0 ? "+" + modifier : modifier < 0 ? "-" + modifier : "");
-        }
-
-        public string GetRoll(CharacterRollRequest characterRollRequest)
-        {
-            var ability = _abilityDictionary[characterRollRequest.AbilityType].GetAbilityModifier();
-            return D20RollWithModifier(ability);
         }
     }
 }

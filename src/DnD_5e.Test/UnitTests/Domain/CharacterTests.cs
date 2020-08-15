@@ -82,34 +82,28 @@ namespace DnD_5e.Test.UnitTests.Domain
                 var target = new Character(new Ability(score, isProficient),
                     null, null, null, null, null);
 
-                target.GetSavingThrow("strength").Should().Be(expectedRoll);
-            }
-
-            [Fact]
-            public void Throws_exception_if_invalid_ability_score_given()
-            {
-                var target = new Character(null, null, null, null, null, null);
-                Assert.Throws<ArgumentOutOfRangeException>(
-                    () => target.GetSavingThrow("jump roping"));
+                target.GetRoll(new CharacterRollRequest(Ability.Type.Strength, true))
+                    .Should().Be(expectedRoll);
             }
 
             [Theory]
-            [InlineData(10, 12, 14, 16, 18, 20, "strength", "1d20+2")]
-            [InlineData(10, 12, 14, 16, 18, 20, "dexterity", "1d20+3")]
-            [InlineData(10, 12, 14, 16, 18, 20, "constitution", "1d20+4")]
-            [InlineData(10, 12, 14, 16, 18, 20, "intelligence", "1d20+5")]
-            [InlineData(10, 12, 14, 16, 18, 20, "wisdom", "1d20+6")]
-            [InlineData(10, 12, 14, 16, 18, 20, "charisma", "1d20+7")]
+            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Strength, "1d20+2")]
+            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Dexterity, "1d20+3")]
+            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Constitution, "1d20+4")]
+            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Intelligence, "1d20+5")]
+            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Wisdom, "1d20+6")]
+            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Charisma, "1d20+7")]
             public void Checks_the_correct_ability_score(int strength, int dexterity,
                 int constitution, int intelligence, int wisdom, int charisma,
-                string requestedAbility, string expectedRoll)
+                Ability.Type requestedAbility, string expectedRoll)
             {
                 var target = new Character(new Ability(strength, true),
                     new Ability(dexterity, true), new Ability(constitution, true),
                     new Ability(intelligence, true), new Ability(wisdom, true),
                     new Ability(charisma, true));
 
-                target.GetSavingThrow(requestedAbility).Should().Be(expectedRoll);
+                target.GetRoll(new CharacterRollRequest(requestedAbility, true))
+                    .Should().Be(expectedRoll);
             }
         }
     }
