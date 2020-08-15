@@ -22,11 +22,11 @@ namespace DnD_5e.Domain.Roleplay
             };
         }
 
-        public string GetAbilityRoll(string abilityName)
-        {
-            var modifier = GetAbility(abilityName).GetAbilityModifier();
-            return D20RollWithModifier(modifier);
-        }
+        //public string GetAbilityRoll(string abilityName)
+        //{
+        //    var modifier = GetAbility(abilityName).GetAbilityModifier();
+        //    return D20RollWithModifier(modifier);
+        //}
 
         public string GetSavingThrow(string abilityName)
         {
@@ -47,15 +47,19 @@ namespace DnD_5e.Domain.Roleplay
             {
                 return _abilityDictionary[abilityType];
             }
-            else
-            {
-                throw new ArgumentOutOfRangeException(nameof(ability));
-            }
+
+            throw new ArgumentOutOfRangeException(nameof(ability));
         }
 
         private static string D20RollWithModifier(int modifier)
         {
             return "1d20" + (modifier > 0 ? "+" + modifier : modifier < 0 ? "-" + modifier : "");
+        }
+
+        public string GetRoll(CharacterRollRequest characterRollRequest)
+        {
+            var ability = _abilityDictionary[characterRollRequest.AbilityType].GetAbilityModifier();
+            return D20RollWithModifier(ability);
         }
     }
 }

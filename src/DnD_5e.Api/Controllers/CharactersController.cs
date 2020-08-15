@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using DnD_5e.Domain.DiceRolls;
+using DnD_5e.Domain.Roleplay;
 using DnD_5e.Infrastructure.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,8 +23,8 @@ namespace DnD_5e.Api.Controllers
         }
 
         // GET api/<CharactersController>/5/roll/strength
-        [HttpGet("{id}/roll/{ability}")]
-        public async Task<ActionResult<int>> MakeAbilityCheck(int id, string ability)
+        [HttpGet("{id}/roll/{rollType}")]
+        public async Task<ActionResult<int>> MakeAbilityCheck(int id, string rollType)
         {
             var character = _repository.GetById(id);
 
@@ -31,17 +32,17 @@ namespace DnD_5e.Api.Controllers
             {
                 return NotFound();
             }
-
-            try
+            
+            if (Ability.Type.TryParse(rollType, true, out Ability.Type abilityType))
             {
-                var roll = character.GetAbilityRoll(ability);
-
+                var roll = character.GetRoll(new CharacterRollRequest(abilityType));
                 return await _roller.Roll(roll);
             }
-            catch (ArgumentOutOfRangeException)
+            else
             {
-                return NotFound($"Ability {ability} not found");
+                return NotFound($"Ability {rollType} not found");
             }
+            throw new NotImplementedException("TODO: implement skill checks");
         }
 
         // GET api/<CharactersController>/5/roll/strength
@@ -98,5 +99,6 @@ namespace DnD_5e.Api.Controllers
         //public void Delete(int id)
         //{
         //}
+
     }
 }

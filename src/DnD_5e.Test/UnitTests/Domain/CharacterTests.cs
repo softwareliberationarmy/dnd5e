@@ -1,5 +1,6 @@
 ﻿using System;
 using DnD_5e.Domain.Roleplay;
+using DnD_5e.Test.UnitTests.Api.Services;
 using FluentAssertions;
 using Xunit;
 
@@ -25,19 +26,20 @@ namespace DnD_5e.Test.UnitTests.Domain
                 var target = new Character(new Ability(score, false),
                     null, null, null, null, null);
 
-                target.GetAbilityRoll("strength").Should().Be(expectedRoll);
+                target.GetRoll(new CharacterRollRequest(Ability.Type.Strength))
+                    .Should().Be(expectedRoll);
             }
 
             [Theory]
-            [InlineData(10, 12, 14, 16, 18, 20, "strength", "1d20")]
-            [InlineData(10, 12, 14, 16, 18, 20, "dexterity", "1d20+1")]
-            [InlineData(10, 12, 14, 16, 18, 20, "constitution", "1d20+2")]
-            [InlineData(10, 12, 14, 16, 18, 20, "intelligence", "1d20+3")]
-            [InlineData(10, 12, 14, 16, 18, 20, "wisdom", "1d20+4")]
-            [InlineData(10, 12, 14, 16, 18, 20, "charisma", "1d20+5")]
+            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Strength, "1d20")]
+            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Dexterity, "1d20+1")]
+            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Constitution, "1d20+2")]
+            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Intelligence, "1d20+3")]
+            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Wisdom, "1d20+4")]
+            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Charisma, "1d20+5")]
             public void Checks_the_correct_ability_score(int strength, int dexterity,
                 int constitution, int intelligence, int wisdom, int charisma,
-                string requestedAbility, string expectedRoll)
+                Ability.Type requestedAbility, string expectedRoll)
             {
                 var target = new Character(
                     new Ability(strength, false),
@@ -47,16 +49,8 @@ namespace DnD_5e.Test.UnitTests.Domain
                     new Ability(wisdom, false),
                     new Ability(charisma, false)
                 );
-
-                target.GetAbilityRoll(requestedAbility).Should().Be(expectedRoll);
-            }
-
-            [Fact]
-            public void Throws_exception_if_invalid_ability_score_given()
-            {
-                var target = new Character(null, null, null, null, null, null);
-                Assert.Throws<ArgumentOutOfRangeException>(
-                    () => target.GetAbilityRoll("jump roping"));
+                target.GetRoll(new CharacterRollRequest(requestedAbility))
+                    .Should().Be(expectedRoll);
             }
         }
 
