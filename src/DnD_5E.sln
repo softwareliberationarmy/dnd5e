@@ -9,7 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnD_5e.Domain", "DnD_5e.Dom
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnD_5e.Api", "DnD_5e.Api\DnD_5e.Api.csproj", "{F743DB8B-9635-47D6-896B-70E2CC6E753D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DnD_5e.Infrastructure", "DnD_5e.Infrastructure\DnD_5e.Infrastructure.csproj", "{8F301B3A-173F-42AA-987D-DA9CB7B6B96F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnD_5e.Infrastructure", "DnD_5e.Infrastructure\DnD_5e.Infrastructure.csproj", "{8F301B3A-173F-42AA-987D-DA9CB7B6B96F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{12113DF1-E6A6-4E44-9B8E-4FB1DBEF7F22}"
+	ProjectSection(SolutionItems) = preProject
+		TODO.txt = TODO.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

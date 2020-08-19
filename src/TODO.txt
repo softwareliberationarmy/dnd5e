@@ -1,0 +1,7 @@
+TODO:
+Add CharacterRepository unit tests
+TDD Add skill proficiency mapping logic to CharacterRepository
+TDD Add skill proficiency roll creation to Character 
+Feature: user skill check includes proficiency where applicable
+
+DONE:

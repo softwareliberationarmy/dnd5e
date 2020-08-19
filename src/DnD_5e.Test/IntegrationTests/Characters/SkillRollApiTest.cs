@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
+using DnD_5e.Domain.Roleplay;
 using DnD_5e.Infrastructure.DataAccess;
 using DnD_5e.Test.Helpers;
 using FluentAssertions;
@@ -120,6 +121,32 @@ namespace DnD_5e.Test.IntegrationTests
             var response = await client.GetAsync("api/characters/1/roll/small talk");
 
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
+        [Fact]
+        public async Task Uses_proficiency_modifier_if_proficient()
+        {
+            await _factory.SetupCharacters(new CharacterEntity
+            {
+                Id = 1,
+                Strength = 16,
+                SkillProficiencies = new []
+                {
+                    new SkillProficiencyEntity { Type = (int)Skill.Type.Athletics }
+                }
+            });
+
+            var client = _factory.CreateClient();
+
+            var response = await client.GetAsync($"api/characters/1/roll/athletics");
+
+            var minReturnValue = 1 + 3 + 2;
+            var maxReturnValue = 20 + 3 + 2;
+
+            response.EnsureSuccessStatusCode();
+            var roll = JsonSerializer.Deserialize<int>(await response.Content.ReadAsStringAsync());
+            roll.Should().BeInRange(minReturnValue, maxReturnValue,
+                $"Athletics roll must be within the expected bounds");
         }
     }
 }

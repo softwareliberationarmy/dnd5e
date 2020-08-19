@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using DnD_5e.Domain.Roleplay;
 
 namespace DnD_5e.Infrastructure.DataAccess
@@ -33,3 +34,5 @@ namespace DnD_5e.Infrastructure.DataAccess
         }
     }
 }
+
+//TODO: add unit tests for this logic so we can test out the mapping
