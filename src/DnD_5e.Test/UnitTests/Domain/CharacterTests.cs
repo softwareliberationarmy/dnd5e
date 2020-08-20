@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using DnD_5e.Domain.Roleplay;
 using DnD_5e.Test.UnitTests.Api.Services;
 using FluentAssertions;
@@ -104,6 +105,28 @@ namespace DnD_5e.Test.UnitTests.Domain
 
                 target.GetRoll(new CharacterRollRequest(requestedAbility, true))
                     .Should().Be(expectedRoll);
+            }
+        }
+
+        public class SkillChecks : CharacterTests
+        {
+            [Fact]
+            public async Task Uses_parent_ability_for_roll()
+            {
+                var roll = new CharacterRollRequest(Skill.Type.Athletics, Ability.Type.Strength);
+                var character = new Character(new Ability(16, false), null, null, null, null, null);
+
+                character.GetRoll(roll).Should().Be("1d20+3");
+            }
+
+            [Fact]
+            public async Task Includes_proficiency_bonus_when_user_proficient_in_skill()
+            {
+                var roll = new CharacterRollRequest(Skill.Type.Athletics, Ability.Type.Dexterity);
+                var character = new Character(null, new Ability(20, false), null, null, null, null,
+                    new Skill.Type[]{ Skill.Type.Athletics});
+
+                character.GetRoll(roll).Should().Be("1d20+7");
             }
         }
     }
