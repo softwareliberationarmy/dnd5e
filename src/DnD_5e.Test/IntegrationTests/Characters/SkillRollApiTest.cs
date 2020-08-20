@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using DnD_5e.Domain.Roleplay;
@@ -130,7 +131,7 @@ namespace DnD_5e.Test.IntegrationTests
             {
                 Id = 1,
                 Strength = 16,
-                SkillProficiencies = new []
+                SkillProficiencies = new List<SkillProficiencyEntity>
                 {
                     new SkillProficiencyEntity { Type = (int)Skill.Type.Athletics }
                 }

@@ -31,7 +31,7 @@ namespace DnD_5e.Api.Controllers
             try
             {
                 var request = _rollParser.ParseRequest(rollType);
-                var character = _repository.GetById(id);
+                var character = await _repository.GetById(id);
 
                 if (character == null)
                 {
@@ -53,7 +53,7 @@ namespace DnD_5e.Api.Controllers
             try
             {
                 var request = _rollParser.ParseRequest(ability, isSave: true);
-                var character = _repository.GetById(id);
+                var character = await _repository.GetById(id);
 
                 if (character == null)
                 {

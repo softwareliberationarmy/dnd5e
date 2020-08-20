@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using DnD_5e.Domain.Roleplay;
 
 namespace DnD_5e.Infrastructure.DataAccess
@@ -13,9 +14,9 @@ namespace DnD_5e.Infrastructure.DataAccess
             _context = context;
         }
 
-        public Character GetById(int id)
+        public async Task<Character> GetById(int id)
         {
-            var record = _context.Characters.FirstOrDefault(c => c.Id == id);
+            var record = await _context.Characters.FindAsync(id);
             if (record == null)
             {
                 return null;
