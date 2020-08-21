@@ -10,7 +10,7 @@ namespace DnD_5e.Domain.Roleplay
         private readonly int _proficiency = 2;
 
         public Character(Ability strength, Ability dexterity, Ability constitution,
-            Ability intelligence, Ability wisdom, Ability charisma, Skill.Type[] skillProficiencies = null)
+            Ability intelligence, Ability wisdom, Ability charisma, Skill.Type[] skillProficiencies)
         {
             //TODO: remove this default value and make it required to build a character
             _skillProficiencies = skillProficiencies ?? new Skill.Type[0];

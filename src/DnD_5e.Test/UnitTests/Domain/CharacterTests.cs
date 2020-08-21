@@ -25,7 +25,7 @@ namespace DnD_5e.Test.UnitTests.Domain
             public void Returns_ability_check_roll_based_on_score(int score, string expectedRoll)
             {
                 var target = new Character(new Ability(score, false),
-                    null, null, null, null, null);
+                    null, null, null, null, null, null);
 
                 target.GetRoll(new CharacterRollRequest(Ability.Type.Strength))
                     .Should().Be(expectedRoll);
@@ -48,7 +48,7 @@ namespace DnD_5e.Test.UnitTests.Domain
                     new Ability(constitution, false),
                     new Ability(intelligence, false),
                     new Ability(wisdom, false),
-                    new Ability(charisma, false)
+                    new Ability(charisma, false), null
                 );
                 target.GetRoll(new CharacterRollRequest(requestedAbility))
                     .Should().Be(expectedRoll);
@@ -81,7 +81,7 @@ namespace DnD_5e.Test.UnitTests.Domain
             public void Returns_ability_saving_throw_based_on_score_and_proficiency(int score, bool isProficient, string expectedRoll)
             {
                 var target = new Character(new Ability(score, isProficient),
-                    null, null, null, null, null);
+                    null, null, null, null, null, null);
 
                 target.GetRoll(new CharacterRollRequest(Ability.Type.Strength, true))
                     .Should().Be(expectedRoll);
@@ -101,7 +101,7 @@ namespace DnD_5e.Test.UnitTests.Domain
                 var target = new Character(new Ability(strength, true),
                     new Ability(dexterity, true), new Ability(constitution, true),
                     new Ability(intelligence, true), new Ability(wisdom, true),
-                    new Ability(charisma, true));
+                    new Ability(charisma, true), null);
 
                 target.GetRoll(new CharacterRollRequest(requestedAbility, true))
                     .Should().Be(expectedRoll);
@@ -111,16 +111,16 @@ namespace DnD_5e.Test.UnitTests.Domain
         public class SkillChecks : CharacterTests
         {
             [Fact]
-            public async Task Uses_parent_ability_for_roll()
+            public void Uses_parent_ability_for_roll()
             {
                 var roll = new CharacterRollRequest(Skill.Type.Athletics, Ability.Type.Strength);
-                var character = new Character(new Ability(16, false), null, null, null, null, null);
+                var character = new Character(new Ability(16, false), null, null, null, null, null, null);
 
                 character.GetRoll(roll).Should().Be("1d20+3");
             }
 
             [Fact]
-            public async Task Includes_proficiency_bonus_when_user_proficient_in_skill()
+            public void Includes_proficiency_bonus_when_user_proficient_in_skill()
             {
                 var roll = new CharacterRollRequest(Skill.Type.Athletics, Ability.Type.Dexterity);
                 var character = new Character(null, new Ability(20, false), null, null, null, null,
