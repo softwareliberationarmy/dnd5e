@@ -35,7 +35,9 @@ namespace DnD_5e.Test.UnitTests.Infrastructure
             {
                 context.Characters.Add(new CharacterEntity
                 {
-                    Id = characterId, Strength = 16, StrengthSaveProficiency = true
+                    Id = characterId,
+                    Strength = 16,
+                    StrengthSaveProficiency = true
                 });
                 await context.SaveChangesAsync();
             }
@@ -60,7 +62,9 @@ namespace DnD_5e.Test.UnitTests.Infrastructure
             {
                 context.Characters.Add(new CharacterEntity
                 {
-                    Id = characterId, Strength = 14, SkillProficiencies = new List<SkillProficiencyEntity>
+                    Id = characterId,
+                    Strength = 14,
+                    SkillProficiencies = new List<SkillProficiencyEntity>
                     {
                         new SkillProficiencyEntity
                         {
@@ -81,6 +85,7 @@ namespace DnD_5e.Test.UnitTests.Infrastructure
                     .Should().Be("1d20+4");
             }
         }
+
 
         private static DbContextOptionsBuilder<CharacterDbContext> CreateNewInMemoryDatabase()
         {

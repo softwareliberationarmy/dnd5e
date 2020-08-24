@@ -1,7 +1,4 @@
 TODO:
-Feature: user skill check includes proficiency where applicable
-	TDD Add skill proficiency mapping logic to CharacterRepository
-		Include unit test for invalid database data. What should happen if a Type does not map?
 Feature: user level determined by XP
 Feature: user can change character XP
 Feature: user proficiency changes with user level
@@ -9,4 +6,6 @@ Feature: user proficiency changes with user level
 DONE:
 Add CharacterRepository unit tests
 Define mapping from CharacterEntity to SkillProficiencyEntity
-TDD Add skill proficiency roll creation to Character 
+Feature: user skill check includes proficiency where applicable
+	TDD Add skill proficiency roll creation to Character 
+	TDD Add skill proficiency mapping logic to CharacterRepository
