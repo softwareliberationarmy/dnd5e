@@ -86,7 +86,6 @@ namespace DnD_5e.Test.UnitTests.Infrastructure
             }
         }
 
-
         private static DbContextOptionsBuilder<CharacterDbContext> CreateNewInMemoryDatabase()
         {
             var options = new DbContextOptionsBuilder<CharacterDbContext>();

@@ -1,13 +1,12 @@
 ﻿using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using DnD_5e.Domain.Roleplay;
 using DnD_5e.Infrastructure.DataAccess;
 using DnD_5e.Test.Helpers;
 using FluentAssertions;
 using Xunit;
 
-namespace DnD_5e.Test.IntegrationTests
+namespace DnD_5e.Test.IntegrationTests.Characters
 {
     public class AbilitySavingThrowApiTest : IClassFixture<TestClientFactory>
     {
@@ -140,6 +139,29 @@ namespace DnD_5e.Test.IntegrationTests
             var response = await client.GetAsync("api/characters/1/rollsave/excellence");
 
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
+        [Fact]
+        public async Task Proficiency_modifier_changes_with_character_level()
+        {
+            await _factory.SetupCharacters(new CharacterEntity
+            {
+                Id = 1,
+                Constitution = 16,
+                ConstitutionSaveProficiency = true,
+                ExperiencePoints = 6500
+            });
+
+            var client = _factory.CreateClient();
+
+            var response = await client.GetAsync("api/characters/1/rollsave/constitution");
+            var expectedModifier = 6;   //ability modifier + proficiency at 5th level (3)
+            var minReturnValue = 1 + expectedModifier;
+            var maxReturnValue = 20 + expectedModifier;
+
+            response.EnsureSuccessStatusCode();
+            var roll = JsonSerializer.Deserialize<int>(await response.Content.ReadAsStringAsync());
+            roll.Should().BeInRange(minReturnValue, maxReturnValue, "Expected constitution saving throw to be within bounds");
         }
     }
 }

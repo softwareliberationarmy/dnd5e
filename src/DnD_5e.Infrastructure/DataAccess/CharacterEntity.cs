@@ -21,5 +21,7 @@ namespace DnD_5e.Infrastructure.DataAccess
         public bool CharismaSaveProficiency { get; set; }
 
         public List<SkillProficiencyEntity> SkillProficiencies { get; set; }
+        
+        public int ExperiencePoints { get; set; }
     }
 }

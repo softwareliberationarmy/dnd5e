@@ -1,7 +1,7 @@
 TODO:
-Feature: user level determined by XP
+Feature: user proficiency changes with user level/XP
+Feature: user level determined by XP	
 Feature: user can change character XP
-Feature: user proficiency changes with user level
 
 DONE:
 Add CharacterRepository unit tests
