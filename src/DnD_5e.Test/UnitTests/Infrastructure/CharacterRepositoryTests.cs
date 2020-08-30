@@ -86,6 +86,35 @@ namespace DnD_5e.Test.UnitTests.Infrastructure
             }
         }
 
+        [Fact]
+        public async Task Returns_character_with_correct_experience_points()
+        {
+            var characterId = 52352;
+            var options = CreateNewInMemoryDatabase();
+
+            await using (var context = new CharacterDbContext(options.Options))
+            {
+                context.Characters.Add(new CharacterEntity
+                {
+                    Id = characterId,
+                    Wisdom = 14,
+                    WisdomSaveProficiency = true,
+                    ExperiencePoints = 50000
+                });
+
+                await context.SaveChangesAsync();
+            }
+
+            await using (var context = new CharacterDbContext(options.Options))
+            {
+                var repo = new CharacterRepository(context);
+
+                var character = await repo.GetById(characterId);
+                character.GetRoll(new CharacterRollRequest(Ability.Type.Wisdom, true))
+                    .Should().Be("1d20+6");
+            }
+        }
+
         private static DbContextOptionsBuilder<CharacterDbContext> CreateNewInMemoryDatabase()
         {
             var options = new DbContextOptionsBuilder<CharacterDbContext>();

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace DnD_5e.Domain.Roleplay
 {
@@ -8,9 +9,11 @@ namespace DnD_5e.Domain.Roleplay
         private readonly Skill.Type[] _skillProficiencies;
         private readonly Dictionary<Ability.Type, Ability> _abilityDictionary;
         private readonly int _proficiency = 2;
+        private static readonly int[] _xpProficiencyBumps = new[] {6500, 48000, 120000, 225000};
 
         public Character(Ability strength, Ability dexterity, Ability constitution,
-            Ability intelligence, Ability wisdom, Ability charisma, Skill.Type[] skillProficiencies)
+            Ability intelligence, Ability wisdom, Ability charisma, Skill.Type[] skillProficiencies, 
+            int experiencePoints = 0)
         {
             //TODO: remove this default value and make it required to build a character
             _skillProficiencies = skillProficiencies ?? new Skill.Type[0];
@@ -23,6 +26,13 @@ namespace DnD_5e.Domain.Roleplay
                 {Ability.Type.Wisdom, wisdom},
                 {Ability.Type.Charisma, charisma}
             };
+            for (int i = 0; i < _xpProficiencyBumps.Length; i++)
+            {
+                if (experiencePoints >= _xpProficiencyBumps[i])
+                {
+                    _proficiency++;
+                }
+            }
         }
 
         public string GetRoll(CharacterRollRequest characterRollRequest)

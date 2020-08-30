@@ -106,6 +106,20 @@ namespace DnD_5e.Test.UnitTests.Domain
                 target.GetRoll(new CharacterRollRequest(requestedAbility, true))
                     .Should().Be(expectedRoll);
             }
+
+            [Theory]
+            [InlineData(6500,"1d20+6")]
+            [InlineData(48000,"1d20+7")]
+            [InlineData(120000,"1d20+8")]
+            [InlineData(225000, "1d20+9")]
+            public void Adds_correct_proficiency_based_on_character_level(int experiencePoints, string expectedRoll)
+            {
+                var target = new Character( null, null, new Ability(16, true), null, null, null, null,
+                    experiencePoints);
+
+                target.GetRoll(new CharacterRollRequest(Ability.Type.Constitution, true))
+                    .Should().Be(expectedRoll);
+            }
         }
 
         public class SkillChecks : CharacterTests

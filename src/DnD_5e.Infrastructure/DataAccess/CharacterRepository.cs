@@ -35,7 +35,7 @@ namespace DnD_5e.Infrastructure.DataAccess
                     new Ability(record.Intelligence, record.IntelligenceSaveProficiency),
                     new Ability(record.Wisdom, record.WisdomSaveProficiency),
                     new Ability(record.Charisma, record.CharismaSaveProficiency),
-                    proficiencies.ToArray()
+                    proficiencies.ToArray(), record.ExperiencePoints
                 );
             }
         }
