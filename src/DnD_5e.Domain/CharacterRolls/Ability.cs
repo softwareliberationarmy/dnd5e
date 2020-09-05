@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DnD_5e.Domain.Roleplay
+﻿namespace DnD_5e.Domain.CharacterRolls
 {
     public class Ability
     {

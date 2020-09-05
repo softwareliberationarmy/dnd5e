@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using DnD_5e.Domain.Roleplay;
+using DnD_5e.Domain.CharacterRolls;
 using FluentAssertions;
 using Xunit;
 

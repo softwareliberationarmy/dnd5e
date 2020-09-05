@@ -2,7 +2,7 @@
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using DnD_5e.Domain.Roleplay;
+using DnD_5e.Domain.CharacterRolls;
 using DnD_5e.Infrastructure.DataAccess;
 using DnD_5e.Test.Helpers;
 using FluentAssertions;

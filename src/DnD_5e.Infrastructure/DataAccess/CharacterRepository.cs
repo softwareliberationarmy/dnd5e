@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using DnD_5e.Domain.Roleplay;
+using DnD_5e.Domain.CharacterRolls;
 using Microsoft.EntityFrameworkCore;
 
 namespace DnD_5e.Infrastructure.DataAccess

@@ -1,5 +1,5 @@
 ﻿using System.Runtime.InteropServices.ComTypes;
-using DnD_5e.Domain.Roleplay;
+using DnD_5e.Domain.CharacterRolls;
 using FluentAssertions;
 using Xunit;
 

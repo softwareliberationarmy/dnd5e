@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 
-namespace DnD_5e.Domain.Roleplay
+namespace DnD_5e.Domain.CharacterRolls
 {
     public class Character
     {

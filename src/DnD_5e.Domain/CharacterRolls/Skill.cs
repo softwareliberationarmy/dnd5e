@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DnD_5e.Domain.Roleplay
+namespace DnD_5e.Domain.CharacterRolls
 {
     public class Skill
     {

@@ -1,5 +1,5 @@
 ﻿using System;
-using DnD_5e.Domain.Roleplay;
+using DnD_5e.Domain.CharacterRolls;
 
 namespace DnD_5e.Api.Services
 {

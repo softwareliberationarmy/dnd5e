@@ -1,4 +1,4 @@
-﻿namespace DnD_5e.Domain.Roleplay
+﻿namespace DnD_5e.Domain.CharacterRolls
 {
     public enum RollTypeEnum
     {

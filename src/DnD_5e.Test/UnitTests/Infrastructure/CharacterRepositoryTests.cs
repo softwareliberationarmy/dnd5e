@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DnD_5e.Domain.Roleplay;
+using DnD_5e.Domain.CharacterRolls;
 using DnD_5e.Infrastructure.DataAccess;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;

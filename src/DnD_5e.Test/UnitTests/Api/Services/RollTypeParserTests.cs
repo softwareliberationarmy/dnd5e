@@ -1,5 +1,5 @@
 ﻿using DnD_5e.Api.Services;
-using DnD_5e.Domain.Roleplay;
+using DnD_5e.Domain.CharacterRolls;
 using DnD_5e.Test.IntegrationTests;
 using FluentAssertions;
 using Xunit;
