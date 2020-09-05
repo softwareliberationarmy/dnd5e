@@ -26,7 +26,7 @@ namespace DnD_5e.Api.Controllers
 
         // GET api/<CharactersController>/5/roll/strength
         [HttpGet("{id}/roll/{rollType}")]
-        public async Task<ActionResult<int>> MakeAbilityCheck(int id, string rollType)
+        public async Task<ActionResult<int>> MakeCharacterRoll(int id, string rollType)
         {
             try
             {

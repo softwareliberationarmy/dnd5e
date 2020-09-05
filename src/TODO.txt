@@ -1,6 +1,6 @@
 TODO:
 Feature: roll for initiative uses the player's dexterity by default
-	Write a failing controller test
+	TDD roll parser
 	TDD domain character action
 Review architecture so far and check for cohesiveness
 Not happy with the repository unit tests. They test domain things because nothing is exposed
@@ -11,9 +11,13 @@ Feature: on level-up, user hit points are updated based on character class
 Epic: start adding race characteristics, broken out by race
 Epic: start adding class characteristics, broken out by class
 Feature: user can change character XP
+Cleanup: refactor all character roll test classes to use a common base class for readability
+Cleanup: consolidate saving throw and character roll methods
 
 DONE:
 Feature: user skill check includes proficiency where applicable
 	TDD Add skill proficiency roll creation to Character 
 	TDD Add skill proficiency mapping logic to CharacterRepository
 Feature: user proficiency changes with user level/XP
+Feature: roll for initiative uses the player's dexterity by default
+	Write a failing controller test

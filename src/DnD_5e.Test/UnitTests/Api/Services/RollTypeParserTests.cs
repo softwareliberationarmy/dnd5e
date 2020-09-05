@@ -8,6 +8,8 @@ namespace DnD_5e.Test.UnitTests.Api.Services
 {
     public class RollTypeParserTests
     {
+        private RollTypeParser _target = new RollTypeParser();
+
         [Theory]
         [InlineData("strength", Ability.Type.Strength)]
         [InlineData("dexterity", Ability.Type.Dexterity)]
@@ -17,9 +19,23 @@ namespace DnD_5e.Test.UnitTests.Api.Services
         [InlineData("charisma", Ability.Type.Charisma)]
         public void Parses_Ability_To_Enum(string input, Ability.Type expectedEnum)
         {
-            var target = new RollTypeParser();
-            var characterRollRequest = target.ParseRequest(input);
-            characterRollRequest.AbilityType.Should().Be(expectedEnum);
+            var request = _target.ParseRequest(input);
+            request.AbilityType.Should().Be(expectedEnum);
+            request.RollType.Should().Be(RollTypeEnum.AbilityCheck);
+        }
+
+        [Theory]
+        [InlineData("strength", Ability.Type.Strength)]
+        [InlineData("dexterity", Ability.Type.Dexterity)]
+        [InlineData("constitution", Ability.Type.Constitution)]
+        [InlineData("intelligence", Ability.Type.Intelligence)]
+        [InlineData("wisdom", Ability.Type.Wisdom)]
+        [InlineData("charisma", Ability.Type.Charisma)]
+        public void Parses_Ability_Save_To_Right_Roll_Type(string input, Ability.Type expectedEnum)
+        {
+            var request = _target.ParseRequest(input, true);
+            request.AbilityType.Should().Be(expectedEnum);
+            request.RollType.Should().Be(RollTypeEnum.AbilitySavingThrow);
         }
 
         [Theory]
@@ -43,10 +59,19 @@ namespace DnD_5e.Test.UnitTests.Api.Services
         [InlineData("survival", Skill.Type.Survival, Ability.Type.Wisdom)]
         public void Parses_Skill_To_Enum(string input, Skill.Type expectedSkillType, Ability.Type expectedAbilityType)
         {
-            var target = new RollTypeParser();
-            var characterRollRequest = target.ParseRequest(input);
-            characterRollRequest.SkillType.Should().Be(expectedSkillType);
-            characterRollRequest.AbilityType.Should().Be(expectedAbilityType);
+            var request = _target.ParseRequest(input);
+            request.SkillType.Should().Be(expectedSkillType);
+            request.AbilityType.Should().Be(expectedAbilityType);
+            request.RollType.Should().Be(RollTypeEnum.SkillCheck);
+        }
+
+        [Fact]
+        public void Parses_Initiative()
+        {
+            
+            var result = _target.ParseRequest("initiative");
+
+            result.RollType.Should().Be(RollTypeEnum.Initiative);
         }
     }
 }

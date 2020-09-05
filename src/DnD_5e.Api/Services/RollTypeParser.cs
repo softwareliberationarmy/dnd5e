@@ -7,7 +7,6 @@ namespace DnD_5e.Api.Services
     {
         public CharacterRollRequest ParseRequest(string input, bool isSave = false)
         {
-            var ability = input.ToLower().Trim();
             if (Enum.TryParse(input, true, out Ability.Type abilityType))
             {
                 return new CharacterRollRequest(abilityType, isSave);
@@ -15,6 +14,10 @@ namespace DnD_5e.Api.Services
             else if (Enum.TryParse(input.Replace(" ", ""), true, out Skill.Type skillType))
             {
                 return new CharacterRollRequest(skillType, skillType.GetParentAbility());
+            }
+            else if (Enum.TryParse(input, true, out RollTypeEnum rollType))
+            {
+                return new CharacterRollRequest(rollType);
             }
             throw new ArgumentOutOfRangeException(nameof(input));
         }
