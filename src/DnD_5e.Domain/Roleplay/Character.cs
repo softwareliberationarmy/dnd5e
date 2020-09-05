@@ -9,10 +9,10 @@ namespace DnD_5e.Domain.Roleplay
         private readonly Skill.Type[] _skillProficiencies;
         private readonly Dictionary<Ability.Type, Ability> _abilityDictionary;
         private readonly int _proficiency = 2;
-        private static readonly int[] _xpProficiencyBumps = new[] {6500, 48000, 120000, 225000};
+        private static readonly int[] _xpProficiencyBumps = new[] { 6500, 48000, 120000, 225000 };
 
         public Character(Ability strength, Ability dexterity, Ability constitution,
-            Ability intelligence, Ability wisdom, Ability charisma, Skill.Type[] skillProficiencies, 
+            Ability intelligence, Ability wisdom, Ability charisma, Skill.Type[] skillProficiencies,
             int experiencePoints = 0)
         {
             //TODO: remove this default value and make it required to build a character
@@ -35,20 +35,34 @@ namespace DnD_5e.Domain.Roleplay
             }
         }
 
-        public string GetRoll(CharacterRollRequest characterRollRequest)
+        public string GetRoll(CharacterRollRequest rollRequest)
         {
-            var ability = _abilityDictionary[characterRollRequest.AbilityType];
-            var abilityModifier = ability.GetAbilityModifier();
-            if (characterRollRequest.IsSavingThrow && ability.ProficientAtSaves)
+            return D20RollWithModifier(GetRollModifier(rollRequest));
+        }
+
+        private int GetRollModifier(CharacterRollRequest characterRollRequest)
+        {
+            int modifier;
+            if (characterRollRequest.RollType == RollTypeEnum.Initiative)
             {
-                abilityModifier += _proficiency;
+                modifier = _abilityDictionary[Ability.Type.Dexterity].GetAbilityModifier();
             }
-            else if (characterRollRequest.SkillType != default(Skill.Type) &&
-                     _skillProficiencies.Contains(characterRollRequest.SkillType))
+            else
             {
-                abilityModifier += _proficiency;
+                var ability = _abilityDictionary[characterRollRequest.AbilityType];
+                modifier = ability.GetAbilityModifier();
+                if (characterRollRequest.RollType == RollTypeEnum.AbilitySavingThrow
+                    && ability.ProficientAtSaves)
+                {
+                    modifier += _proficiency;
+                }
+                else if (characterRollRequest.SkillType != default(Skill.Type) &&
+                         _skillProficiencies.Contains(characterRollRequest.SkillType))
+                {
+                    modifier += _proficiency;
+                }
             }
-            return D20RollWithModifier(abilityModifier);
+            return modifier;
         }
 
         private static string D20RollWithModifier(int modifier)

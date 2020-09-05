@@ -1,7 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Runtime.InteropServices.ComTypes;
 using DnD_5e.Domain.Roleplay;
-using DnD_5e.Test.UnitTests.Api.Services;
 using FluentAssertions;
 using Xunit;
 
@@ -108,13 +106,13 @@ namespace DnD_5e.Test.UnitTests.Domain
             }
 
             [Theory]
-            [InlineData(6500,"1d20+6")]
-            [InlineData(48000,"1d20+7")]
-            [InlineData(120000,"1d20+8")]
+            [InlineData(6500, "1d20+6")]
+            [InlineData(48000, "1d20+7")]
+            [InlineData(120000, "1d20+8")]
             [InlineData(225000, "1d20+9")]
             public void Adds_correct_proficiency_based_on_character_level(int experiencePoints, string expectedRoll)
             {
-                var target = new Character( null, null, new Ability(16, true), null, null, null, null,
+                var target = new Character(null, null, new Ability(16, true), null, null, null, null,
                     experiencePoints);
 
                 target.GetRoll(new CharacterRollRequest(Ability.Type.Constitution, true))
@@ -138,10 +136,24 @@ namespace DnD_5e.Test.UnitTests.Domain
             {
                 var roll = new CharacterRollRequest(Skill.Type.Athletics, Ability.Type.Dexterity);
                 var character = new Character(null, new Ability(20, false), null, null, null, null,
-                    new Skill.Type[]{ Skill.Type.Athletics});
+                    new[] { Skill.Type.Athletics });
 
                 character.GetRoll(roll).Should().Be("1d20+7");
             }
         }
+
+        public class InitiativeRoll : CharacterTests
+        {
+            [Fact]
+            public void Uses_dexterity_for_initiative_roll()
+            {
+                var roll = new CharacterRollRequest(RollTypeEnum.Initiative);
+                var character = new Character(null, new Ability(14, false), null, null, null, null, null);
+
+                character.GetRoll(roll).Should().Be("1d20+2");
+            }
+
+        }
+
     }
 }

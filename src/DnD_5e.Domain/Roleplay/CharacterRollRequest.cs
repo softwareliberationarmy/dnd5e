@@ -6,7 +6,6 @@
         {
             RollType = isSave ? RollTypeEnum.AbilitySavingThrow : RollTypeEnum.AbilityCheck;
             AbilityType = abilityType;
-            IsSavingThrow = isSave;
         }
 
         public CharacterRollRequest(Skill.Type skillType, Ability.Type abilityType)
@@ -23,7 +22,6 @@
 
         public Ability.Type AbilityType { get; }
         public Skill.Type SkillType { get; }
-        public bool IsSavingThrow { get; }
-        public RollTypeEnum RollType { get; set; }
+        public RollTypeEnum RollType { get; }
     }
 }
