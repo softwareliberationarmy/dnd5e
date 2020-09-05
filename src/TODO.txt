@@ -1,8 +1,10 @@
 TODO:
+Feature: roll for initiative uses the player's dexterity by default
+	Write a failing controller test
+	TDD domain character action
 Review architecture so far and check for cohesiveness
 Not happy with the repository unit tests. They test domain things because nothing is exposed
 Consider adding Mediatr and CQRS so we can have an end-to-end test without exposing properties
-Feature: roll for initiative uses the player's dexterity by default
 Feature: starting hit points determined by character class
 Feature: speed determined by race
 Feature: on level-up, user hit points are updated based on character class
