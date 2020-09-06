@@ -6,30 +6,30 @@ using FluentAssertions;
 
 namespace DnD_5e.Test.Helpers
 {
-    public class CharacterRollHelper
+    public class CharacterRollTestHelper
     {
         private readonly TestClientFactory _clientFactory;
         private CharacterEntity _characterEntity;
         private string _rollType;
 
-        public CharacterRollHelper(TestClientFactory clientFactory)
+        public CharacterRollTestHelper(TestClientFactory clientFactory)
         {
             _clientFactory = clientFactory;
         }
 
-        public CharacterRollHelper GivenNoCharacters()
+        public CharacterRollTestHelper GivenNoCharacters()
         {
             _characterEntity = null;
             return this;
         }
 
-        public CharacterRollHelper GivenACharacter(CharacterEntity characterEntity)
+        public CharacterRollTestHelper GivenACharacter(CharacterEntity characterEntity)
         {
             _characterEntity = characterEntity;
             return this;
         }
 
-        public CharacterRollHelper WhenIRollFor(string rollType)
+        public CharacterRollTestHelper WhenIRollFor(string rollType)
         {
             _rollType = rollType;
             return this;

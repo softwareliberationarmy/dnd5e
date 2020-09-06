@@ -63,9 +63,9 @@ namespace DnD_5e.Test.Helpers
             }
         }
 
-        public CharacterRollHelper CharacterRoll()
+        public CharacterRollTestHelper CharacterRoll()
         {
-            return new CharacterRollHelper(this);
+            return new CharacterRollTestHelper(this);
         }
     }
 }
