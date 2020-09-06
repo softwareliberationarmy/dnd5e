@@ -6,7 +6,7 @@ using DnD_5e.Test.Helpers;
 using FluentAssertions;
 using Xunit;
 
-namespace DnD_5e.Test.IntegrationTests
+namespace DnD_5e.Test.IntegrationTests.CharacterRolls
 {
     public class AbilityRollApiTest : IClassFixture<TestClientFactory>
     {
