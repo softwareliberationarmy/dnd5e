@@ -24,34 +24,20 @@ namespace DnD_5e.Test.IntegrationTests.CharacterRolls
         [InlineData(11, 0)]
         public async Task Makes_character_strength_roll_with_right_modifier(int strengthScore, int expectedModifier)
         {
-            await _factory.SetupCharacters(new CharacterEntity
+            await _factory.CharacterRoll().GivenACharacter(new CharacterEntity
             {
                 Id = 1,
                 Strength = strengthScore
-            });
-
-            var client = _factory.CreateClient();
-
-            var response = await client.GetAsync("api/characters/1/roll/strength");
-
-            var minReturnValue = 1 + expectedModifier;
-            var maxReturnValue = 20 + expectedModifier;
-
-            response.EnsureSuccessStatusCode();
-            var roll = JsonSerializer.Deserialize<int>(await response.Content.ReadAsStringAsync());
-            roll.Should().BeInRange(minReturnValue, maxReturnValue, "Expected strength roll to be within bounds");
+            }).WhenIRollFor("strength")
+                .ThenTheRollIs1d20Plus(expectedModifier);
         }
 
         [Fact]
         public async Task Returns_404_When_Character_Id_Not_Valid()
         {
-            await _factory.SetupCharacters();   //clears out all characters and inserts none
-
-            var client = _factory.CreateClient();
-
-            var response = await client.GetAsync("api/characters/1/roll/strength");
-
-            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+            await _factory.CharacterRoll().GivenNoCharacters()
+                .WhenIRollFor("strength")
+                .ThenTheApiReturnsNotFound();
         }
 
         [Theory]
@@ -65,7 +51,7 @@ namespace DnD_5e.Test.IntegrationTests.CharacterRolls
             int constitution, int intelligence, int wisdom, int charisma,
             string abilityToTest, int expectedModifier)
         {
-            await _factory.SetupCharacters(new CharacterEntity
+            await _factory.CharacterRoll().GivenACharacter(new CharacterEntity
             {
                 Id = 1,
                 Strength = strength,
@@ -74,35 +60,19 @@ namespace DnD_5e.Test.IntegrationTests.CharacterRolls
                 Intelligence = intelligence,
                 Wisdom = wisdom,
                 Charisma = charisma
-            });
-
-            var client = _factory.CreateClient();
-
-            var response = await client.GetAsync($"api/characters/1/roll/{abilityToTest}");
-
-            var minReturnValue = 1 + expectedModifier;
-            var maxReturnValue = 20 + expectedModifier;
-
-            response.EnsureSuccessStatusCode();
-            var roll = JsonSerializer.Deserialize<int>(await response.Content.ReadAsStringAsync());
-            roll.Should().BeInRange(minReturnValue, maxReturnValue,
-                $"{abilityToTest} roll must be within the expected bounds");
+            }).WhenIRollFor(abilityToTest)
+                .ThenTheRollIs1d20Plus(expectedModifier);
         }
 
         [Fact]
         public async Task Returns_404_for_invalid_ability_name()
         {
-            await _factory.SetupCharacters(new CharacterEntity
+            await _factory.CharacterRoll().GivenACharacter(new CharacterEntity
             {
                 Id = 1, Strength = 15, Dexterity = 15, Constitution = 15, 
                 Intelligence = 15, Wisdom = 15, Charisma = 15
-            });
-
-            var client = _factory.CreateClient();
-
-            var response = await client.GetAsync("api/characters/1/roll/efficiency");
-
-            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+            }).WhenIRollFor("efficiency")
+                .ThenTheApiReturnsNotFound();
         }
     }
 }

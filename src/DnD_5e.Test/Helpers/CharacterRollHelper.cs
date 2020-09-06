@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Net;
+using System.Text.Json;
 using System.Threading.Tasks;
 using DnD_5e.Infrastructure.DataAccess;
 using FluentAssertions;
@@ -16,6 +17,12 @@ namespace DnD_5e.Test.Helpers
             _clientFactory = clientFactory;
         }
 
+        public CharacterRollHelper GivenNoCharacters()
+        {
+            _characterEntity = null;
+            return this;
+        }
+
         public CharacterRollHelper GivenACharacter(CharacterEntity characterEntity)
         {
             _characterEntity = characterEntity;
@@ -30,7 +37,8 @@ namespace DnD_5e.Test.Helpers
 
         public async Task ThenTheRollIs1d20Plus(int expectedModifier)
         {
-            await _clientFactory.SetupCharacters(_characterEntity);
+            var characters = _characterEntity == null ? new CharacterEntity[0] : new[] { _characterEntity };
+            await _clientFactory.SetupCharacters(characters);
 
             var client = _clientFactory.CreateClient();
 
@@ -41,7 +49,19 @@ namespace DnD_5e.Test.Helpers
 
             response.EnsureSuccessStatusCode();
             var roll = JsonSerializer.Deserialize<int>(await response.Content.ReadAsStringAsync());
-            roll.Should().BeInRange(minReturnValue, maxReturnValue, "Expected initiative roll to use player's dexterity");
+            roll.Should().BeInRange(minReturnValue, maxReturnValue, $"Expected {_rollType} roll to be within expected bounds");
+        }
+
+        public async Task ThenTheApiReturnsNotFound()
+        {
+            var characters = _characterEntity == null ? new CharacterEntity[0] : new[] {_characterEntity};
+            await _clientFactory.SetupCharacters(characters);
+
+            var client = _clientFactory.CreateClient();
+
+            var response = await client.GetAsync($"api/characters/1/roll/{_rollType}");
+
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
     }
 }
