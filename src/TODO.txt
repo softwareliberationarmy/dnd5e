@@ -1,5 +1,5 @@
 TODO:
-Cleanup: refactor all character roll test classes to use a common base class for readability
+Cleanup: consolidate saving throw and character roll methods
 Review architecture so far and check for cohesiveness
 Cleanup: Character ctor has too many arguments (consolidate abilities?)
 Not happy with the repository unit tests. They test domain things because nothing is exposed
@@ -10,7 +10,6 @@ Feature: on level-up, user hit points are updated based on character class
 Epic: start adding race characteristics, broken out by race
 Epic: start adding class characteristics, broken out by class
 Feature: user can change character XP
-Cleanup: consolidate saving throw and character roll methods
 
 DONE:
 Feature: user skill check includes proficiency where applicable
@@ -21,3 +20,4 @@ Feature: roll for initiative uses the player's dexterity by default
 	Write a failing controller test
 	TDD roll parser
 	TDD domain character action
+Cleanup: refactor all character roll test classes to use a common base class for readability
