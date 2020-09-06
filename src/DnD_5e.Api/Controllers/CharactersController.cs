@@ -47,7 +47,7 @@ namespace DnD_5e.Api.Controllers
         }
 
         // GET api/<CharactersController>/5/roll/strength
-        [HttpGet("{id}/rollsave/{ability}")]
+        [HttpGet("{id}/roll/{ability}/save")]
         public async Task<ActionResult<int>> MakeSavingThrow(int id, string ability)
         {
             try

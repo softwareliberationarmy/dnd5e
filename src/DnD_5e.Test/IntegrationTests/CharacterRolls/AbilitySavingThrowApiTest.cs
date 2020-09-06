@@ -29,7 +29,7 @@ namespace DnD_5e.Test.IntegrationTests.CharacterRolls
 
             var client = _factory.CreateClient();
 
-            var response = await client.GetAsync("api/characters/1/rollsave/strength");
+            var response = await client.GetAsync("api/characters/1/roll/strength/save");
             var expectedModifier = 5;   //ability modifier + proficiency at 1st level (2)
             var minReturnValue = 1 + expectedModifier;
             var maxReturnValue = 20 + expectedModifier;
@@ -51,7 +51,7 @@ namespace DnD_5e.Test.IntegrationTests.CharacterRolls
 
             var client = _factory.CreateClient();
 
-            var response = await client.GetAsync("api/characters/1/rollsave/strength");
+            var response = await client.GetAsync("api/characters/1/roll/strength/save");
             var expectedModifier = 3;   //ability modifier + proficiency at 1st level (2)
             var minReturnValue = 1 + expectedModifier;
             var maxReturnValue = 20 + expectedModifier;
@@ -68,7 +68,7 @@ namespace DnD_5e.Test.IntegrationTests.CharacterRolls
 
             var client = _factory.CreateClient();
 
-            var response = await client.GetAsync("api/characters/1/rollsave/strength");
+            var response = await client.GetAsync("api/characters/1/roll/strength/save");
 
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
@@ -109,7 +109,7 @@ namespace DnD_5e.Test.IntegrationTests.CharacterRolls
 
             var client = _factory.CreateClient();
 
-            var response = await client.GetAsync($"api/characters/1/rollsave/{abilityToTest}");
+            var response = await client.GetAsync($"api/characters/1/roll/{abilityToTest}/save");
 
             var minReturnValue = 1 + expectedModifier;
             var maxReturnValue = 20 + expectedModifier;
@@ -136,7 +136,7 @@ namespace DnD_5e.Test.IntegrationTests.CharacterRolls
 
             var client = _factory.CreateClient();
 
-            var response = await client.GetAsync("api/characters/1/rollsave/excellence");
+            var response = await client.GetAsync("api/characters/1/roll/excellence/save");
 
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
@@ -154,7 +154,7 @@ namespace DnD_5e.Test.IntegrationTests.CharacterRolls
 
             var client = _factory.CreateClient();
 
-            var response = await client.GetAsync("api/characters/1/rollsave/constitution");
+            var response = await client.GetAsync("api/characters/1/roll/constitution/save");
             var expectedModifier = 6;   //ability modifier + proficiency at 5th level (3)
             var minReturnValue = 1 + expectedModifier;
             var maxReturnValue = 20 + expectedModifier;
