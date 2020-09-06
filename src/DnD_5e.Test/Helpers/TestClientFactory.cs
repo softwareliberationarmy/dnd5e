@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using DnD_5e.Infrastructure.DataAccess;
+using DnD_5e.Test.IntegrationTests.CharacterRolls;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -60,6 +61,11 @@ namespace DnD_5e.Test.Helpers
                 await context.Characters.AddRangeAsync(characters);
                 await context.SaveChangesAsync();
             }
+        }
+
+        public CharacterRollHelper CharacterRoll()
+        {
+            return new CharacterRollHelper(this);
         }
     }
 }

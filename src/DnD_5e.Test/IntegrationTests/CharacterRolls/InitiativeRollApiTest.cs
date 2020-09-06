@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Threading.Tasks;
 using DnD_5e.Infrastructure.DataAccess;
 using DnD_5e.Test.Helpers;
@@ -19,10 +20,12 @@ namespace DnD_5e.Test.IntegrationTests.CharacterRolls
         [Fact]
         public async Task Initiative_roll_uses_character_dexterity()
         {
-            await _clientFactory.SetupCharacters(new CharacterEntity
+            await _clientFactory.CharacterRoll().GivenACharacter(new CharacterEntity
             {
                 Id = 1, Dexterity = 14
-            });
+            })
+                .WhenIRollFor("initiative")
+                .ThenTheRollIs1d20Plus(2);
 
             var client = _clientFactory.CreateClient();
 
