@@ -20,57 +20,38 @@ namespace DnD_5e.Test.IntegrationTests.CharacterRolls
         [Fact]
         public async Task Makes_strength_saving_throw_with_proficiency()
         {
-            await _factory.SetupCharacters(new CharacterEntity
-            {
-                Id = 1,
-                Strength = 16,
-                StrengthSaveProficiency = true
-            });
-
-            var client = _factory.CreateClient();
-
-            var response = await client.GetAsync("api/characters/1/roll/strength/save");
-            var expectedModifier = 5;   //ability modifier + proficiency at 1st level (2)
-            var minReturnValue = 1 + expectedModifier;
-            var maxReturnValue = 20 + expectedModifier;
-
-            response.EnsureSuccessStatusCode();
-            var roll = JsonSerializer.Deserialize<int>(await response.Content.ReadAsStringAsync());
-            roll.Should().BeInRange(minReturnValue, maxReturnValue, "Expected strength saving throw to be within bounds");
+            await _factory.CharacterRoll()
+                .GivenACharacter(new CharacterEntity
+                {
+                    Id = 1,
+                    Strength = 16,
+                    StrengthSaveProficiency = true
+                })
+                .WhenIRollFor("strength/save")
+                .ThenTheRollIs1d20Plus(5);
         }
 
         [Fact]
         public async Task Makes_strength_saving_throw_without_proficiency()
         {
-            await _factory.SetupCharacters(new CharacterEntity
-            {
-                Id = 1,
-                Strength = 16,
-                StrengthSaveProficiency = false
-            });
-
-            var client = _factory.CreateClient();
-
-            var response = await client.GetAsync("api/characters/1/roll/strength/save");
-            var expectedModifier = 3;   //ability modifier + proficiency at 1st level (2)
-            var minReturnValue = 1 + expectedModifier;
-            var maxReturnValue = 20 + expectedModifier;
-
-            response.EnsureSuccessStatusCode();
-            var roll = JsonSerializer.Deserialize<int>(await response.Content.ReadAsStringAsync());
-            roll.Should().BeInRange(minReturnValue, maxReturnValue, "Expected strength saving throw to be within bounds");
+            await _factory.CharacterRoll()
+                .GivenACharacter(new CharacterEntity
+                {
+                    Id = 1,
+                    Strength = 16,
+                    StrengthSaveProficiency = false
+                })
+                .WhenIRollFor("strength/save")
+                .ThenTheRollIs1d20Plus(3);
         }
 
         [Fact]
         public async Task Returns_404_When_Character_Id_Not_Valid()
         {
-            await _factory.SetupCharacters();   //clears out all characters and inserts none
-
-            var client = _factory.CreateClient();
-
-            var response = await client.GetAsync("api/characters/1/roll/strength/save");
-
-            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+            await _factory.CharacterRoll()
+                .GivenNoCharacters()
+                .WhenIRollFor("strength/save")
+                .ThenTheApiReturnsNotFound();
         }
 
         [Theory]
@@ -90,78 +71,58 @@ namespace DnD_5e.Test.IntegrationTests.CharacterRolls
             int constitution, int intelligence, int wisdom, int charisma,
             string abilityToTest, bool hasProficiency, int expectedModifier)
         {
-            await _factory.SetupCharacters(new CharacterEntity
-            {
-                Id = 1,
-                Strength = strength,
-                Dexterity = dexterity,
-                Constitution = constitution,
-                Intelligence = intelligence,
-                Wisdom = wisdom,
-                Charisma = charisma,
-                StrengthSaveProficiency = hasProficiency,
-                DexteritySaveProficiency = hasProficiency,
-                ConstitutionSaveProficiency = hasProficiency,
-                IntelligenceSaveProficiency = hasProficiency,
-                WisdomSaveProficiency = hasProficiency,
-                CharismaSaveProficiency = hasProficiency
-            });
-
-            var client = _factory.CreateClient();
-
-            var response = await client.GetAsync($"api/characters/1/roll/{abilityToTest}/save");
-
-            var minReturnValue = 1 + expectedModifier;
-            var maxReturnValue = 20 + expectedModifier;
-
-            response.EnsureSuccessStatusCode();
-            var roll = JsonSerializer.Deserialize<int>(await response.Content.ReadAsStringAsync());
-            roll.Should().BeInRange(minReturnValue, maxReturnValue,
-                $"{abilityToTest} saving roll must be within the expected bounds");
+            await _factory.CharacterRoll()
+                .GivenACharacter(new CharacterEntity
+                {
+                    Id = 1,
+                    Strength = strength,
+                    Dexterity = dexterity,
+                    Constitution = constitution,
+                    Intelligence = intelligence,
+                    Wisdom = wisdom,
+                    Charisma = charisma,
+                    StrengthSaveProficiency = hasProficiency,
+                    DexteritySaveProficiency = hasProficiency,
+                    ConstitutionSaveProficiency = hasProficiency,
+                    IntelligenceSaveProficiency = hasProficiency,
+                    WisdomSaveProficiency = hasProficiency,
+                    CharismaSaveProficiency = hasProficiency
+                })
+                .WhenIRollFor($"{abilityToTest}/save")
+                .ThenTheRollIs1d20Plus(expectedModifier);
         }
 
         [Fact]
         public async Task Returns_404_for_invalid_ability_name()
         {
-            await _factory.SetupCharacters(new CharacterEntity
-            {
-                Id = 1,
-                Strength = 15,
-                Dexterity = 15,
-                Constitution = 15,
-                Intelligence = 15,
-                Wisdom = 15,
-                Charisma = 15
-            });
-
-            var client = _factory.CreateClient();
-
-            var response = await client.GetAsync("api/characters/1/roll/excellence/save");
-
-            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+            await _factory.CharacterRoll()
+                .GivenACharacter(new CharacterEntity
+                {
+                    Id = 1,
+                    Strength = 15,
+                    Dexterity = 15,
+                    Constitution = 15,
+                    Intelligence = 15,
+                    Wisdom = 15,
+                    Charisma = 15
+                })
+                .WhenIRollFor("excellence/save")
+                .ThenTheApiReturnsNotFound();
         }
 
         [Fact]
         public async Task Proficiency_modifier_changes_with_character_level()
         {
-            await _factory.SetupCharacters(new CharacterEntity
-            {
-                Id = 1,
-                Constitution = 16,
-                ConstitutionSaveProficiency = true,
-                ExperiencePoints = 6500
-            });
-
-            var client = _factory.CreateClient();
-
-            var response = await client.GetAsync("api/characters/1/roll/constitution/save");
-            var expectedModifier = 6;   //ability modifier + proficiency at 5th level (3)
-            var minReturnValue = 1 + expectedModifier;
-            var maxReturnValue = 20 + expectedModifier;
-
-            response.EnsureSuccessStatusCode();
-            var roll = JsonSerializer.Deserialize<int>(await response.Content.ReadAsStringAsync());
-            roll.Should().BeInRange(minReturnValue, maxReturnValue, "Expected constitution saving throw to be within bounds");
+            await _factory.CharacterRoll()
+                .GivenACharacter(new CharacterEntity
+                {
+                    Id = 1,
+                    Constitution = 16,
+                    ConstitutionSaveProficiency = true,
+                    ExperiencePoints = 6500
+                })
+                .WhenIRollFor("constitution/save")
+                .ThenTheRollIs1d20Plus(6);
         }
     }
 }
