@@ -1,5 +1,4 @@
 TODO:
-Cleanup: consolidate saving throw and character roll methods
 Review architecture so far and check for cohesiveness
 Cleanup: Character ctor has too many arguments (consolidate abilities?)
 Not happy with the repository unit tests. They test domain things because nothing is exposed
@@ -12,12 +11,13 @@ Epic: start adding class characteristics, broken out by class
 Feature: user can change character XP
 
 DONE:
-Feature: user skill check includes proficiency where applicable
-	TDD Add skill proficiency roll creation to Character 
-	TDD Add skill proficiency mapping logic to CharacterRepository
-Feature: user proficiency changes with user level/XP
+Cleanup: consolidate saving throw and character roll methods
+Cleanup: refactor all character roll test classes to use a common base class for readability
 Feature: roll for initiative uses the player's dexterity by default
 	Write a failing controller test
 	TDD roll parser
 	TDD domain character action
-Cleanup: refactor all character roll test classes to use a common base class for readability
+Feature: user proficiency changes with user level/XP
+Feature: user skill check includes proficiency where applicable
+	TDD Add skill proficiency roll creation to Character 
+	TDD Add skill proficiency mapping logic to CharacterRepository
