@@ -40,12 +40,12 @@ namespace DnD_5e.Api.Controllers
         }
 
         // GET api/<RollController>/1d20
-        [HttpGet("{rollRequest}/{rollFlavor}")]
-        public async Task<ActionResult<RollResponse>> RollWith(string rollRequest, string rollFlavor = "")
+        [HttpGet("{rollRequest}/{rollWith}")]
+        public async Task<ActionResult<RollResponse>> RollWith(string rollRequest, string rollWith = "")
         {
             try
             {
-                switch (rollFlavor.ToLower())
+                switch (rollWith.ToLower())
                 {
                     case "advantage":
                         return await _roller.RollWithAdvantage(rollRequest);
