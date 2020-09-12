@@ -40,26 +40,20 @@ namespace DnD_5e.Api.Controllers
         }
 
         // GET api/<RollController>/1d20
-        [HttpGet("{rollRequest}/advantage")]
-        public async Task<ActionResult<RollResponse>> RollWithAdvantage(string rollRequest)
+        [HttpGet("{rollRequest}/{rollFlavor}")]
+        public async Task<ActionResult<RollResponse>> RollWith(string rollRequest, string rollFlavor = "")
         {
             try
             {
-                return await _roller.RollWithAdvantage(rollRequest);
-            }
-            catch (FormatException)
-            {
-                return BadRequest();
-            }
-        }
-
-        // GET api/<RollController>/1d20
-        [HttpGet("{rollRequest}/disadvantage")]
-        public async Task<ActionResult<RollResponse>> RollWithDisadvantage(string rollRequest)
-        {
-            try
-            {
-                return await _roller.RollWithDisadvantage(rollRequest);
+                switch (rollFlavor.ToLower())
+                {
+                    case "advantage":
+                        return await _roller.RollWithAdvantage(rollRequest);
+                    case "disadvantage":
+                        return await _roller.RollWithDisadvantage(rollRequest);
+                    default:
+                        return BadRequest();
+                }
             }
             catch (FormatException)
             {

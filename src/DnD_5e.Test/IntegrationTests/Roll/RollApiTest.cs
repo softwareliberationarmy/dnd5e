@@ -88,5 +88,16 @@ namespace DnD_5e.Test.IntegrationTests.Roll
                 rollResponse.Result.Should().BeLessOrEqualTo(roll);
             }
         }
+
+        [Fact]
+        public async Task RollWithUnknownFlavorReturnsBadRequest()
+        {
+            var client = _factory.CreateClient();
+
+            var response = await client.GetAsync($"api/roll/1d20/blindfolded");
+
+            response.IsSuccessStatusCode.Should().BeFalse();
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
     }
 }
