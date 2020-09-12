@@ -63,9 +63,7 @@ namespace DnD_5e.Test.IntegrationTests.Roll
             var response = await client.GetAsync($"api/roll/1d20/advantage");
 
             response.EnsureSuccessStatusCode();
-            var readAsStringAsync = await response.Content.ReadAsStringAsync();
-            var rollResponse = (TestRollResponse)JsonSerializer.Deserialize(readAsStringAsync, typeof(TestRollResponse),
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            var rollResponse = TestRollResponse.FromJson(await response.Content.ReadAsStringAsync());
             rollResponse.Rolls.Length.Should().Be(2);
             rollResponse.Rolls.Should().Contain(rollResponse.Result);
             foreach (var roll in rollResponse.Rolls)
@@ -82,9 +80,7 @@ namespace DnD_5e.Test.IntegrationTests.Roll
             var response = await client.GetAsync($"api/roll/1d20/disadvantage");
 
             response.EnsureSuccessStatusCode();
-            var readAsStringAsync = await response.Content.ReadAsStringAsync();
-            var rollResponse = (TestRollResponse)JsonSerializer.Deserialize(readAsStringAsync, typeof(TestRollResponse),
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            var rollResponse = TestRollResponse.FromJson(await response.Content.ReadAsStringAsync());
             rollResponse.Rolls.Length.Should().Be(2);
             rollResponse.Rolls.Should().Contain(rollResponse.Result);
             foreach (var roll in rollResponse.Rolls)
@@ -92,11 +88,5 @@ namespace DnD_5e.Test.IntegrationTests.Roll
                 rollResponse.Result.Should().BeLessOrEqualTo(roll);
             }
         }
-    }
-
-    public class TestRollResponse
-    {
-        public int Result { get; set; }
-        public int[] Rolls { get; set; }
     }
 }
