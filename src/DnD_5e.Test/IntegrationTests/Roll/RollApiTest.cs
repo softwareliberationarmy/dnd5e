@@ -8,7 +8,7 @@ using Xunit;
 namespace DnD_5e.Test.IntegrationTests.Roll
 {
 
-    public class RollApiTest: IClassFixture<TestClientFactory>
+    public class RollApiTest : IClassFixture<TestClientFactory>
     {
         private readonly TestClientFactory _factory;
 
@@ -54,5 +54,49 @@ namespace DnD_5e.Test.IntegrationTests.Roll
             response.IsSuccessStatusCode.Should().BeFalse();
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
+
+        [Fact]
+        public async Task RollWithAdvantageReturnsGreaterOfTwoRolls()
+        {
+            var client = _factory.CreateClient();
+
+            var response = await client.GetAsync($"api/roll/1d20/advantage");
+
+            response.EnsureSuccessStatusCode();
+            var readAsStringAsync = await response.Content.ReadAsStringAsync();
+            var rollResponse = (TestRollResponse)JsonSerializer.Deserialize(readAsStringAsync, typeof(TestRollResponse),
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            rollResponse.Rolls.Length.Should().Be(2);
+            rollResponse.Rolls.Should().Contain(rollResponse.Result);
+            foreach (var roll in rollResponse.Rolls)
+            {
+                rollResponse.Result.Should().BeGreaterOrEqualTo(roll);
+            }
+        }
+
+        [Fact]
+        public async Task RollWithDisadvantageReturnsLesserOfTwoRolls()
+        {
+            var client = _factory.CreateClient();
+
+            var response = await client.GetAsync($"api/roll/1d20/disadvantage");
+
+            response.EnsureSuccessStatusCode();
+            var readAsStringAsync = await response.Content.ReadAsStringAsync();
+            var rollResponse = (TestRollResponse)JsonSerializer.Deserialize(readAsStringAsync, typeof(TestRollResponse),
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            rollResponse.Rolls.Length.Should().Be(2);
+            rollResponse.Rolls.Should().Contain(rollResponse.Result);
+            foreach (var roll in rollResponse.Rolls)
+            {
+                rollResponse.Result.Should().BeLessOrEqualTo(roll);
+            }
+        }
+    }
+
+    public class TestRollResponse
+    {
+        public int Result { get; set; }
+        public int[] Rolls { get; set; }
     }
 }

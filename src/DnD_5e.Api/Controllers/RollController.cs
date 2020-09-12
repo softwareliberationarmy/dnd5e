@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using DnD_5e.Domain.Common;
 using DnD_5e.Domain.DiceRolls;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,6 +32,34 @@ namespace DnD_5e.Api.Controllers
             try
             {
                 return await _roller.Roll(rollRequest);
+            }
+            catch (FormatException)
+            {
+                return BadRequest();
+            }
+        }
+
+        // GET api/<RollController>/1d20
+        [HttpGet("{rollRequest}/advantage")]
+        public async Task<ActionResult<RollResponse>> RollWithAdvantage(string rollRequest)
+        {
+            try
+            {
+                return await _roller.RollWithAdvantage(rollRequest);
+            }
+            catch (FormatException)
+            {
+                return BadRequest();
+            }
+        }
+
+        // GET api/<RollController>/1d20
+        [HttpGet("{rollRequest}/disadvantage")]
+        public async Task<ActionResult<RollResponse>> RollWithDisadvantage(string rollRequest)
+        {
+            try
+            {
+                return await _roller.RollWithDisadvantage(rollRequest);
             }
             catch (FormatException)
             {

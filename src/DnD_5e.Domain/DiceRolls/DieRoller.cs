@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+using DnD_5e.Domain.Common;
 
 namespace DnD_5e.Domain.DiceRolls
 {
@@ -61,6 +63,36 @@ namespace DnD_5e.Domain.DiceRolls
             }
 
             throw new FormatException("Unable to parse roll request");
+        }
+
+        public async Task<RollResponse> RollWithAdvantage(string rollRequest)
+        {
+            var result = new RollResponse();
+            var parsedRequest = await Parse(rollRequest);
+
+            result.Rolls = new[]
+            {
+                await ProcessRoll(parsedRequest),
+                await ProcessRoll(parsedRequest)
+            };
+            result.Result = result.Rolls.Max();
+
+            return result;
+        }
+
+        public async Task<RollResponse> RollWithDisadvantage(string rollRequest)
+        {
+            var result = new RollResponse();
+            var parsedRequest = await Parse(rollRequest);
+
+            result.Rolls = new[]
+            {
+                await ProcessRoll(parsedRequest),
+                await ProcessRoll(parsedRequest)
+            };
+            result.Result = result.Rolls.Min();
+
+            return result;
         }
     }
 }
