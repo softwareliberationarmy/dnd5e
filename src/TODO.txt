@@ -1,4 +1,5 @@
 TODO:
+Feature: roll with advantage/disadvantage
 Review architecture so far and check for cohesiveness
 Cleanup: Character ctor has too many arguments (consolidate abilities?)
 Cleanup: Not happy with the repository unit tests. They test domain things because nothing is exposed
