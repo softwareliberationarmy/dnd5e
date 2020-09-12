@@ -9,15 +9,21 @@ namespace DnD_5e.Domain.DiceRolls
     {
         private static readonly Random _random = new Random();
 
-        public async Task<RollResponse> Roll(string requestString)
+        public async Task<RollResponse> Roll(string requestString, With? rollType = null)
         {
             var result = new RollResponse();
             var parsedRequest = await Parse(requestString);
-            result.Rolls = new[]
+            result.Rolls = rollType == null ? 
+                new[] { await ProcessRoll(parsedRequest) } : 
+                new[] { await ProcessRoll(parsedRequest), await ProcessRoll(parsedRequest) };
+            if (rollType == null)
             {
-                await ProcessRoll(parsedRequest)
-            };
-            result.Result = result.Rolls.Single();
+                result.Result = result.Rolls.Single();
+            }
+            else
+            {
+                result.Result = rollType == With.Advantage ? result.Rolls.Max() : result.Rolls.Min();
+            }
             return result;
         }
 
@@ -43,8 +49,8 @@ namespace DnD_5e.Domain.DiceRolls
                 if (firstSplit[1].Contains("+"))
                 {
                     var secondSplit = firstSplit[1].Split('+');
-                    if (secondSplit.Length == 2 
-                        && int.TryParse(secondSplit[0].Trim(), out sides) 
+                    if (secondSplit.Length == 2
+                        && int.TryParse(secondSplit[0].Trim(), out sides)
                         && int.TryParse(secondSplit[1].Trim(), out modifier))
                     {
                         return new DiceRollRequest(qty, sides, modifier);
@@ -62,28 +68,13 @@ namespace DnD_5e.Domain.DiceRolls
                     }
 
                 }
-                else if(int.TryParse(firstSplit[1].Trim(), out sides))
+                else if (int.TryParse(firstSplit[1].Trim(), out sides))
                 {
                     return await Task.FromResult(new DiceRollRequest(qty, sides, modifier));
                 }
             }
 
             throw new FormatException("Unable to parse roll request");
-        }
-
-        public async Task<RollResponse> RollWith(string rollRequest, With with)
-        {
-            var result = new RollResponse();
-            var parsedRequest = await Parse(rollRequest);
-
-            result.Rolls = new[]
-            {
-                await ProcessRoll(parsedRequest),
-                await ProcessRoll(parsedRequest)
-            };
-            result.Result = with == With.Advantage ? result.Rolls.Max() : result.Rolls.Min();
-
-            return result;
         }
     }
 }

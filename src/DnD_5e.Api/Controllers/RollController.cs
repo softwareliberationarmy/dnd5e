@@ -48,9 +48,9 @@ namespace DnD_5e.Api.Controllers
                 switch (rollWith.ToLower())
                 {
                     case "advantage":
-                        return await _roller.RollWith(rollRequest, With.Advantage);
+                        return await _roller.Roll(rollRequest, With.Advantage);
                     case "disadvantage":
-                        return await _roller.RollWith(rollRequest, With.Disadvantage);
+                        return await _roller.Roll(rollRequest, With.Disadvantage);
                     default:
                         return BadRequest();
                 }
