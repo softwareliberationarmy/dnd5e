@@ -65,7 +65,7 @@ namespace DnD_5e.Domain.DiceRolls
             throw new FormatException("Unable to parse roll request");
         }
 
-        public async Task<RollResponse> RollWithAdvantage(string rollRequest)
+        public async Task<RollResponse> RollWith(string rollRequest, With with)
         {
             var result = new RollResponse();
             var parsedRequest = await Parse(rollRequest);
@@ -75,22 +75,7 @@ namespace DnD_5e.Domain.DiceRolls
                 await ProcessRoll(parsedRequest),
                 await ProcessRoll(parsedRequest)
             };
-            result.Result = result.Rolls.Max();
-
-            return result;
-        }
-
-        public async Task<RollResponse> RollWithDisadvantage(string rollRequest)
-        {
-            var result = new RollResponse();
-            var parsedRequest = await Parse(rollRequest);
-
-            result.Rolls = new[]
-            {
-                await ProcessRoll(parsedRequest),
-                await ProcessRoll(parsedRequest)
-            };
-            result.Result = result.Rolls.Min();
+            result.Result = with == With.Advantage ? result.Rolls.Max() : result.Rolls.Min();
 
             return result;
         }
