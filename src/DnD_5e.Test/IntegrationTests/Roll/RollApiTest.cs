@@ -90,7 +90,7 @@ namespace DnD_5e.Test.IntegrationTests.Roll
         }
 
         [Fact]
-        public async Task RollWithUnknownFlavorReturnsBadRequest()
+        public async Task RollWithUnknownRollTypeReturnsBadRequest()
         {
             var client = _factory.CreateClient();
 
