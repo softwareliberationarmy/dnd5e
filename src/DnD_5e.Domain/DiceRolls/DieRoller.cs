@@ -9,10 +9,16 @@ namespace DnD_5e.Domain.DiceRolls
     {
         private static readonly Random _random = new Random();
 
-        public async Task<int> Roll(string requestString)
+        public async Task<RollResponse> Roll(string requestString)
         {
+            var result = new RollResponse();
             var parsedRequest = await Parse(requestString);
-            return await ProcessRoll(parsedRequest);
+            result.Rolls = new[]
+            {
+                await ProcessRoll(parsedRequest)
+            };
+            result.Result = result.Rolls.Single();
+            return result;
         }
 
         private async Task<int> ProcessRoll(DiceRollRequest parsedRequest)

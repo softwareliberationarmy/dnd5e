@@ -28,8 +28,10 @@ namespace DnD_5e.Test.IntegrationTests.Roll
             var response = await client.GetAsync($"api/roll/{input}");
 
             response.EnsureSuccessStatusCode();
-            var roll = JsonSerializer.Deserialize<int>(await response.Content.ReadAsStringAsync());
-            roll.Should().BeInRange(minReturnValue, maxReturnValue);
+            var roll = TestRollResponse.FromJson(await response.Content.ReadAsStringAsync());
+            roll.Result.Should().BeInRange(minReturnValue, maxReturnValue);
+            roll.Rolls.Length.Should().Be(1);
+            roll.Rolls[0].Should().Be(roll.Result);
         }
 
         [Fact]
@@ -40,8 +42,10 @@ namespace DnD_5e.Test.IntegrationTests.Roll
             var response = await client.GetAsync("api/roll");
 
             response.EnsureSuccessStatusCode();
-            var roll = JsonSerializer.Deserialize<int>(await response.Content.ReadAsStringAsync());
-            roll.Should().BeInRange(1, 20);
+            var roll = TestRollResponse.FromJson(await response.Content.ReadAsStringAsync());
+            roll.Rolls.Length.Should().Be(1);
+            roll.Rolls[0].Should().Be(roll.Result);
+            roll.Result.Should().BeInRange(1, 20);
         }
 
         [Fact]

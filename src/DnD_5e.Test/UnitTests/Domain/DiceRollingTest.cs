@@ -26,7 +26,7 @@ namespace DnD_5e.Test.UnitTests.Domain
         public async Task Dice_Roll_Falls_In_Range(string diceRollRequest, int minValue, int maxValue)
         {
             var target = new DieRoller();
-            var roll = await target.Roll(diceRollRequest);
+            var roll = (await target.Roll(diceRollRequest)).Result;
             _testOutputHelper.WriteLine($"Rolls a {roll}");
             roll.Should().BeInRange(minValue, maxValue, "Roll must fall within expected roll range");
         }
@@ -38,7 +38,7 @@ namespace DnD_5e.Test.UnitTests.Domain
             var target = new DieRoller();
             for (int i = 0; i < 100; i++)
             {
-                var roll = await target.Roll("1d20");
+                var roll = (await target.Roll("1d20")).Result;
                 if (results.ContainsKey(roll))
                 {
                     results[roll]++;

@@ -38,7 +38,7 @@ namespace DnD_5e.Api.Controllers
                     return NotFound();
                 }
                 var roll = character.GetRoll(request);
-                return await _roller.Roll(roll);
+                return (await _roller.Roll(roll)).Result;
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -61,7 +61,7 @@ namespace DnD_5e.Api.Controllers
                 }
                 var roll = character.GetRoll(request);
 
-                return await _roller.Roll(roll);
+                return (await _roller.Roll(roll)).Result;
             }
             catch (ArgumentOutOfRangeException)
             {
