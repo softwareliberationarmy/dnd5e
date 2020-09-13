@@ -48,8 +48,8 @@ namespace DnD_5e.Test.Helpers
             var maxReturnValue = 20 + expectedModifier;
 
             response.EnsureSuccessStatusCode();
-            var roll = JsonSerializer.Deserialize<int>(await response.Content.ReadAsStringAsync());
-            roll.Should().BeInRange(minReturnValue, maxReturnValue, $"Expected {_rollType} roll to be within expected bounds");
+            var roll = TestRollResponse.FromJson(await response.Content.ReadAsStringAsync());
+            roll.Result.Should().BeInRange(minReturnValue, maxReturnValue, $"Expected {_rollType} roll to be within expected bounds");
         }
 
         public async Task ThenTheApiReturnsNotFound()

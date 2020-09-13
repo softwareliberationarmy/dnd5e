@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using DnD_5e.Api.Services;
+using DnD_5e.Domain.Common;
 using DnD_5e.Domain.DiceRolls;
 using DnD_5e.Infrastructure.DataAccess;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace DnD_5e.Api.Controllers
 {
@@ -26,7 +25,7 @@ namespace DnD_5e.Api.Controllers
 
         // GET api/<CharactersController>/5/roll/strength
         [HttpGet("{id}/roll/{rollType}")]
-        public async Task<ActionResult<int>> MakeCharacterRoll(int id, string rollType)
+        public async Task<ActionResult<RollResponse>> MakeCharacterRoll(int id, string rollType)
         {
             try
             {
@@ -38,7 +37,7 @@ namespace DnD_5e.Api.Controllers
                     return NotFound();
                 }
                 var roll = character.GetRoll(request);
-                return (await _roller.Roll(roll)).Result;
+                return await _roller.Roll(roll);
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -48,7 +47,7 @@ namespace DnD_5e.Api.Controllers
 
         // GET api/<CharactersController>/5/roll/strength
         [HttpGet("{id}/roll/{ability}/save")]
-        public async Task<ActionResult<int>> MakeSavingThrow(int id, string ability)
+        public async Task<ActionResult<RollResponse>> MakeSavingThrow(int id, string ability)
         {
             try
             {
@@ -61,27 +60,13 @@ namespace DnD_5e.Api.Controllers
                 }
                 var roll = character.GetRoll(request);
 
-                return (await _roller.Roll(roll)).Result;
+                return await _roller.Roll(roll);
             }
             catch (ArgumentOutOfRangeException)
             {
                 return NotFound($"Ability {ability} not found");
             }
         }
-
-        //// GET: api/<CharactersController>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        //// GET api/<CharactersController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
 
         //// POST api/<CharactersController>
         //[HttpPost]

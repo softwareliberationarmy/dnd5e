@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Net.Mime;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading.Tasks;
 using DnD_5e.Infrastructure.DataAccess;
@@ -36,8 +37,8 @@ namespace DnD_5e.Test.IntegrationTests.CharacterRolls
             var maxReturnValue = 20 + expectedModifier;
 
             response.EnsureSuccessStatusCode();
-            var roll = JsonSerializer.Deserialize<int>(await response.Content.ReadAsStringAsync());
-            roll.Should().BeInRange(minReturnValue, maxReturnValue, "Expected initiative roll to use player's dexterity");
+            var roll = TestRollResponse.FromJson(await response.Content.ReadAsStringAsync());
+            roll.Result.Should().BeInRange(minReturnValue, maxReturnValue, "Expected initiative roll to use player's dexterity");
         }
     }
 }
