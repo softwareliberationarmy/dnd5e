@@ -1,5 +1,4 @@
 TODO:
-Refactor: make roll response responsible for setting result and rolls?
 Review architecture so far and check for cohesiveness
 Cleanup: Character ctor has too many arguments (consolidate abilities?)
 Cleanup: Not happy with the repository unit tests. They test domain things because nothing is exposed
@@ -23,3 +22,4 @@ Feature: user skill check includes proficiency where applicable
 	TDD Add skill proficiency roll creation to Character 
 	TDD Add skill proficiency mapping logic to CharacterRepository
 Feature: roll with advantage/disadvantage
+Refactor: make roll response responsible for setting result and rolls?
