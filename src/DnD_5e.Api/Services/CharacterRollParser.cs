@@ -3,7 +3,7 @@ using DnD_5e.Domain.CharacterRolls;
 
 namespace DnD_5e.Api.Services
 {
-    public class RollTypeParser
+    public class CharacterRollParser
     {
         public CharacterRollRequest ParseRequest(string input, bool isSave = false)
         {

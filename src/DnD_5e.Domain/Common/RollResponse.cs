@@ -17,6 +17,7 @@ namespace DnD_5e.Domain.Common
         }
 
         public int Result { get; }
+        // ReSharper disable once MemberCanBePrivate.Global
         public int[] Rolls { get; }
     }
 }

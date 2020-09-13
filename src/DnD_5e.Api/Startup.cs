@@ -24,7 +24,7 @@ namespace DnD_5e.Api
         {
             services.AddControllers();
             services.AddSingleton<DieRoller>();
-            services.AddSingleton<RollTypeParser>();
+            services.AddSingleton<CharacterRollParser>();
             services.AddScoped<CharacterRepository>();
             services.AddDbContext<CharacterDbContext>(options => { options.UseInMemoryDatabase("DnD"); });
         }

@@ -14,9 +14,9 @@ namespace DnD_5e.Api.Controllers
     {
         private readonly CharacterRepository _repository;
         private readonly DieRoller _roller;
-        private readonly RollTypeParser _rollParser;
+        private readonly CharacterRollParser _rollParser;
 
-        public CharactersController(CharacterRepository repository, DieRoller roller, RollTypeParser rollParser)
+        public CharactersController(CharacterRepository repository, DieRoller roller, CharacterRollParser rollParser)
         {
             _repository = repository;
             _roller = roller;

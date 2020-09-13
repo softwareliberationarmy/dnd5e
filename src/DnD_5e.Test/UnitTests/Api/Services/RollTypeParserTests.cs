@@ -8,7 +8,7 @@ namespace DnD_5e.Test.UnitTests.Api.Services
 {
     public class RollTypeParserTests
     {
-        private RollTypeParser _target = new RollTypeParser();
+        private CharacterRollParser _target = new CharacterRollParser();
 
         [Theory]
         [InlineData("strength", Ability.Type.Strength)]
