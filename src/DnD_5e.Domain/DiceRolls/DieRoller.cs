@@ -11,23 +11,20 @@ namespace DnD_5e.Domain.DiceRolls
 
         public async Task<RollResponse> Roll(string requestString, With? rollType = null)
         {
-            var result = new RollResponse();
-            var parsedRequest = await Parse(requestString);
-            result.Rolls = rollType == null ? 
-                new[] { await ProcessRoll(parsedRequest) } : 
-                new[] { await ProcessRoll(parsedRequest), await ProcessRoll(parsedRequest) };
+            var parsedRequest = await ParseRollRequest(requestString);
             if (rollType == null)
             {
-                result.Result = result.Rolls.Single();
+                return new RollResponse(await RollDice(parsedRequest));
             }
             else
             {
-                result.Result = rollType == With.Advantage ? result.Rolls.Max() : result.Rolls.Min();
+                var result = new RollResponse(rollType.Value, await RollDice(parsedRequest),
+                    await RollDice(parsedRequest));
+                return result;
             }
-            return result;
         }
 
-        private async Task<int> ProcessRoll(DiceRollRequest parsedRequest)
+        private async Task<int> RollDice(DiceRollRequest parsedRequest)
         {
             int result = parsedRequest.Modifier;
             for (int i = 0; i < parsedRequest.Quantity; i++)
@@ -38,7 +35,7 @@ namespace DnD_5e.Domain.DiceRolls
             return await Task.FromResult(result);
         }
 
-        private async Task<DiceRollRequest> Parse(string requestString)
+        private async Task<DiceRollRequest> ParseRollRequest(string requestString)
         {
             int modifier = 0;
 

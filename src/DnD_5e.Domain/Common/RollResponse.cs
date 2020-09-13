@@ -1,8 +1,22 @@
-﻿namespace DnD_5e.Domain.Common
+﻿using System.Linq;
+
+namespace DnD_5e.Domain.Common
 {
     public class RollResponse
     {
-        public int Result { get; set; }
-        public int[] Rolls { get; set; }
+        public RollResponse(int roll)
+        {
+            Result = roll;
+            Rolls = new[] {roll};
+        }
+
+        public RollResponse(With rollType, int firstRoll, int secondRoll)
+        {
+            Rolls = new[] {firstRoll, secondRoll};
+            Result = rollType == With.Advantage ? Rolls.Max() : Rolls.Min();
+        }
+
+        public int Result { get; }
+        public int[] Rolls { get; }
     }
 }
