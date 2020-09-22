@@ -1,4 +1,10 @@
 TODO:
+Add simple react website 
++ is a reserved character for URLs
+	- add IIS Express exception for this?
+	- change it to a POST and pass as message body
+	- change the character to something else (2d4p2)
+	- make it a query argument instead 
 Review architecture so far and check for cohesiveness
 Cleanup: Character ctor has too many arguments (consolidate abilities?)
 Cleanup: Not happy with the repository unit tests. They test domain things because nothing is exposed

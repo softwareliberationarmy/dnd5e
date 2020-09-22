@@ -4,7 +4,7 @@
 ## Rolling Dice
 `GET` `/api/roll` - rolls a 1d20 and returns the result
 
-`GET` `/api/roll/2d20+5` - rolls the requested dice and returns the integer result. Supports multiples of a die (e.g. 2d6) and modifiers. Rolling with advantage or disadvantage is not currently supported.
+`GET` `/api/roll/2d20+5` - rolls the requested dice and returns the result. Supports multiples of a die (e.g. 2d6) and modifiers. Rolling with advantage or disadvantage is supported (append "/advantage" or "/disadvantage" to your request.
 
 ---
 ## Character Maintenance
