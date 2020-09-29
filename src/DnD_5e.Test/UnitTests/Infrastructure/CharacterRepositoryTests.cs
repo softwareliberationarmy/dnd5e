@@ -48,7 +48,7 @@ namespace DnD_5e.Test.UnitTests.Infrastructure
 
                 var character = await repo.GetById(characterId);
                 character.GetRoll(new CharacterRollRequest(Ability.Type.Strength, true))
-                    .Should().Be("1d20+5");
+                    .Should().Be("1d20p5");
             }
         }
 
@@ -82,7 +82,7 @@ namespace DnD_5e.Test.UnitTests.Infrastructure
 
                 var character = await repo.GetById(characterId);
                 character.GetRoll(new CharacterRollRequest(Skill.Type.Athletics, Ability.Type.Strength))
-                    .Should().Be("1d20+4");
+                    .Should().Be("1d20p4");
             }
         }
 
@@ -111,7 +111,7 @@ namespace DnD_5e.Test.UnitTests.Infrastructure
 
                 var character = await repo.GetById(characterId);
                 character.GetRoll(new CharacterRollRequest(Ability.Type.Wisdom, true))
-                    .Should().Be("1d20+6");
+                    .Should().Be("1d20p6");
             }
         }
 

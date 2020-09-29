@@ -20,7 +20,8 @@ namespace DnD_5e.Test.IntegrationTests.Roll
         [Theory]
         [InlineData("1d20", 1, 20)]
         [InlineData("2d20", 2, 40)]
-        [InlineData("1d4+8", 9, 12)]
+        [InlineData("1d4p8", 9, 12)]
+        [InlineData("1d4m1", 0, 3)]
         public async Task GetReturnsRandomDiceRoll(string input, int minReturnValue, int maxReturnValue)
         {
             var client = _factory.CreateClient();

@@ -12,14 +12,14 @@ namespace DnD_5e.Test.UnitTests.Domain
             [Theory]
             [InlineData(10, "1d20")]
             [InlineData(11, "1d20")]
-            [InlineData(12, "1d20+1")]
-            [InlineData(13, "1d20+1")]
-            [InlineData(14, "1d20+2")]
-            [InlineData(15, "1d20+2")]
-            [InlineData(16, "1d20+3")]
-            [InlineData(17, "1d20+3")]
-            [InlineData(18, "1d20+4")]
-            [InlineData(19, "1d20+4")]
+            [InlineData(12, "1d20p1")]
+            [InlineData(13, "1d20p1")]
+            [InlineData(14, "1d20p2")]
+            [InlineData(15, "1d20p2")]
+            [InlineData(16, "1d20p3")]
+            [InlineData(17, "1d20p3")]
+            [InlineData(18, "1d20p4")]
+            [InlineData(19, "1d20p4")]
             public void Returns_ability_check_roll_based_on_score(int score, string expectedRoll)
             {
                 var target = new Character(new Ability(score, false),
@@ -31,11 +31,11 @@ namespace DnD_5e.Test.UnitTests.Domain
 
             [Theory]
             [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Strength, "1d20")]
-            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Dexterity, "1d20+1")]
-            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Constitution, "1d20+2")]
-            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Intelligence, "1d20+3")]
-            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Wisdom, "1d20+4")]
-            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Charisma, "1d20+5")]
+            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Dexterity, "1d20p1")]
+            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Constitution, "1d20p2")]
+            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Intelligence, "1d20p3")]
+            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Wisdom, "1d20p4")]
+            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Charisma, "1d20p5")]
             public void Checks_the_correct_ability_score(int strength, int dexterity,
                 int constitution, int intelligence, int wisdom, int charisma,
                 Ability.Type requestedAbility, string expectedRoll)
@@ -57,25 +57,25 @@ namespace DnD_5e.Test.UnitTests.Domain
         {
             [Theory]
             [InlineData(10, false, "1d20")]
-            [InlineData(10, true, "1d20+2")]
+            [InlineData(10, true, "1d20p2")]
             [InlineData(11, false, "1d20")]
-            [InlineData(11, true, "1d20+2")]
-            [InlineData(12, false, "1d20+1")]
-            [InlineData(12, true, "1d20+3")]
-            [InlineData(13, false, "1d20+1")]
-            [InlineData(13, true, "1d20+3")]
-            [InlineData(14, false, "1d20+2")]
-            [InlineData(14, true, "1d20+4")]
-            [InlineData(15, false, "1d20+2")]
-            [InlineData(15, true, "1d20+4")]
-            [InlineData(16, false, "1d20+3")]
-            [InlineData(16, true, "1d20+5")]
-            [InlineData(17, false, "1d20+3")]
-            [InlineData(17, true, "1d20+5")]
-            [InlineData(18, false, "1d20+4")]
-            [InlineData(18, true, "1d20+6")]
-            [InlineData(19, false, "1d20+4")]
-            [InlineData(19, true, "1d20+6")]
+            [InlineData(11, true, "1d20p2")]
+            [InlineData(12, false, "1d20p1")]
+            [InlineData(12, true, "1d20p3")]
+            [InlineData(13, false, "1d20p1")]
+            [InlineData(13, true, "1d20p3")]
+            [InlineData(14, false, "1d20p2")]
+            [InlineData(14, true, "1d20p4")]
+            [InlineData(15, false, "1d20p2")]
+            [InlineData(15, true, "1d20p4")]
+            [InlineData(16, false, "1d20p3")]
+            [InlineData(16, true, "1d20p5")]
+            [InlineData(17, false, "1d20p3")]
+            [InlineData(17, true, "1d20p5")]
+            [InlineData(18, false, "1d20p4")]
+            [InlineData(18, true, "1d20p6")]
+            [InlineData(19, false, "1d20p4")]
+            [InlineData(19, true, "1d20p6")]
             public void Returns_ability_saving_throw_based_on_score_and_proficiency(int score, bool isProficient, string expectedRoll)
             {
                 var target = new Character(new Ability(score, isProficient),
@@ -86,12 +86,12 @@ namespace DnD_5e.Test.UnitTests.Domain
             }
 
             [Theory]
-            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Strength, "1d20+2")]
-            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Dexterity, "1d20+3")]
-            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Constitution, "1d20+4")]
-            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Intelligence, "1d20+5")]
-            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Wisdom, "1d20+6")]
-            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Charisma, "1d20+7")]
+            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Strength, "1d20p2")]
+            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Dexterity, "1d20p3")]
+            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Constitution, "1d20p4")]
+            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Intelligence, "1d20p5")]
+            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Wisdom, "1d20p6")]
+            [InlineData(10, 12, 14, 16, 18, 20, Ability.Type.Charisma, "1d20p7")]
             public void Checks_the_correct_ability_score(int strength, int dexterity,
                 int constitution, int intelligence, int wisdom, int charisma,
                 Ability.Type requestedAbility, string expectedRoll)
@@ -106,10 +106,10 @@ namespace DnD_5e.Test.UnitTests.Domain
             }
 
             [Theory]
-            [InlineData(6500, "1d20+6")]
-            [InlineData(48000, "1d20+7")]
-            [InlineData(120000, "1d20+8")]
-            [InlineData(225000, "1d20+9")]
+            [InlineData(6500, "1d20p6")]
+            [InlineData(48000, "1d20p7")]
+            [InlineData(120000, "1d20p8")]
+            [InlineData(225000, "1d20p9")]
             public void Adds_correct_proficiency_based_on_character_level(int experiencePoints, string expectedRoll)
             {
                 var target = new Character(null, null, new Ability(16, true), null, null, null, null,
@@ -128,7 +128,7 @@ namespace DnD_5e.Test.UnitTests.Domain
                 var roll = new CharacterRollRequest(Skill.Type.Athletics, Ability.Type.Strength);
                 var character = new Character(new Ability(16, false), null, null, null, null, null, null);
 
-                character.GetRoll(roll).Should().Be("1d20+3");
+                character.GetRoll(roll).Should().Be("1d20p3");
             }
 
             [Fact]
@@ -138,7 +138,7 @@ namespace DnD_5e.Test.UnitTests.Domain
                 var character = new Character(null, new Ability(20, false), null, null, null, null,
                     new[] { Skill.Type.Athletics });
 
-                character.GetRoll(roll).Should().Be("1d20+7");
+                character.GetRoll(roll).Should().Be("1d20p7");
             }
         }
 
@@ -150,7 +150,7 @@ namespace DnD_5e.Test.UnitTests.Domain
                 var roll = new CharacterRollRequest(RollTypeEnum.Initiative);
                 var character = new Character(null, new Ability(14, false), null, null, null, null, null);
 
-                character.GetRoll(roll).Should().Be("1d20+2");
+                character.GetRoll(roll).Should().Be("1d20p2");
             }
 
         }

@@ -42,9 +42,9 @@ namespace DnD_5e.Domain.DiceRolls
             if (firstSplit.Length == 2 && int.TryParse(firstSplit[0].Trim(), out var qty))
             {
                 int sides;
-                if (firstSplit[1].Contains("+"))
+                if (firstSplit[1].Contains("p"))
                 {
-                    var secondSplit = firstSplit[1].Split('+');
+                    var secondSplit = firstSplit[1].Split('p');
                     if (secondSplit.Length == 2
                         && int.TryParse(secondSplit[0].Trim(), out sides)
                         && int.TryParse(secondSplit[1].Trim(), out modifier))
@@ -52,9 +52,9 @@ namespace DnD_5e.Domain.DiceRolls
                         return new DiceRollRequest(qty, sides, modifier);
                     }
                 }
-                else if (firstSplit[1].Contains("-"))
+                else if (firstSplit[1].Contains("m"))
                 {
-                    var secondSplit = firstSplit[1].Split('-');
+                    var secondSplit = firstSplit[1].Split('m');
                     if (secondSplit.Length == 2
                         && int.TryParse(secondSplit[0].Trim(), out sides)
                         && int.TryParse(secondSplit[1].Trim(), out modifier))

@@ -20,8 +20,8 @@ namespace DnD_5e.Test.UnitTests.Domain
         [InlineData("1d6", 1, 6)]
         [InlineData("2d6", 2, 12)]
         [InlineData("1d4", 1, 4)]
-        [InlineData("1d6+1", 2, 7)]
-        [InlineData("1d20-1", 0, 19)]
+        [InlineData("1d6p1", 2, 7)]
+        [InlineData("1d20m1", 0, 19)]
         [InlineData("5d8", 5, 40)]
         public async Task Dice_Roll_Falls_In_Range(string diceRollRequest, int minValue, int maxValue)
         {

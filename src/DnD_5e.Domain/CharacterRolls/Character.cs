@@ -66,7 +66,7 @@ namespace DnD_5e.Domain.CharacterRolls
 
         private static string D20RollWithModifier(int modifier)
         {
-            return "1d20" + (modifier > 0 ? "+" + modifier : modifier < 0 ? "-" + modifier : "");
+            return "1d20" + (modifier > 0 ? "p" + modifier : modifier < 0 ? "m" + modifier : "");
         }
     }
 }
