@@ -12,9 +12,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnD_5e.Infrastructure", "DnD_5e.Infrastructure\DnD_5e.Infrastructure.csproj", "{8F301B3A-173F-42AA-987D-DA9CB7B6B96F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{12113DF1-E6A6-4E44-9B8E-4FB1DBEF7F22}"
-	ProjectSection(SolutionItems) = preProject
-		TODO.txt = TODO.txt
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
