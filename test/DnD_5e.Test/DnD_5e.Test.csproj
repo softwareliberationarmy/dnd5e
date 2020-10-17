@@ -18,9 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DnD_5e.Api\DnD_5e.Api.csproj" />
-    <ProjectReference Include="..\DnD_5e.Domain\DnD_5e.Domain.csproj" />
-    <ProjectReference Include="..\DnD_5e.Infrastructure\DnD_5e.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\api\DnD_5e.Api\DnD_5e.Api.csproj" />
   </ItemGroup>
 
 </Project>
