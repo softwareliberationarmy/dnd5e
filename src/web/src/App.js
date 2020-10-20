@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import axios from 'axios';
+import API from './components/api';
 import {Button} from 'react-bootstrap';
 
 import logo from './logo.svg';
@@ -21,8 +21,9 @@ class App extends Component {
   }
 
   rollButtonHandler(){
-    axios.get('https://localhost:5001/api/roll/2d4p2')
+    API.get('roll/2d4p2')
     .then(result => {
+      console.log('api',result);
       const rollResult = result.data;
       this.setState({ roll: rollResult.result});
     });
