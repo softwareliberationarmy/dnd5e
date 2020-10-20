@@ -12,6 +12,8 @@ namespace DnD_5e.Api
 {
     public class Startup
     {
+        private readonly string LocalCors = "AllowLocalhostCors";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -22,6 +24,14 @@ namespace DnD_5e.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(LocalCors,
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3000");
+                    });
+            });
             services.AddControllers();
             services.AddSingleton<DieRoller>();
             services.AddSingleton<CharacterRollParser>();
@@ -40,7 +50,7 @@ namespace DnD_5e.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors(LocalCors);
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
