@@ -9,6 +9,7 @@ namespace DnD_5e.Test.Helpers
     {
         public int Result { get; set; }
         public int[] Rolls { get; set; }
+        public string RequestedRoll { get; set; }
 
         public static TestRollResponse FromJson(string json)
         {

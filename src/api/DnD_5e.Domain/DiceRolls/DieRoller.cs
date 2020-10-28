@@ -13,11 +13,11 @@ namespace DnD_5e.Domain.DiceRolls
             var parsedRequest = await ParseRollRequest(requestString);
             if (rollType == null)
             {
-                return new RollResponse(await RollDice(parsedRequest));
+                return new RollResponse(requestString, await RollDice(parsedRequest));
             }
             else
             {
-                var result = new RollResponse(rollType.Value, await RollDice(parsedRequest),
+                var result = new RollResponse(requestString, rollType.Value, await RollDice(parsedRequest),
                     await RollDice(parsedRequest));
                 return result;
             }

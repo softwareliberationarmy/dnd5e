@@ -33,6 +33,7 @@ namespace DnD_5e.Test.IntegrationTests.Roll
             roll.Result.Should().BeInRange(minReturnValue, maxReturnValue);
             roll.Rolls.Length.Should().Be(1);
             roll.Rolls[0].Should().Be(roll.Result);
+            roll.RequestedRoll.Should().Be(input);
         }
 
         [Fact]
@@ -47,6 +48,7 @@ namespace DnD_5e.Test.IntegrationTests.Roll
             roll.Rolls.Length.Should().Be(1);
             roll.Rolls[0].Should().Be(roll.Result);
             roll.Result.Should().BeInRange(1, 20);
+            roll.RequestedRoll.Should().Be("1d20");
         }
 
         [Fact]
@@ -75,6 +77,7 @@ namespace DnD_5e.Test.IntegrationTests.Roll
             {
                 rollResponse.Result.Should().BeGreaterOrEqualTo(roll);
             }
+            rollResponse.RequestedRoll.Should().Be("1d20");
         }
 
         [Fact]
@@ -92,6 +95,7 @@ namespace DnD_5e.Test.IntegrationTests.Roll
             {
                 rollResponse.Result.Should().BeLessOrEqualTo(roll);
             }
+            rollResponse.RequestedRoll.Should().Be("1d20");
         }
 
         [Fact]
