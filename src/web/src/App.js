@@ -29,7 +29,7 @@ class App extends Component {
       })
       .catch(err => {
         console.log('kp-error', err.response);
-        if(err.response.status === 400){
+        if(err.response && err.response.status === 400){
           //bad request
           this.setState({ rollError: 'You entered an invalid roll request.'})
         }
