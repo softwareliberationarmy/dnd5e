@@ -46,11 +46,16 @@ class App extends Component {
     this.setState(partialState);
   }
 
+  handleEnter(event, onEnter){
+    if(event.key === 'Enter'){
+      onEnter();
+    }
+  }
+
   render(){
     console.log('roll',this.state.roll);
     const rollResult = this.state.roll > 0 ? 
-      <h1>{this.state.roll}</h1> :
-      <img src={logo} className="App-logo" alt="logo" />;
+      <h1>{this.state.roll}</h1> : <h1>0</h1>;
 
     return (
       <div className="App">
@@ -59,10 +64,12 @@ class App extends Component {
           <p>
             Roll your fate
           </p>
-          {this.state.rollError ? <Form.Label>{this.state.rollError}</Form.Label> : null}
+          {this.state.rollError ? <Form.Label>{this.state.rollError}</Form.Label> : null}          
           <Form.Group className="d-flex d-inline" controlId="frmRoll">
                         <Form.Label className="mr-3">Roll</Form.Label>
-                        <Form.Control as="input" name="rollType" onChange={this.handleChange} value={this.state.rollType}                         />
+                        <Form.Control as="input" name="rollType" 
+                        onChange={this.handleChange} value={this.state.rollType}
+                        onKeyPress={e => this.handleEnter(e,this.rollButtonHandler)} />
           </Form.Group>
           <Button size="lg" onClick={this.rollButtonHandler} >Roll</Button>
         </header>
