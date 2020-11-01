@@ -36,7 +36,10 @@ namespace DnD_5e.Api
             services.AddSingleton<DieRoller>();
             services.AddSingleton<CharacterRollParser>();
             services.AddScoped<CharacterRepository>();
-            services.AddDbContext<CharacterDbContext>(options => { options.UseInMemoryDatabase("DnD"); });
+            services.AddDbContext<CharacterDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
