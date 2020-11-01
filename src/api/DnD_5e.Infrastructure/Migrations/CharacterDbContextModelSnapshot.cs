@@ -67,7 +67,7 @@ namespace DnD_5e.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Characters");
+                    b.ToTable("Character");
                 });
 
             modelBuilder.Entity("DnD_5e.Infrastructure.DataAccess.SkillProficiencyEntity", b =>
@@ -87,7 +87,7 @@ namespace DnD_5e.Infrastructure.Migrations
 
                     b.HasIndex("CharacterId");
 
-                    b.ToTable("SkillProficiencyEntity");
+                    b.ToTable("SkillProficiency");
                 });
 
             modelBuilder.Entity("DnD_5e.Infrastructure.DataAccess.SkillProficiencyEntity", b =>

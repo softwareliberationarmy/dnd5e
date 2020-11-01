@@ -33,7 +33,7 @@ namespace DnD_5e.Test.UnitTests.Infrastructure
 
             await using (var context = new CharacterDbContext(options.Options))
             {
-                context.Characters.Add(new CharacterEntity
+                context.Character.Add(new CharacterEntity
                 {
                     Id = characterId,
                     Strength = 16,
@@ -60,7 +60,7 @@ namespace DnD_5e.Test.UnitTests.Infrastructure
 
             await using (var context = new CharacterDbContext(options.Options))
             {
-                context.Characters.Add(new CharacterEntity
+                context.Character.Add(new CharacterEntity
                 {
                     Id = characterId,
                     Strength = 14,
@@ -94,7 +94,7 @@ namespace DnD_5e.Test.UnitTests.Infrastructure
 
             await using (var context = new CharacterDbContext(options.Options))
             {
-                context.Characters.Add(new CharacterEntity
+                context.Character.Add(new CharacterEntity
                 {
                     Id = characterId,
                     Wisdom = 14,

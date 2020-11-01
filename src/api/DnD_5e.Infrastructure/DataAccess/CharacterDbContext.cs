@@ -9,6 +9,6 @@ namespace DnD_5e.Infrastructure.DataAccess
         {
         }
 
-        public DbSet<CharacterEntity> Characters { get; set; }
+        public DbSet<CharacterEntity> Character { get; set; }
     }
 }

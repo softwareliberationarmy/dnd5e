@@ -52,12 +52,12 @@ namespace DnD_5e.Test.Helpers
 
             await using (var context = new CharacterDbContext(options))
             {
-                var existing = context.Characters.ToList();
+                var existing = context.Character.ToList();
                 foreach (var character in existing)
                 {
-                    context.Characters.Remove(character);
+                    context.Character.Remove(character);
                 }
-                await context.Characters.AddRangeAsync(characters);
+                await context.Character.AddRangeAsync(characters);
                 await context.SaveChangesAsync();
             }
         }

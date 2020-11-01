@@ -17,7 +17,7 @@ namespace DnD_5e.Infrastructure.DataAccess
 
         public async Task<Character> GetById(int id)
         {
-            var record = await _context.Characters.Include(c => c.SkillProficiencies)
+            var record = await _context.Character.Include(c => c.SkillProficiencies)
                 .FirstOrDefaultAsync(c => c.Id == id);
 
             if (record == null)

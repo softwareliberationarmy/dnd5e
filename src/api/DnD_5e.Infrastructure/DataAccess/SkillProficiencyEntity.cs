@@ -1,5 +1,8 @@
-﻿namespace DnD_5e.Infrastructure.DataAccess
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace DnD_5e.Infrastructure.DataAccess
 {
+    [Table("SkillProficiency")]
     public class SkillProficiencyEntity
     {
         public int Id { get; set; }
