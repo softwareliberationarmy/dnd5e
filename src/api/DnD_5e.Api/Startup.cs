@@ -1,4 +1,5 @@
 using DnD_5e.Api.Services;
+using DnD_5e.Api.StartupServices;
 using DnD_5e.Domain.DiceRolls;
 using DnD_5e.Infrastructure.DataAccess;
 using Microsoft.AspNetCore.Builder;
@@ -55,12 +56,13 @@ namespace DnD_5e.Api
             app.UseRouting();
             app.UseCors(LocalCors);
             app.UseAuthorization();
+            
+            app.UpdateDatabase();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-
         }
     }
 }
