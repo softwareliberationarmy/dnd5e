@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import API from './components/api';
 import {Button, Form} from 'react-bootstrap';
 
-import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
