@@ -1,10 +1,10 @@
 TODO:
 Review architecture so far and check for cohesiveness
-Rewrite repository to use MongoDb
 Cleanup: Character ctor has too many arguments (consolidate abilities?)
 Cleanup: Not happy with the repository unit tests. They test domain things because nothing is exposed
 Consider adding Mediatr and CQRS so we can have an end-to-end test without exposing properties
 Add AutoFixture to test project
+Add logging
 Feature: authentication and associating characters with a login
 Feature: starting hit points determined by character class
 Feature: speed determined by race
@@ -12,6 +12,7 @@ Feature: on level-up, user hit points are updated based on character class
 Epic: start adding race characteristics, broken out by race
 Epic: start adding class characteristics, broken out by class
 Feature: user can change character XP
+Rewrite repository to use MongoDb
 
 DONE:
 Add requested roll to roll result
