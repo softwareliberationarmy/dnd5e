@@ -1,4 +1,5 @@
 TODO:
+Add authentication (SQL Server storage for now)
 In React, if user enters a + or -, correct it before sending it
 Review architecture so far and check for cohesiveness
 	Open up Resharper architecture viewer
@@ -8,7 +9,6 @@ Cleanup: Not happy with the repository unit tests. They test domain things becau
 Consider adding Mediatr and CQRS so we can have an end-to-end test without exposing properties
 Add AutoFixture to test project
 Add logging
-Add authentication (SQL Server storage for now)
 Feature: authentication and associating characters with a login
 Feature: starting hit points determined by character class
 Feature: speed determined by race
