@@ -8,7 +8,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 class App extends Component {
 
   render(){
-    return <FreeRoller />;
+    return (
+    <div className="App">
+      <FreeRoller />
+    </div>
+    );
   }
 }
 
