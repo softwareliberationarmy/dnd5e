@@ -39,12 +39,12 @@ class FreeRoller extends Component {
     
       render(){
         return (
-            <header className="App-header">
+            <div className="Page-header">
               <h1>Roll your fate</h1>
               <RollResult roll={this.state.roll} />
               <ErrorMessage error={this.state.rollError} />              
               <RollRequestor requested={this.makeRoll} />
-            </header>
+            </div>
         );  
       }    
 }

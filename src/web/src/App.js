@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
+import { BrowserRouter, Route, NavLink } from 'react-router-dom';
 
 import FreeRoller from './containers/FreeRoller/FreeRoller';
+import Home from './containers/Home/Home';
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,9 +11,20 @@ class App extends Component {
 
   render() {
     return (
-    <div className="App">
-      <FreeRoller />
-    </div>
+      <BrowserRouter>
+        <div className="App">
+          <header>
+            <nav>
+              <ul>
+                <li><NavLink to="/" exact>Home</NavLink></li>
+                <li><NavLink to="/roll">Free Roll</NavLink></li>
+              </ul>
+            </nav>
+          </header>
+          <Route path="/" exact component={ Home } />
+          <Route path="/roll" component={ FreeRoller } />          
+        </div>
+    </BrowserRouter>
     );
   }
 }
