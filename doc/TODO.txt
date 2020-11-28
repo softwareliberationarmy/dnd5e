@@ -1,4 +1,5 @@
 TODO:
+React - add main page, free roll page, and routing
 Add authentication (SQL Server storage for now)
 In React, if user enters a + or -, correct it before sending it
 Review architecture so far and check for cohesiveness
@@ -17,14 +18,4 @@ Epic: start adding race characteristics, broken out by race
 Epic: start adding class characteristics, broken out by class
 Feature: user can change character XP
 
-MAYBE:
-Rewrite repository to use MongoDb
-
 DONE:
-Add requested roll to roll result
-Add simple react website 
-+ is a reserved character for URLs
-	- add IIS Express exception for this?
-	- change it to a POST and pass as message body
-	- change the character to something else (2d4p2)
-	- make it a query argument instead 
