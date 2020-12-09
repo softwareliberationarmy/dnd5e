@@ -16,6 +16,7 @@ namespace DnD_5e.Test.Helpers
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
+            builder.UseEnvironment("Testing");
             builder.ConfigureServices(services =>
             {
                 RegisterInMemoryDatabase(services);
@@ -32,6 +33,7 @@ namespace DnD_5e.Test.Helpers
                     db.Database.EnsureCreated();
                 }
             });
+
         }
 
         private void RegisterInMemoryDatabase(IServiceCollection services)
@@ -42,7 +44,10 @@ namespace DnD_5e.Test.Helpers
 
             services.Remove(descriptor);
 
-            services.AddDbContext<CharacterDbContext>(options => { options.UseInMemoryDatabase(_databaseName); });
+            services.AddDbContext<CharacterDbContext>(options =>
+            {
+                options.UseInMemoryDatabase(_databaseName);
+            });
         }
 
         public async Task SetupCharacters(params CharacterEntity[] characters)

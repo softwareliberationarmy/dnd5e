@@ -56,8 +56,11 @@ namespace DnD_5e.Api
             app.UseRouting();
             app.UseCors(LocalCors);
             app.UseAuthorization();
-            
-            app.UpdateDatabase();
+
+            if (env.EnvironmentName != "Testing")
+            {
+                app.UpdateDatabase();
+            }
 
             app.UseEndpoints(endpoints =>
             {
