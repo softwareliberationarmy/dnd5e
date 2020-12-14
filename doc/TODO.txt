@@ -1,7 +1,5 @@
 TODO:
-React - add main page, free roll page, and routing
 Add authentication (SQL Server storage for now)
-In React, if user enters a + or -, correct it before sending it
 Review architecture so far and check for cohesiveness
 	Open up Resharper architecture viewer
 	Can we group all SQL Server work closer together?
@@ -19,3 +17,5 @@ Epic: start adding class characteristics, broken out by class
 Feature: user can change character XP
 
 DONE:
+In React, if user enters a + or -, correct it before sending it
+React - add main page, free roll page, and routing
