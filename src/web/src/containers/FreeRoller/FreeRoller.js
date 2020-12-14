@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import API from '../../services/api';
 import RollResult from '../../components/Roll/RollResult';
 import ErrorMessage from '../../components/Error/ErrorMessage';
 import RollRequestor from '../../components/Roll/RollRequestor';
+import RollService from '../../services/RollService';
 
 class FreeRoller extends Component {
     constructor(props){
@@ -18,14 +18,12 @@ class FreeRoller extends Component {
 
       makeRoll(rollType){
         if(rollType){
-            API.get('roll/' + rollType)
+          RollService.rollDice(rollType)
             .then(result => {
-              console.log('api',result);
               const rollResult = result.data;
               this.setState({ roll: rollResult.result, rollError: null});
             })
             .catch(err => {
-              console.log('kp-error', err.response);
               if(err.response && err.response.status === 400){
                 //bad request
                 this.setState({ rollError: 'You entered an invalid roll request.'})
