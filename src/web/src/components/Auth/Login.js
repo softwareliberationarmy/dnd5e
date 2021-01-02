@@ -3,7 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Image, Nav, Navbar } from 'react-bootstrap';
 
 const Login = () => {
-  const { loginWithRedirect, user, isAuthenticated, isLoading } = useAuth0();
+  const { loginWithRedirect, logout, user, isAuthenticated, isLoading, error } = useAuth0();
 
   const profileInfo = isLoading ? 
       (<Navbar.Text className="d-inline">Loading ...</Navbar.Text>) :
@@ -18,16 +18,26 @@ const Login = () => {
       ) : 
     null;
 
-  return (  
+    const loginLogoutButton = isAuthenticated ? 
+        (
+          <Nav.Link className="text-nowrap align-middle" 
+        onClick={() => logout({ returnTo: window.location.origin})}>
+          Log Out
+        </Nav.Link>
+        ):
+        (
+          <Nav.Link className="text-nowrap align-middle" 
+        onClick={() => loginWithRedirect(window.location.origin)}>
+          Log In
+        </Nav.Link>
+        );
+        
+  return error ? error : (  
     <Nav>
         {profileInfo}
       <Nav.Item>
-        <Nav.Link className="text-nowrap align-middle" 
-        onClick={() => loginWithRedirect('http://localhost:3000')}>
-          Log In
-        </Nav.Link>
-      </Nav.Item>
-      
+        {loginLogoutButton}
+      </Nav.Item>      
     </Nav>  
   );
 };
