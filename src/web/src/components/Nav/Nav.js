@@ -2,10 +2,10 @@ import React from 'react';
 import Login from '../Auth/Login';
 import { Navbar, Nav } from 'react-bootstrap';
 
-const nav = (props) => {
+const nav = () => {
     return (
         <header>
-            <Navbar bg="dark" variant="dark" expand="lg">
+            <Navbar bg="dark" variant="dark" expand="sm">
                 <Navbar.Brand href="/">My D&amp;D App</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav"> 
