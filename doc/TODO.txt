@@ -1,7 +1,6 @@
 TODO:
 Add authentication
 	https://medium.com/datadigest/integrating-auth0-in-a-react-app-with-an-asp-net-core-api-backend-20a64c0e1f9f
-	Move domain info from Auth0 to project secrets in API, and call API to get them	(may require replacing context with custom)
 	If logged in user, show characters link and allow to nav to character page
 	Lock down characters api so cannot access if not logged in
 Review architecture so far and check for cohesiveness
@@ -23,3 +22,4 @@ Feature: add logging
 
 
 DONE:
+	Move domain info from Auth0 to project secrets in API, and call API to get them	(may require replacing context with custom)
