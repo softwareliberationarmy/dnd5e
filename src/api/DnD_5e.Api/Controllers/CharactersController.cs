@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DnD_5e.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/characters")]
     [ApiController]
     public class CharactersController : ControllerBase
     {

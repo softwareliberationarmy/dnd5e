@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DnD_5e.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/roll")]
     [ApiController]
     public class RollController : ControllerBase
     {
