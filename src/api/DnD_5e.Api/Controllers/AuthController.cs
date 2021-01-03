@@ -1,10 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 
 namespace DnD_5e.Api.Controllers
@@ -23,12 +18,19 @@ namespace DnD_5e.Api.Controllers
         [HttpGet]
         public IActionResult GetAuthConfigInfo()
         {
-            return Ok(new
+            try
             {
-                Domain = _config.GetValue<string>("Auth:Domain"),
-                ClientId = _config.GetValue<string>("Auth:ClientId"),
-                Audience = _config.GetValue<string>("Auth:Audience")
-            });
+                return Ok(new
+                {
+                    Domain = _config.GetValue<string>("Auth:Domain"),
+                    ClientId = _config.GetValue<string>("Auth:ClientId"),
+                    Audience = _config.GetValue<string>("Auth:Audience")
+                });
+            }
+            catch (Exception)
+            {
+                return new StatusCodeResult(500);
+            }
         }
     }
 }

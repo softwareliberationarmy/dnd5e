@@ -19,5 +19,7 @@ Feature: on level-up, user hit points are updated based on character class
 Epic: start adding race characteristics, broken out by race
 Epic: start adding class characteristics, broken out by class
 Feature: user can change character XP
+Feature: add logging
+
 
 DONE:
