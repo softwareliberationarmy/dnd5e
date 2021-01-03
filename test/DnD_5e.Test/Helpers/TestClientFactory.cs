@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DnD_5e.Infrastructure.DataAccess;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -13,6 +15,7 @@ namespace DnD_5e.Test.Helpers
     public class TestClientFactory : WebApplicationFactory<Api.Startup>
     {
         private readonly string _databaseName = Guid.NewGuid().ToString();
+        public Dictionary<string, string> ConfigurationInfo { get; } = new Dictionary<string, string>();
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -33,7 +36,12 @@ namespace DnD_5e.Test.Helpers
                     db.Database.EnsureCreated();
                 }
             });
+            builder.ConfigureAppConfiguration(AddConfigurationValues);
+        }
 
+        private void AddConfigurationValues(WebHostBuilderContext context, IConfigurationBuilder bldr)
+        {
+            bldr.AddInMemoryCollection(ConfigurationInfo);
         }
 
         private void RegisterInMemoryDatabase(IServiceCollection services)
