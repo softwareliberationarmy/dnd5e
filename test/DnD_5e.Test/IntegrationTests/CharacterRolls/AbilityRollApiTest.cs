@@ -1,9 +1,6 @@
-﻿using System.Net;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using DnD_5e.Infrastructure.DataAccess;
 using DnD_5e.Test.Helpers;
-using FluentAssertions;
 using Xunit;
 
 namespace DnD_5e.Test.IntegrationTests.CharacterRolls
