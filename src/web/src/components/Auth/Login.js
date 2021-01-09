@@ -31,6 +31,10 @@ const Login = () => {
           Log In
         </Nav.Link>
         );
+
+        if(isAuthenticated){
+          console.log('kp-user', user);
+        }
         
   return error ? error : (  
     <Nav>
