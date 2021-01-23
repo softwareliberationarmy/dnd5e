@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using DnD_5e.Test.Helpers;
 using FluentAssertions;
@@ -6,13 +7,13 @@ using Xunit;
 
 namespace DnD_5e.Test.IntegrationTests.Auth
 {
-    public class AuthApiTest: IClassFixture<TestClientFactory>
+    public class AuthApiTest: IDisposable
     {
         private readonly TestClientFactory _factory;
 
-        public AuthApiTest(TestClientFactory factory)
+        public AuthApiTest()
         {
-            _factory = factory;
+            _factory = new TestClientFactory();
         }
 
         [Fact]
@@ -57,6 +58,11 @@ namespace DnD_5e.Test.IntegrationTests.Auth
             public string Domain { get; set; }
             public string ClientId { get; set; }
             public string Audience { get; set; }
+        }
+
+        public void Dispose()
+        {
+            _factory?.Dispose();
         }
     }
 }
