@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using DnD_5e.Infrastructure.DataAccess;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,11 +19,20 @@ namespace DnD_5e.Test.Helpers
     public class TestClientFactory : WebApplicationFactory<Api.Startup>
     {
         private readonly string _databaseName = Guid.NewGuid().ToString();
+        private string _nameIdentifier;
         public Dictionary<string, string> ConfigurationInfo { get; } = new Dictionary<string, string>();
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.UseEnvironment("Testing");
+            builder.ConfigureTestServices(services =>
+            {
+                if (_nameIdentifier != null)
+                {
+                    var evaluator = new FakePolicyEvaluator(_nameIdentifier);
+                    services.AddSingleton<IPolicyEvaluator>(evaluator);
+                }
+            });
             builder.ConfigureServices(services =>
             {
                 RegisterInMemoryDatabase(services);
@@ -78,6 +91,29 @@ namespace DnD_5e.Test.Helpers
         public CharacterRollTestHelper CharacterRoll()
         {
             return new CharacterRollTestHelper(this);
+        }
+
+        public TestClientFactory WithUserNameIdentifier(string nameIdentifier)
+        {
+            _nameIdentifier = nameIdentifier;
+            return this;
+        }
+
+        public async Task SetupUser(int userId, string userName)
+        {
+            var options = new DbContextOptionsBuilder<CharacterDbContext>()
+                .UseInMemoryDatabase(_databaseName).Options;
+
+            await using (var context = new CharacterDbContext(options))
+            {
+                var existing = context.User.ToList();
+                foreach (var user in existing)
+                {
+                    context.User.Remove(user);
+                }
+                await context.User.AddAsync(new UserEntity { Id = userId, Name = userName });
+                await context.SaveChangesAsync();
+            }
         }
     }
 }

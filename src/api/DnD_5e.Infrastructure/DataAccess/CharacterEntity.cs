@@ -6,6 +6,10 @@ namespace DnD_5e.Infrastructure.DataAccess
     public class CharacterEntity
     {
         public int Id { get; set; }
+        public string Name { get; set; }
+
+        public int UserId { get; set; }
+
         public int Strength { get; set; }
         public int Dexterity { get; set; }
         public int Constitution { get; set; }

@@ -7,7 +7,6 @@ using DnD_5e.Domain.DiceRolls;
 using DnD_5e.Infrastructure.DataAccess;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace DnD_5e.Api.Controllers
 {
@@ -31,11 +30,13 @@ namespace DnD_5e.Api.Controllers
         public async Task<IActionResult> GetMyCharacters()
         {
             //TODO: grab user.identity.name and add to user table, then join to character table to get characters
-            //var claims = User.Claims.Select(c => new
-            //{
-            //    c.Type, c.Value
-            //}).ToArray();
-            
+
+            var claims = User.Claims.Select(c => new
+            {
+                c.Type,
+                c.Value
+            }).ToArray();
+
             //return Ok(claims);
 
             return Ok("here be a list of characters for ye");
