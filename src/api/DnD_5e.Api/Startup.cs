@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using DnD_5e.Api.Services;
 using DnD_5e.Api.StartupServices;
 using DnD_5e.Domain.DiceRolls;
@@ -8,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DnD_5e.Api
 {
@@ -31,6 +34,7 @@ namespace DnD_5e.Api
                     builder =>
                     {
                         builder.WithOrigins("http://localhost:3000");
+                        builder.AllowAnyHeader();
                     });
             });
             services.AddControllers();
@@ -40,6 +44,20 @@ namespace DnD_5e.Api
             services.AddDbContext<CharacterDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = Configuration.GetValue<string>("Auth:Authority");
+                options.Audience = Configuration.GetValue<string>("Auth:Audience");
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    NameClaimType = ClaimTypes.NameIdentifier
+                };
             });
         }
 
@@ -52,6 +70,7 @@ namespace DnD_5e.Api
             }
 
             app.UseHttpsRedirection();
+            app.UseAuthentication();
 
             app.UseRouting();
             app.UseCors(LocalCors);
@@ -66,6 +85,8 @@ namespace DnD_5e.Api
             {
                 endpoints.MapControllers();
             });
+
+
         }
     }
 }

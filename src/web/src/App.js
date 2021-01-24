@@ -21,10 +21,13 @@ const onRedirectCallback = (appState) => {
 class App extends Component {
   render() {
     return (
-      <Auth0Provider domain={this.props.authSettings.data.domain}
-      clientId={this.props.authSettings.data.clientId}
-      redirectUri={window.location.origin} 
-      onRedirectCallback={onRedirectCallback} >
+      <Auth0Provider 
+        domain={this.props.authSettings.data.domain}
+        clientId={this.props.authSettings.data.clientId}
+        redirectUri={window.location.origin} 
+        onRedirectCallback={onRedirectCallback}
+        audience={this.props.authSettings.data.audience}
+        scope="read:characters" >
         <Router history={history} >
           <div className="App">
             <NavMenu />
