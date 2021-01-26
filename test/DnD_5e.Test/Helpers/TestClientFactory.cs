@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using DnD_5e.Infrastructure.DataAccess;
+using DnD_5e.Test.Helpers.ApiSecurity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Hosting;
@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace DnD_5e.Test.Helpers
 {
@@ -29,15 +28,7 @@ namespace DnD_5e.Test.Helpers
             {
                 if (_nameIdentifier != null)
                 {
-                    var fakePolicyEvaluator = new FakePolicyEvaluator(_nameIdentifier);
-                    services.AddSingleton<IPolicyEvaluator>(fakePolicyEvaluator);
-                    services.AddSingleton<FakePolicyEvaluator>(fakePolicyEvaluator);
-                    services.AddAuthentication(x =>
-                    {
-                        x.DefaultAuthenticateScheme = FakePolicyEvaluator.TestScheme;
-                        x.DefaultScheme = FakePolicyEvaluator.TestScheme;
-                    }).AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(
-                        FakePolicyEvaluator.TestScheme, options => { });
+                    FakeOutAuthenticationAndBypassAuthorization(services);
                 }
             });
             builder.ConfigureServices(services =>
@@ -46,22 +37,34 @@ namespace DnD_5e.Test.Helpers
 
                 var sp = services.BuildServiceProvider();
 
-                using (var scope = sp.CreateScope())
-                {
-                    var scopedServices = scope.ServiceProvider;
-                    var db = scopedServices.GetRequiredService<CharacterDbContext>();
-                    var logger = scopedServices
-                        .GetRequiredService<ILogger<TestClientFactory>>();
-
-                    db.Database.EnsureCreated();
-                }
+                using var scope = sp.CreateScope();
+                var scopedServices = scope.ServiceProvider;
+                var db = scopedServices.GetRequiredService<CharacterDbContext>();
+                
+                db.Database.EnsureCreated();
             });
             builder.ConfigureAppConfiguration(AddConfigurationValues);
         }
 
-        private void AddConfigurationValues(WebHostBuilderContext context, IConfigurationBuilder bldr)
+        private void FakeOutAuthenticationAndBypassAuthorization(IServiceCollection services)
         {
-            bldr.AddInMemoryCollection(ConfigurationInfo);
+            //allows us to bypass authorization and to pass in a custom ClaimsPrincipal to the controller method
+            var fakePolicyEvaluator = new FakePolicyEvaluator(_nameIdentifier);
+            services.AddSingleton<IPolicyEvaluator>(fakePolicyEvaluator);
+            services.AddSingleton(fakePolicyEvaluator);
+
+            //allows us to point authentication by default to our mock authentication handler
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = FakePolicyEvaluator.TestScheme;
+                x.DefaultScheme = FakePolicyEvaluator.TestScheme;
+            }).AddScheme<AuthenticationSchemeOptions, FakeAuthHandler>(
+                FakePolicyEvaluator.TestScheme, options => { });
+        }
+
+        private void AddConfigurationValues(WebHostBuilderContext context, IConfigurationBuilder builder)
+        {
+            builder.AddInMemoryCollection(ConfigurationInfo);
         }
 
         private void RegisterInMemoryDatabase(IServiceCollection services)
@@ -83,16 +86,14 @@ namespace DnD_5e.Test.Helpers
             var options = new DbContextOptionsBuilder<CharacterDbContext>()
                 .UseInMemoryDatabase(_databaseName).Options;
 
-            await using (var context = new CharacterDbContext(options))
+            await using var context = new CharacterDbContext(options);
+            var existing = context.Character.ToList();
+            foreach (var character in existing)
             {
-                var existing = context.Character.ToList();
-                foreach (var character in existing)
-                {
-                    context.Character.Remove(character);
-                }
-                await context.Character.AddRangeAsync(characters);
-                await context.SaveChangesAsync();
+                context.Character.Remove(character);
             }
+            await context.Character.AddRangeAsync(characters);
+            await context.SaveChangesAsync();
         }
 
         public CharacterRollTestHelper CharacterRoll()
@@ -100,8 +101,9 @@ namespace DnD_5e.Test.Helpers
             return new CharacterRollTestHelper(this);
         }
 
-        public TestClientFactory WithUserNameIdentifier(string nameIdentifier)
+        public TestClientFactory WithUser(string nameIdentifier)
         {
+            //NOTE: additional claim KVPs can be added to this method
             _nameIdentifier = nameIdentifier;
             return this;
         }
@@ -111,16 +113,14 @@ namespace DnD_5e.Test.Helpers
             var options = new DbContextOptionsBuilder<CharacterDbContext>()
                 .UseInMemoryDatabase(_databaseName).Options;
 
-            await using (var context = new CharacterDbContext(options))
+            await using var context = new CharacterDbContext(options);
+            var existing = context.User.ToList();
+            foreach (var user in existing)
             {
-                var existing = context.User.ToList();
-                foreach (var user in existing)
-                {
-                    context.User.Remove(user);
-                }
-                await context.User.AddAsync(new UserEntity { Id = userId, Name = userName });
-                await context.SaveChangesAsync();
+                context.User.Remove(user);
             }
+            await context.User.AddAsync(new UserEntity { Id = userId, Name = userName });
+            await context.SaveChangesAsync();
         }
     }
 }
