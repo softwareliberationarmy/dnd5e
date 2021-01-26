@@ -29,8 +29,15 @@ namespace DnD_5e.Test.Helpers
             {
                 if (_nameIdentifier != null)
                 {
-                    var evaluator = new FakePolicyEvaluator(_nameIdentifier);
-                    services.AddSingleton<IPolicyEvaluator>(evaluator);
+                    var fakePolicyEvaluator = new FakePolicyEvaluator(_nameIdentifier);
+                    services.AddSingleton<IPolicyEvaluator>(fakePolicyEvaluator);
+                    services.AddSingleton<FakePolicyEvaluator>(fakePolicyEvaluator);
+                    services.AddAuthentication(x =>
+                    {
+                        x.DefaultAuthenticateScheme = FakePolicyEvaluator.TestScheme;
+                        x.DefaultScheme = FakePolicyEvaluator.TestScheme;
+                    }).AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(
+                        FakePolicyEvaluator.TestScheme, options => { });
                 }
             });
             builder.ConfigureServices(services =>

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Text;
+﻿using System.Security.Claims;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace DnD_5e.Test.Helpers
 {
@@ -15,22 +15,21 @@ namespace DnD_5e.Test.Helpers
     /// </summary>
     public class FakePolicyEvaluator : IPolicyEvaluator
     {
-        private readonly string _userName;
+        public const string TestScheme = "FakeScheme";
+        public ClaimsPrincipal Principal { get; }
 
         public FakePolicyEvaluator(string userName)
         {
-            _userName = userName;
+            Principal = new ClaimsPrincipal();
+            Principal.AddIdentity(new ClaimsIdentity(new[] {
+                new Claim(ClaimTypes.Name, userName)
+            }, TestScheme));
         }
 
         public virtual async Task<AuthenticateResult> AuthenticateAsync(AuthorizationPolicy policy, HttpContext context)
         {
-            var testScheme = "FakeScheme";
-            var principal = new ClaimsPrincipal();
-            principal.AddIdentity(new ClaimsIdentity(new[] {
-                new Claim(ClaimTypes.Name, _userName)
-            }, testScheme));
-            return await Task.FromResult(AuthenticateResult.Success(new AuthenticationTicket(principal,
-                new AuthenticationProperties(), testScheme)));
+            return await Task.FromResult(AuthenticateResult.Success(new AuthenticationTicket(Principal,
+                new AuthenticationProperties(), TestScheme)));
         }
 
         public virtual async Task<PolicyAuthorizationResult> AuthorizeAsync(AuthorizationPolicy policy,
@@ -39,4 +38,25 @@ namespace DnD_5e.Test.Helpers
             return await Task.FromResult(PolicyAuthorizationResult.Success());
         }
     }
+
+    public class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
+    {
+        private readonly FakePolicyEvaluator _policyEvaluator;
+
+        public TestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> options,
+            ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock, FakePolicyEvaluator policyEvaluator)
+            : base(options, logger, encoder, clock)
+        {
+            _policyEvaluator = policyEvaluator;
+        }
+
+        protected override Task<AuthenticateResult> HandleAuthenticateAsync()
+        {
+            var ticket = new AuthenticationTicket(_policyEvaluator.Principal, FakePolicyEvaluator.TestScheme);
+
+            return Task.FromResult(AuthenticateResult.Success(ticket));
+        }
+    }
+
+
 }
