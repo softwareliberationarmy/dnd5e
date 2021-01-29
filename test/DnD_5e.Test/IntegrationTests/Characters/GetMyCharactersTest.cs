@@ -15,20 +15,21 @@ namespace DnD_5e.Test.IntegrationTests.Characters
         public async Task ReturnsJustMyCharacters()
         {
             var expectedId = 25;
-            var userId = 27;
             var nameIdentifier = "google|123456789";
             using var factory = new TestClientFactory().WithUser(nameIdentifier);
 
-            await factory.SetupUser(27, nameIdentifier);
-            await factory.SetupCharacters(
-                new CharacterEntity {Id = expectedId, UserId = userId, Name = "Fred"},
-                new CharacterEntity {Id = expectedId + 1, UserId = userId + 1, Name = "Bill" },
-                new CharacterEntity {Id = expectedId - 1, UserId = userId - 1, Name = "Pense" }
-            );
+            var userDbRecord = new UserEntity{ Id = 27, Name = nameIdentifier};
+            await factory.SetupDatabase(
+                users: new[] {userDbRecord},
+                characters: new[]
+                {
+                    new CharacterEntity { Id = expectedId, Owner = userDbRecord, Name = "Fred" },
+                    new CharacterEntity { Id = expectedId + 1, Owner = userDbRecord, Name = "Bill" },
+                    new CharacterEntity { Id = expectedId - 1, Owner = userDbRecord, Name = "Olaf" }
+                });
 
             var client = factory.CreateClient();
-            client.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue("Test");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Test");
 
             var response = await client.GetAsync("api/characters");
 
@@ -38,7 +39,8 @@ namespace DnD_5e.Test.IntegrationTests.Characters
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
             //should return just my characters
-            characters.Single().Id.Should().Be(expectedId);
+            characters.Sum(i => i.Id).Should().Be(expectedId * 3);
+            
         }
     }
 

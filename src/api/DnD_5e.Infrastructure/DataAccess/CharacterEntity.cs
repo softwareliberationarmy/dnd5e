@@ -7,8 +7,6 @@ namespace DnD_5e.Infrastructure.DataAccess
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public int UserId { get; set; }
-
         public int Strength { get; set; }
         public int Dexterity { get; set; }
         public int Constitution { get; set; }
@@ -21,9 +19,11 @@ namespace DnD_5e.Infrastructure.DataAccess
         public bool IntelligenceSaveProficiency { get; set; }
         public bool WisdomSaveProficiency { get; set; }
         public bool CharismaSaveProficiency { get; set; }
-
-        public List<SkillProficiencyEntity> SkillProficiencies { get; set; }
         
         public int ExperiencePoints { get; set; }
+
+        public List<SkillProficiencyEntity> SkillProficiencies { get; set; }
+
+        public UserEntity Owner { get; set; }
     }
 }

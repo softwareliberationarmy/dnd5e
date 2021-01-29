@@ -108,7 +108,7 @@ namespace DnD_5e.Test.Helpers
             return this;
         }
 
-        public async Task SetupUser(int userId, string userName)
+        public async Task<UserEntity> SetupUser(int userId, string userName)
         {
             var options = new DbContextOptionsBuilder<CharacterDbContext>()
                 .UseInMemoryDatabase(_databaseName).Options;
@@ -119,7 +119,34 @@ namespace DnD_5e.Test.Helpers
             {
                 context.User.Remove(user);
             }
-            await context.User.AddAsync(new UserEntity { Id = userId, Name = userName });
+
+            var userEntity = new UserEntity { Id = userId, Name = userName };
+            await context.User.AddAsync(userEntity);
+            await context.SaveChangesAsync();
+
+            return context.User.First(c => c.Id == userId);
+        }
+
+        public async Task SetupDatabase(UserEntity[] users, CharacterEntity[] characters)
+        {
+            var options = new DbContextOptionsBuilder<CharacterDbContext>()
+                .UseInMemoryDatabase(_databaseName).Options;
+
+            await using var context = new CharacterDbContext(options);
+            var existingUsers = context.User.ToList();
+            foreach (var user in existingUsers)
+            {
+                context.User.Remove(user);
+            }
+            await context.User.AddRangeAsync(users);
+
+            var existingChars = context.Character.ToList();
+            foreach (var character in existingChars)
+            {
+                context.Character.Remove(character);
+            }
+            await context.Character.AddRangeAsync(characters);
+            
             await context.SaveChangesAsync();
         }
     }
