@@ -13,7 +13,6 @@ const Characters = () => {
                 audience: 'https://localhost:5001/api',
                 scope: 'read:characters'
             });
-            console.log('token', token);
             const response = await getMyCharacters(token);
             setCharacterData(response.data);    
         }
@@ -23,7 +22,9 @@ const Characters = () => {
     return (
         <>
         <h1>Characters!</h1>
-        {/* <p>{characterData}</p> */}
+        {characterData.map(c => 
+            (<h2 key={c.id}>{c.name}</h2>)
+        )} 
         </>
     );
 };
