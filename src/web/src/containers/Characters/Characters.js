@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Card, Container, Row, Col } from 'react-bootstrap';
 import { getMyCharacters } from '../../services/CharacterService';
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -21,10 +22,20 @@ const Characters = () => {
 
     return (
         <>
-        <h1>Characters!</h1>
-        {characterData.map(c => 
-            (<h2 key={c.id}>{c.name}</h2>)
+        <h1>Characters</h1>
+        <Container className="m-5">
+            <Row>
+            {characterData.map(c => 
+            (
+            <Card as={Col} md="3" className="m-1" text="dark"  key={c.id}>
+                <Card.Body>
+                    <Card.Title>{c.name}</Card.Title>                
+                </Card.Body>
+            </Card>
+            )
         )} 
+            </Row>
+        </Container>
         </>
     );
 };
