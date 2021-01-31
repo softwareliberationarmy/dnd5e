@@ -20,9 +20,9 @@ namespace DnD_5e.Test.IntegrationTests.Auth
         public async Task GetReturnsConfigValues()
         {
             _factory.ConfigurationInfo.Clear();
-            _factory.ConfigurationInfo.Add("Auth:Domain", "domain");
-            _factory.ConfigurationInfo.Add("Auth:ClientId", "clientid");
-            _factory.ConfigurationInfo.Add("Auth:Audience", "audience");
+            _factory.ConfigurationInfo.Add("Auth0Settings:Domain", "domain");
+            _factory.ConfigurationInfo.Add("Auth0Settings:ClientId", "clientid");
+            _factory.ConfigurationInfo.Add("Auth0Settings:Audience", "audience");
             var client = _factory.CreateClient();
 
             var response = await client.GetAsync("api/auth");

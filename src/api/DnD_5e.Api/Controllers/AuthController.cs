@@ -1,6 +1,7 @@
 ﻿using System;
+using DnD_5e.Api.Security;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace DnD_5e.Api.Controllers
 {
@@ -8,11 +9,11 @@ namespace DnD_5e.Api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IConfiguration _config;
+        private readonly Auth0Settings _settings;
 
-        public AuthController(IConfiguration config)
+        public AuthController(IOptions<Auth0Settings> settings)
         {
-            _config = config;
+            _settings = settings.Value;
         }
 
         [HttpGet]
@@ -22,9 +23,9 @@ namespace DnD_5e.Api.Controllers
             {
                 return Ok(new
                 {
-                    Domain = _config.GetValue<string>("Auth:Domain"),
-                    ClientId = _config.GetValue<string>("Auth:ClientId"),
-                    Audience = _config.GetValue<string>("Auth:Audience")
+                    Domain = _settings.Domain,
+                    ClientId = _settings.ClientId,
+                    Audience = _settings.Audience
                 });
             }
             catch (Exception)

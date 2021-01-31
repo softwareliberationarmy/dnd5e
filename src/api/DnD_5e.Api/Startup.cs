@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using DnD_5e.Api.Security;
 using DnD_5e.Api.Services;
 using DnD_5e.Api.StartupServices;
 using DnD_5e.Domain.DiceRolls;
@@ -28,6 +29,7 @@ namespace DnD_5e.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<Auth0Settings>(Configuration.GetSection(Auth0Settings.ConfigSection));
             services.AddCors(options =>
             {
                 options.AddPolicy(LocalCors,
@@ -52,8 +54,8 @@ namespace DnD_5e.Api
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options =>
             {
-                options.Authority = Configuration.GetValue<string>("Auth:Authority");
-                options.Audience = Configuration.GetValue<string>("Auth:Audience");
+                options.Authority = Configuration.GetValue<string>("Auth0Settings:Authority");
+                options.Audience = Configuration.GetValue<string>("Auth0Settings:Audience");
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     NameClaimType = ClaimTypes.NameIdentifier
