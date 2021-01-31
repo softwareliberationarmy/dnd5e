@@ -72,7 +72,7 @@ namespace DnD_5e.Test.UnitTests.Infrastructure
                     {
                         new SkillProficiencyEntity
                         {
-                            Id = characterId + 1, Type = (int) Skill.Type.Athletics
+                            Id = characterId + 1, Type = Skill.Type.Athletics
                         }
                     }
                     });

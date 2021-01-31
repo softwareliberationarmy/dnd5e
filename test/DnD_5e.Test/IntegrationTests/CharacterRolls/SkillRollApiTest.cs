@@ -103,7 +103,7 @@ namespace DnD_5e.Test.IntegrationTests.CharacterRolls
                 Strength = 16,
                 SkillProficiencies = new List<SkillProficiencyEntity>
                 {
-                    new SkillProficiencyEntity { Type = (int)Skill.Type.Athletics }
+                    new SkillProficiencyEntity { Type = Skill.Type.Athletics }
                 }
             }).WhenIRollFor("athletics").ThenTheRollIs1d20Plus(5);
         }
