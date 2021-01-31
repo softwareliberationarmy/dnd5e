@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DnD_5e.Infrastructure.DataAccess.Entities
 {
@@ -25,5 +26,12 @@ namespace DnD_5e.Infrastructure.DataAccess.Entities
         public List<SkillProficiencyEntity> SkillProficiencies { get; set; }
 
         public UserEntity Owner { get; set; }
+
+        internal static void Configure(EntityTypeBuilder<CharacterEntity> builder)
+        {
+            builder.HasMany(c => c.SkillProficiencies).WithOne().HasForeignKey("CharacterId");
+            builder.Property(c => c.Name).IsRequired().HasMaxLength(100);
+            builder.HasOne(c => c.Owner).WithMany().IsRequired();
+        }
     }
 }

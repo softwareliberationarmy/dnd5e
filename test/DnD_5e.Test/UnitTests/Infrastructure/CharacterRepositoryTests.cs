@@ -20,12 +20,12 @@ namespace DnD_5e.Test.UnitTests.Infrastructure
             {
                 var options = CreateNewInMemoryDatabase();
 
-                var context = new CharacterDbContext(options.Options);
+                await using var context = new CharacterDbContext(options.Options);
 
                 var repo = new CharacterRepository(context);
 
-                var character = await repo.GetById(25);
-
+                var character = repo.GetById(25);
+                 
                 character.Should().BeNull("No character found in database");
             }
 
@@ -50,7 +50,7 @@ namespace DnD_5e.Test.UnitTests.Infrastructure
                 {
                     var repo = new CharacterRepository(context);
 
-                    var character = await repo.GetById(characterId);
+                    var character = repo.GetById(characterId);
                     character.GetRoll(new CharacterRollRequest(Ability.Type.Strength, true))
                         .Should().Be("1d20p5");
                 }
@@ -84,7 +84,7 @@ namespace DnD_5e.Test.UnitTests.Infrastructure
                 {
                     var repo = new CharacterRepository(context);
 
-                    var character = await repo.GetById(characterId);
+                    var character = repo.GetById(characterId);
                     character.GetRoll(new CharacterRollRequest(Skill.Type.Athletics, Ability.Type.Strength))
                         .Should().Be("1d20p4");
                 }
@@ -113,7 +113,7 @@ namespace DnD_5e.Test.UnitTests.Infrastructure
                 {
                     var repo = new CharacterRepository(context);
 
-                    var character = await repo.GetById(characterId);
+                    var character = repo.GetById(characterId);
                     character.GetRoll(new CharacterRollRequest(Ability.Type.Wisdom, true))
                         .Should().Be("1d20p6");
                 }
@@ -160,7 +160,7 @@ namespace DnD_5e.Test.UnitTests.Infrastructure
                 {
                     var repo = new CharacterRepository(context);
 
-                    var characters = await repo.GetByOwner(userName);
+                    var characters = repo.GetByOwner(userName);
                     characters.Count().Should().Be(2);
                 }
             }

@@ -18,14 +18,14 @@ namespace DnD_5e.Infrastructure.DataAccess
             _context = context;
         }
 
-        public async Task<Character> GetById(int id)
+        public Character GetById(int id)
         {
             return _context.Character.Include(c => c.SkillProficiencies).Where(c => c.Id == id)
                 .MapToCharacter()
                 .FirstOrDefault();
         }
 
-        public async Task<IEnumerable<CharacterListPoco>> GetByOwner(string userName)
+        public IEnumerable<CharacterListPoco> GetByOwner(string userName)
         {
             return _context.Character.Where(c => c.Owner.Name == userName).MapToListCharacter();
         }

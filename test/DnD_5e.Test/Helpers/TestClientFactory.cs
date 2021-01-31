@@ -109,25 +109,6 @@ namespace DnD_5e.Test.Helpers
             return this;
         }
 
-        public async Task<UserEntity> SetupUser(int userId, string userName)
-        {
-            var options = new DbContextOptionsBuilder<CharacterDbContext>()
-                .UseInMemoryDatabase(_databaseName).Options;
-
-            await using var context = new CharacterDbContext(options);
-            var existing = context.User.ToList();
-            foreach (var user in existing)
-            {
-                context.User.Remove(user);
-            }
-
-            var userEntity = new UserEntity { Id = userId, Name = userName };
-            await context.User.AddAsync(userEntity);
-            await context.SaveChangesAsync();
-
-            return context.User.First(c => c.Id == userId);
-        }
-
         public async Task SetupDatabase(UserEntity[] users, CharacterEntity[] characters)
         {
             var options = new DbContextOptionsBuilder<CharacterDbContext>()

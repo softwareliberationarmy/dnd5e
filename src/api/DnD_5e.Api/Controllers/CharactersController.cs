@@ -30,7 +30,7 @@ namespace DnD_5e.Api.Controllers
         [Authorize]
         public async Task<IActionResult> GetMyCharacters()
         {
-            var characters = await _repository.GetByOwner(User.Identity.Name);
+            var characters = _repository.GetByOwner(User.Identity.Name);
             return Ok(characters.ToArray());
         }
 
@@ -41,7 +41,7 @@ namespace DnD_5e.Api.Controllers
             try
             {
                 var request = _rollParser.ParseRequest(rollType);
-                var character = await _repository.GetById(id);
+                var character = _repository.GetById(id);
 
                 if (character == null)
                 {
@@ -63,7 +63,7 @@ namespace DnD_5e.Api.Controllers
             try
             {
                 var request = _rollParser.ParseRequest(ability, isSave: true);
-                var character = await _repository.GetById(id);
+                var character = _repository.GetById(id);
 
                 if (character == null)
                 {
