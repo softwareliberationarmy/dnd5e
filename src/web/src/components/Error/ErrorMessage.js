@@ -1,6 +1,6 @@
 import React from 'react';
-import {Form} from 'react-bootstrap';
+import {Alert} from 'react-bootstrap';
 
-const errorMessage = props => props.error ? <Form.Label>{props.error}</Form.Label> : null;
+const errorMessage = props => props.error ? <Alert variant="danger">{props.error}</Alert> : null;
 
 export default errorMessage;

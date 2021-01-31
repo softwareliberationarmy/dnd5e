@@ -5,10 +5,8 @@ import { Image, Nav, Navbar } from 'react-bootstrap';
 const Login = () => {
   const { loginWithRedirect, logout, user, isAuthenticated, isLoading, error } = useAuth0();
 
-  const profileInfo = isLoading ? 
-      (<Navbar.Text className="d-inline">Loading ...</Navbar.Text>) :
-    isAuthenticated ? 
-      (
+  const profileInfo = isLoading ? (<Navbar.Text className="d-inline">Loading ...</Navbar.Text>) :
+    isAuthenticated ? (
         <Nav.Item className="align-items-center">
               <Image className="mr-1" src={user.picture} roundedCircle height="45" />
               <span className="align-items-center">

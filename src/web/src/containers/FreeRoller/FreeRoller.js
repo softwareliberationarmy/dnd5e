@@ -4,7 +4,7 @@ import ErrorMessage from '../../components/Error/ErrorMessage';
 import RollRequestor from '../../components/Roll/RollRequestor';
 import RollService from '../../services/RollService';
 
-const FreeRoller = props => {
+const FreeRoller = () => {
 
   const [roll, setRoll] = useState({ result: 0, error: null});
 
@@ -24,17 +24,17 @@ const FreeRoller = props => {
                 setRoll({ result: 0, error: 'Error rolling dice. Please try again.'})
               }
             });  
-          }
         }
+  };
     
-      return (
-          <div className="Page-header">
-            <h1>Roll your fate</h1>
-            <RollResult roll={roll.result} />
-            <ErrorMessage error={roll.error} />              
-            <RollRequestor requested={makeRoll} />
-          </div>
-      );  
+    return (
+        <div className="Page-header">
+          <h1>Roll your fate</h1>
+          <RollResult roll={roll.result} />
+          <ErrorMessage error={roll.error} />              
+          <RollRequestor requested={makeRoll} />
+        </div>
+    );  
 };
 
 export default FreeRoller;
