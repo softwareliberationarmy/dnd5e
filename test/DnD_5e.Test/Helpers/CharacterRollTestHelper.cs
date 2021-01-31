@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 using DnD_5e.Infrastructure.DataAccess;
+using DnD_5e.Infrastructure.DataAccess.Entities;
 using FluentAssertions;
 
 namespace DnD_5e.Test.Helpers

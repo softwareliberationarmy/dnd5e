@@ -1,4 +1,4 @@
-﻿namespace DnD_5e.Infrastructure.DataAccess
+﻿namespace DnD_5e.Infrastructure.DataAccess.Entities
 {
     public class UserEntity
     {

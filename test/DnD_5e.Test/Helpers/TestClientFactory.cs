@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DnD_5e.Infrastructure.DataAccess;
+using DnD_5e.Infrastructure.DataAccess.Entities;
 using DnD_5e.Test.Helpers.ApiSecurity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization.Policy;

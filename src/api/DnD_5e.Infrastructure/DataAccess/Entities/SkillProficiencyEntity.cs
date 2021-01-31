@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DnD_5e.Infrastructure.DataAccess
+namespace DnD_5e.Infrastructure.DataAccess.Entities
 {
     [Table("SkillProficiency")]
     public class SkillProficiencyEntity

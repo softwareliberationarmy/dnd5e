@@ -78,23 +78,5 @@ namespace DnD_5e.Api.Controllers
                 return NotFound($"Ability {ability} not found");
             }
         }
-
-        //// POST api/<CharactersController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-        //// PUT api/<CharactersController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE api/<CharactersController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }

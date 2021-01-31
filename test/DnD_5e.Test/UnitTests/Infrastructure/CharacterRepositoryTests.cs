@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DnD_5e.Domain.CharacterRolls;
 using DnD_5e.Infrastructure.DataAccess;
+using DnD_5e.Infrastructure.DataAccess.Entities;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Xunit;

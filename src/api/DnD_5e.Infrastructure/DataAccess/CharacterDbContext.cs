@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DnD_5e.Infrastructure.DataAccess.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace DnD_5e.Infrastructure.DataAccess
 {

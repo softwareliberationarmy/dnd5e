@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using DnD_5e.Infrastructure.DataAccess;
+using DnD_5e.Infrastructure.DataAccess.Entities;
 using DnD_5e.Test.Helpers;
 using Xunit;
 

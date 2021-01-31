@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DnD_5e.Domain.CharacterRolls;
+using DnD_5e.Infrastructure.DataAccess.Entities;
 using DnD_5e.Infrastructure.DataAccess.Pocos;
 
 namespace DnD_5e.Infrastructure.DataAccess.Mapping
