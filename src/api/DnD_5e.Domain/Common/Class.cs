@@ -7,15 +7,15 @@ namespace DnD_5e.Domain.Common
     public enum Class
     {
         Barbarian = 1,
-        Fighter,
-        Wizard,
-        Monk,
-        Cleric,
-        Paladin,
-        Rogue,
-        Warlock,
-        Sorcerer,
-        Bard,
-        Ranger
+        Fighter = 2,
+        Wizard = 3,
+        Monk = 4,
+        Cleric = 5,
+        Paladin = 6,
+        Rogue = 7,
+        Warlock = 8,
+        Sorcerer = 9,
+        Bard = 10,
+        Ranger = 11
     }
 }

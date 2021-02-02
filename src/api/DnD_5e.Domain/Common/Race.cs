@@ -7,13 +7,13 @@ namespace DnD_5e.Domain.Common
     public enum Race
     {
         Human = 1,
-        Dwarf,
-        Elf,
-        HalfElf,
-        Gnome,
-        Halfling,
-        Tiefling,
-        Dragonborn,
-        HalfOrc
+        Dwarf = 2,
+        Elf = 3,
+        HalfElf = 4,
+        Gnome = 5,
+        Halfling = 6,
+        Tiefling = 7,
+        Dragonborn = 8,
+        HalfOrc = 9
     }
 }
