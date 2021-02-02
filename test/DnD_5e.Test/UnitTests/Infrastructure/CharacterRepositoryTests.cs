@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using DnD_5e.Domain.CharacterRolls;
+using DnD_5e.Domain.Common;
 using DnD_5e.Infrastructure.DataAccess;
 using DnD_5e.Infrastructure.DataAccess.Entities;
 using FluentAssertions;
@@ -138,20 +140,25 @@ namespace DnD_5e.Test.UnitTests.Infrastructure
                         {
                             Id = 1,
                             Name = "Torvald the Elder",
-                            Owner = user
+                            Owner = user,
+                            Race = Race.Dwarf,
+                            Class = Class.Fighter
                         },
                         new CharacterEntity
                         {
                             Id = 2,
                             Name = "Bravo the Chicken",
-                            Owner = user
+                            Owner = user,
+                            Race = Race.Elf,
+                            Class = Class.Wizard
                         },
                         new CharacterEntity
                         {
                             Id = 3,
-                            Name = "Fledgling Joe"
-                        }
-                        );
+                            Name = "Fledgling Joe",
+                            Race = Race.Human,
+                            Class = Class.Barbarian
+                        });
 
                     await context.SaveChangesAsync();
                 }

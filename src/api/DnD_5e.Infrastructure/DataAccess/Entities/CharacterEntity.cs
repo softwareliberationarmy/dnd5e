@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DnD_5e.Domain.Common;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DnD_5e.Infrastructure.DataAccess.Entities
@@ -20,7 +21,10 @@ namespace DnD_5e.Infrastructure.DataAccess.Entities
         public bool IntelligenceSaveProficiency { get; set; }
         public bool WisdomSaveProficiency { get; set; }
         public bool CharismaSaveProficiency { get; set; }
-        
+
+        public Race Race { get; set; }
+        public Class Class { get; set; }
+
         public int ExperiencePoints { get; set; }
 
         public List<SkillProficiencyEntity> SkillProficiencies { get; set; }
@@ -32,6 +36,8 @@ namespace DnD_5e.Infrastructure.DataAccess.Entities
             builder.HasMany(c => c.SkillProficiencies).WithOne().HasForeignKey("CharacterId");
             builder.Property(c => c.Name).IsRequired().HasMaxLength(100);
             builder.HasOne(c => c.Owner).WithMany().IsRequired();
+            builder.Property(c => c.Race).HasConversion<int>(c => (int)c, c => (Race)c);
+            builder.Property(c => c.Class).HasConversion<int>(c => (int)c, c => (Class)c);
         }
     }
 }

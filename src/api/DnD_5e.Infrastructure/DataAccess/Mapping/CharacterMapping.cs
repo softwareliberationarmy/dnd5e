@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DnD_5e.Domain.CharacterRolls;
+using DnD_5e.Domain.Common;
 using DnD_5e.Infrastructure.DataAccess.Entities;
 using DnD_5e.Infrastructure.DataAccess.Pocos;
 
@@ -30,7 +31,14 @@ namespace DnD_5e.Infrastructure.DataAccess.Mapping
 
         public static IEnumerable<CharacterListPoco> MapToListCharacter(this IQueryable<CharacterEntity> entities)
         {
-            return entities.Select(c => new CharacterListPoco { Id = c.Id, Name = c.Name });
+            return entities.Select(c => new CharacterListPoco
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Class = c.Class.ToString(),
+                Race = c.Race.ToString(),
+                Level = c.ExperiencePoints.ToCharacterLevel()
+            });
         }
     }
 }
