@@ -60,6 +60,7 @@ namespace DnD_5e.Terminal
             {
                 return false;
             }
+
             return true;
         }
     }
