@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DnD_5e.Terminal
+namespace DnD_5e.Terminal.Common
 {
     public static class Bootstrapper
     {

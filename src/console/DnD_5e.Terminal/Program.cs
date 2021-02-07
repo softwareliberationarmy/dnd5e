@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using DnD_5e.Terminal.Common;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
