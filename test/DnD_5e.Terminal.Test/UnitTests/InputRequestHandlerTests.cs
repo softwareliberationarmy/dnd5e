@@ -51,7 +51,7 @@ namespace DnD_5e.Terminal.Test.UnitTests
         }
 
         [Fact]
-        public async Task DelegatesInputToFirstCommandProcessor()
+        public async Task DelegatesInputToFirstMatchingCommandProcessor()
         {
             string expectedCommand = "roll 2d4";
             string actualCommand = null;

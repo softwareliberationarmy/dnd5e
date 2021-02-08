@@ -1,12 +1,12 @@
 ﻿#nullable enable
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DnD_5e.Terminal.Common;
 using MediatR;
 
-namespace DnD_5e.Terminal
+namespace DnD_5e.Terminal.Common
 {
     public class InputRequest : IRequest<bool>
     {
@@ -23,9 +23,9 @@ namespace DnD_5e.Terminal
         private readonly ICommandProcessor[] _processors;
         private static string[] _exitWords = new[] { "q", "quit", "exit" };
 
-        public InputRequestHandler(ICommandProcessor[] processors)
+        public InputRequestHandler(IEnumerable<ICommandProcessor> processors)
         {
-            _processors = processors;
+            _processors = processors.ToArray();
         }
 
         public async Task<bool> Handle(InputRequest request, CancellationToken cancellationToken)

@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using DnD_5e.Terminal.Common;
+using FluentAssertions;
+using Moq;
+using Moq.AutoMock;
+using Moq.Protected;
+using Xunit;
+namespace DnD_5e.Terminal.Test.UnitTests
+{
+    public class DndApiTests
+    {
+        public class FreeRoll
+        {
+            [Fact]
+            public async Task Send_Get_Request_To_Web_Api()
+            {
+                var mocker = new AutoMocker();
+                var mockHandler = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+                mockHandler.Protected().Setup<Task<HttpResponseMessage>>(
+                        "SendAsync", ItExpr.IsAny<HttpRequestMessage>(),
+                        ItExpr.IsAny<CancellationToken>())
+                    .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new StringContent("{\"result\": 16, \"rolls\": [16],\"requestedRoll\": \"1d20\"}")
+                    });
+                mocker.Use(mockHandler);
+                mocker.Use(new HttpClient(mockHandler.Object){ BaseAddress = new Uri("http://www.dndapi.com/")});
+                var target = mocker.CreateInstance<DndApi>();
+
+                (await target.FreeRoll("1d20")).Result.Should().Be(16);
+            }
+        }
+    }
+}
