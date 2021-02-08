@@ -13,13 +13,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnD_5e.Api", "api\DnD_5e.Ap
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{D4472BC4-FC3E-4001-A7E0-0390E1FACA17}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnD_5e.Api.Test", "..\test\DnD_5e.Test\DnD_5e.Api.Test.csproj", "{73EABA89-E54D-4686-98C4-216B84E0E5EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnD_5e.Test.Api", "..\test\DnD_5e.Test.Api\DnD_5e.Test.Api.csproj", "{73EABA89-E54D-4686-98C4-216B84E0E5EF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "console", "console", "{FD461F14-DDEC-4D3F-8361-F2AEA0141BAC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DnD_5e.Terminal", "console\DnD_5e.Terminal\DnD_5e.Terminal.csproj", "{38BE1B84-1A59-419C-8746-57E9837D47E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnD_5e.Terminal", "console\DnD_5e.Terminal\DnD_5e.Terminal.csproj", "{38BE1B84-1A59-419C-8746-57E9837D47E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DnD_5e.Terminal.Test", "..\test\DnD_5e.Terminal.Test\DnD_5e.Terminal.Test.csproj", "{D9AC5053-F72C-41B0-8F3D-E891CB20A705}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnD_5e.Test.Terminal", "..\test\DnD_5e.Test.Terminal\DnD_5e.Test.Terminal.csproj", "{D9AC5053-F72C-41B0-8F3D-E891CB20A705}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
