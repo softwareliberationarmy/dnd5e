@@ -36,6 +36,22 @@ namespace DnD_5e.Terminal.Test.UnitTests
 
                 (await target.FreeRoll("1d20")).Result.Should().Be(16);
             }
+
+            [Fact]
+            public async Task Throws_Exception_When_Http_Exception_Code_Returned()
+            {
+                var mocker = new AutoMocker();
+                var mockHandler = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+                mockHandler.Protected().Setup<Task<HttpResponseMessage>>(
+                        "SendAsync", ItExpr.IsAny<HttpRequestMessage>(),
+                        ItExpr.IsAny<CancellationToken>())
+                    .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.InternalServerError));
+                mocker.Use(mockHandler);
+                mocker.Use(new HttpClient(mockHandler.Object) { BaseAddress = new Uri("http://www.dndapi.com/") });
+                var target = mocker.CreateInstance<DndApi>();
+
+                await target.Invoking(x => x.FreeRoll("1d20")).Should().ThrowAsync<ApiException>();
+            }
         }
     }
 }

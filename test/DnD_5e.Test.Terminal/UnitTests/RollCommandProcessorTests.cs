@@ -13,14 +13,20 @@ namespace DnD_5e.Terminal.Test.UnitTests
 {
     public class RollCommandProcessorTests
     {
+        private AutoMocker _mocker;
+
+        public RollCommandProcessorTests()
+        {
+            _mocker = new AutoMocker();
+        }
+
         [InlineData("roll    2d4+2")]
         [InlineData("ROLL  initiative")]
         [InlineData("Roll intelligence")]
         [Theory]
         public void Matches_ReturnsTrue_When_Roll_Request(string input)
         {
-            var mocker = new AutoMocker();
-            var target = mocker.CreateInstance<RollCommandProcessor>();
+            var target = _mocker.CreateInstance<RollCommandProcessor>();
             target.Matches(input).Should().BeTrue();
         }
 
@@ -30,23 +36,36 @@ namespace DnD_5e.Terminal.Test.UnitTests
         [Theory]
         public void Matches_ReturnsFalse_When_Not_Roll_Request(string input)
         {
-            var mocker = new AutoMocker();
-            var target = mocker.CreateInstance<RollCommandProcessor>();
+            var target = _mocker.CreateInstance<RollCommandProcessor>();
             target.Matches(input).Should().BeFalse();
         }
 
         [Fact]
         public async Task Process_Calls_DndApi_For_RollResult()
         {
+            var request = "1d20";
             var expectedRoll = 20;
-            var mocker = new AutoMocker();
-            mocker.GetMock<IDndApi>().Setup(api => api.FreeRoll("1d20")).Returns(Task.FromResult(
+            _mocker.GetMock<IDndApi>().Setup(api => api.FreeRoll(request)).Returns(Task.FromResult(
                 new RollResponse{ Result = expectedRoll}));
 
-            var target = mocker.CreateInstance<RollCommandProcessor>();
-            await target.Process($"roll 1d20");
+            var target = _mocker.CreateInstance<RollCommandProcessor>();
+            await target.Process($"roll {request}");
 
-            mocker.Verify<IDndApi>(api => api.FreeRoll("1d20"), Times.Once);
+            _mocker.Verify<IDndApi>(api => api.FreeRoll(request), Times.Once);
+            _mocker.Verify<IOutputWriter>(w => w.WriteLine("20"));
+        }
+
+        [Fact]
+        public async Task Process_Handles_Api_Exception()
+        {
+            var errorMessage = "An error occurred";
+            _mocker.GetMock<IDndApi>().Setup(api => api.FreeRoll(It.IsAny<string>()))
+                .Throws(new ApiException(errorMessage));
+            var target = _mocker.CreateInstance<RollCommandProcessor>();
+
+            await target.Process("roll 3d6");
+
+            _mocker.Verify<IOutputWriter>(writer => writer.WriteLine(errorMessage));
         }
     }
 }

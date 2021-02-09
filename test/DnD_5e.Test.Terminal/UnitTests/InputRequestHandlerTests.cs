@@ -60,7 +60,7 @@ namespace DnD_5e.Terminal.Test.UnitTests
             );
             Mock.Get(processor).Setup(p => p.Process(It.IsAny<string>()))
                 .Callback((string s) => { actualCommand = s; });
-            _mocker.Use(typeof(ICommandProcessor[]), new[] { processor });
+            _mocker.Use(typeof(IEnumerable<ICommandProcessor>), new[] { processor });
             var target = _mocker.CreateInstance<InputRequestHandler>();
 
             await target.Handle(new InputRequest(expectedCommand), CancellationToken.None);
