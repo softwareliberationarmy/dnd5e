@@ -1,4 +1,4 @@
-﻿namespace DnD_5e.Terminal.Common
+﻿namespace DnD_5e.Terminal.Common.IO
 {
     public interface IOutputWriter
     {

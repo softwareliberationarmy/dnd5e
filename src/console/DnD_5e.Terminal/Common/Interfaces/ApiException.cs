@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace DnD_5e.Terminal.Common
+namespace DnD_5e.Terminal.Common.Interfaces
 {
     [Serializable]
     public class ApiException : Exception

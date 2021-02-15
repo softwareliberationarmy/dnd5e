@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using DnD_5e.Terminal.Common;
+using DnD_5e.Terminal.Common.Interfaces;
 using FluentAssertions;
 using Moq;
 using Moq.AutoMock;

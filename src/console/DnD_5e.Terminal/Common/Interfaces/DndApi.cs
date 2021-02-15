@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Text.Json;
 using DnD_5e.Terminal.Roll;
-using Microsoft.Extensions.Configuration;
 
-namespace DnD_5e.Terminal.Common
+namespace DnD_5e.Terminal.Common.Interfaces
 {
     public interface IDndApi
     {

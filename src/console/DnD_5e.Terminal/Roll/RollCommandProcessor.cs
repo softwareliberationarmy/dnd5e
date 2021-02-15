@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DnD_5e.Terminal.Common;
+using DnD_5e.Terminal.Common.Application;
+using DnD_5e.Terminal.Common.Interfaces;
+using DnD_5e.Terminal.Common.IO;
 
 namespace DnD_5e.Terminal.Roll
 {

@@ -1,12 +1,11 @@
 ﻿#nullable enable
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-namespace DnD_5e.Terminal.Common
+namespace DnD_5e.Terminal.Common.Application
 {
     public class InputRequest : IRequest<bool>
     {
@@ -21,7 +20,7 @@ namespace DnD_5e.Terminal.Common
     public class InputRequestHandler : IRequestHandler<InputRequest, bool>
     {
         private readonly ICommandProcessor[] _processors;
-        private static string[] _exitWords = new[] { "q", "quit", "exit" };
+        private static readonly string[] _exitWords = new[] { "q", "quit", "exit" };
 
         public InputRequestHandler(IEnumerable<ICommandProcessor> processors)
         {

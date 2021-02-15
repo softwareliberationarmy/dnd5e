@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace DnD_5e.Terminal.Common
+namespace DnD_5e.Terminal.Common.Application
 {
     public interface ICommandProcessor
     {

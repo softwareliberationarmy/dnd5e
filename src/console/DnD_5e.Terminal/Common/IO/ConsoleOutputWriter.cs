@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DnD_5e.Terminal.Common
+namespace DnD_5e.Terminal.Common.IO
 {
     public class ConsoleOutputWriter : IOutputWriter
     {
