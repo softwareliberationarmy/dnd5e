@@ -17,6 +17,7 @@ namespace DnD_5e.Terminal.Common.DependencyInjection
                     services.AddMediatR(Assembly.GetExecutingAssembly());
                     services.AddTransient<ICommandProcessor, RollCommandProcessor>();
                     services.AddTransient<IDndApi, DndApi>();
+                    services.AddSingleton<IOutputWriter,ConsoleOutputWriter>();
                     services.AddHttpClient<DndApi>();
                 }).UseConsoleLifetime();
 

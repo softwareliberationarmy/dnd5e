@@ -17,11 +17,11 @@ namespace DnD_5e.Terminal
 
             using (var serviceScope = host.Services.CreateScope())
             {
-
+                var outputWriter = serviceScope.ServiceProvider.GetRequiredService<IOutputWriter>();
                 bool result;
                 do
                 {
-                    Console.Write("DnD >> ");
+                    Console.Write(outputWriter.Prefix);
                     var input = Console.ReadLine();
                     var mediator = serviceScope.ServiceProvider.GetRequiredService<IMediator>();
                     result = await mediator.Send(new InputRequest(input));

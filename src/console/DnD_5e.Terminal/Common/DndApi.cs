@@ -25,9 +25,10 @@ namespace DnD_5e.Terminal.Common
 
         public async Task<RollResponse> FreeRoll(string rollRequest)
         {
+            var request = rollRequest.Replace("+", "p").Replace("-", "m");
             try
             {
-                var response = await _http.GetAsync($"roll/{rollRequest}");
+                var response = await _http.GetAsync($"roll/{request}");
                 response.EnsureSuccessStatusCode();
 
                 var result = await response.Content.ReadAsStringAsync(CancellationToken.None);

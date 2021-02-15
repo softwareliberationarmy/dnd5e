@@ -30,7 +30,6 @@ namespace DnD_5e.Terminal.Common
 
         public async Task<bool> Handle(InputRequest request, CancellationToken cancellationToken)
         {
-            Console.WriteLine("User wrote {0}", request.Input);
             if (_exitWords.Contains(request.Input.Trim().ToLower()))
             {
                 return false;
