@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using DnD_5e.Terminal.Common;
 using DnD_5e.Terminal.Common.Application;
 using FluentAssertions;
 using Moq;
 using Moq.AutoMock;
 using Xunit;
 
-namespace DnD_5e.Terminal.Test.UnitTests
+namespace DnD_5e.Test.Terminal.UnitTests.Common.Application
 {
     public class InputRequestHandlerTests
     {

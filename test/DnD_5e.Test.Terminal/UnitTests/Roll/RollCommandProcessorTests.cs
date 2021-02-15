@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DnD_5e.Terminal.Common;
+﻿using System.Threading.Tasks;
 using DnD_5e.Terminal.Common.Interfaces;
 using DnD_5e.Terminal.Common.IO;
 using DnD_5e.Terminal.Roll;
@@ -11,7 +7,7 @@ using Moq;
 using Moq.AutoMock;
 using Xunit;
 
-namespace DnD_5e.Terminal.Test.UnitTests
+namespace DnD_5e.Test.Terminal.UnitTests.Roll
 {
     public class RollCommandProcessorTests
     {

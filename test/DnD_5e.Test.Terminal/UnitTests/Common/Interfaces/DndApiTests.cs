@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DnD_5e.Terminal.Common;
 using DnD_5e.Terminal.Common.Interfaces;
 using FluentAssertions;
 using Moq;
 using Moq.AutoMock;
 using Moq.Protected;
 using Xunit;
-namespace DnD_5e.Terminal.Test.UnitTests
+
+namespace DnD_5e.Test.Terminal.UnitTests.Common.Interfaces
 {
     public class DndApiTests
     {
