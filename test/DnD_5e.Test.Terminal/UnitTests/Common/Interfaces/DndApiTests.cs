@@ -52,7 +52,7 @@ namespace DnD_5e.Test.Terminal.UnitTests.Common.Interfaces
                 var target = GivenAnApiThatReturnsErrorStatusCode(HttpStatusCode.InternalServerError);
 
                 (await target.Invoking(x => x.FreeRoll("1d20")).Should().ThrowAsync<ApiException>())
-                    .WithMessage("The D&D service appears to be unavailable");
+                    .WithMessage("The D&D service encountered an error processing your request.");
             }
 
             [Fact]

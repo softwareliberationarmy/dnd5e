@@ -42,7 +42,7 @@ namespace DnD_5e.Terminal.Common.Interfaces
                     throw new ApiException(
                         "Your roll request does not appear to be properly formatted. Please try again.");
                 }
-                throw new ApiException("The D&D service appears to be unavailable");
+                throw new ApiException("The D&D service encountered an error processing your request.");
             }
         }
     }
