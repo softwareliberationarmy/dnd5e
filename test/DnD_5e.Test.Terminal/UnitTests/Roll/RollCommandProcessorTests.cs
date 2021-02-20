@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
 using DnD_5e.Terminal.Common.Interfaces;
 using DnD_5e.Terminal.Common.IO;
 using DnD_5e.Terminal.Roll;
@@ -64,6 +67,18 @@ namespace DnD_5e.Test.Terminal.UnitTests.Roll
             await target.Process("roll 3d6");
 
             _mocker.Verify<IOutputWriter>(writer => writer.WriteLine(errorMessage));
+        }
+
+        [Fact]
+        public async Task Process_Shows_Http_Status_Code_If_Inner_Exception()
+        {
+            _mocker.GetMock<IDndApi>().Setup(api => api.FreeRoll(It.IsAny<string>()))
+                .Throws(new ApiException("Some error", new HttpRequestException("Something bad", null, HttpStatusCode.Gone)));
+            var target = _mocker.CreateInstance<RollCommandProcessor>();
+
+            await target.Process("roll 3d6");
+
+            _mocker.Verify<IOutputWriter>(writer => writer.WriteLine(It.Is<string>(s => s.Contains("410"))));
         }
     }
 }

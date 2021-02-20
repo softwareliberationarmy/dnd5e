@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using DnD_5e.Terminal.Common;
@@ -39,7 +40,12 @@ namespace DnD_5e.Terminal.Roll
             }
             catch (ApiException ex)
             {
-                _writer.WriteLine(ex.Message);
+                var message = ex.Message;
+                if (ex.InnerException is HttpRequestException http && http.StatusCode != null)
+                {
+                    message += $"({(int)http.StatusCode} {http.StatusCode.ToString()})";
+                }
+                _writer.WriteLine(message);
             }
         }
 
