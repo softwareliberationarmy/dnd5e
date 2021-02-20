@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
@@ -36,6 +37,11 @@ namespace DnD_5e.Terminal.Common.Interfaces
             }
             catch (HttpRequestException ex)
             {
+                if (ex.StatusCode == HttpStatusCode.BadRequest)
+                {
+                    throw new ApiException(
+                        "Your roll request does not appear to be properly formatted. Please try again.");
+                }
                 throw new ApiException("The D&D service appears to be unavailable");
             }
         }
