@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DnD_5e.Terminal": {
+      "commandName": "Project",
+      "commandLineArgs": "roll 1d20"
+    }
+  }
+}
