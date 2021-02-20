@@ -52,7 +52,7 @@ namespace DnD_5e.Test.Terminal.UnitTests.Common.Interfaces
                 var target = GivenAnApiThatReturnsErrorStatusCode(HttpStatusCode.InternalServerError);
 
                 (await target.Invoking(x => x.FreeRoll("1d20")).Should().ThrowAsync<ApiException>())
-                    .WithMessage("The D&D service encountered an error processing your request.");
+                    .WithMessage("The D&D service encountered an error processing your roll request.");
             }
 
             [Fact]
@@ -63,7 +63,16 @@ namespace DnD_5e.Test.Terminal.UnitTests.Common.Interfaces
                 (await target.Invoking(x => x.FreeRoll("1d20")).Should().ThrowAsync<ApiException>())
                     .WithMessage("Your roll request does not appear to be properly formatted. Please try again.");
             }
-            
+
+            [Fact]
+            public async Task Throws_Exception_With_Inner_Exception_For_Unexpected_Error_Code()
+            {
+                var target = GivenAnApiThatReturnsErrorStatusCode(HttpStatusCode.Gone);
+
+                (await target.Invoking(x => x.FreeRoll("1d20")).Should().ThrowAsync<ApiException>())
+                    .WithInnerException<HttpRequestException>().Which.StatusCode.Should().Be(HttpStatusCode.Gone);
+            }
+
             private DndApi GivenAnApiThatReturnsSuccessfulContent(string content, Expression<Func<HttpRequestMessage, bool>> filter = null)
             {
                 return GivenAnApiThatReturnsExpectedResponse(new HttpResponseMessage(HttpStatusCode.OK)

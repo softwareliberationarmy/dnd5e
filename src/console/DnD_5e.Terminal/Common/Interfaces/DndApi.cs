@@ -42,7 +42,14 @@ namespace DnD_5e.Terminal.Common.Interfaces
                     throw new ApiException(
                         "Your roll request does not appear to be properly formatted. Please try again.");
                 }
-                throw new ApiException("The D&D service encountered an error processing your request.");
+
+                if (ex.StatusCode == HttpStatusCode.InternalServerError)
+                {
+                    throw new ApiException("The D&D service encountered an error processing your roll request.");
+                }
+
+                //we're not expecting this status code, so include the exception so we can show the code
+                throw new ApiException("The D&D service returned an unexpected error", ex);
             }
         }
     }
