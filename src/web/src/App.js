@@ -18,15 +18,13 @@ const onRedirectCallback = (appState) => {
   history.replace(appState?.returnTo || window.location.pathname);
 };
 
-class App extends Component {
-  render() {
-    return (
+const App = (props) =>  (
       <Auth0Provider 
-        domain={this.props.authSettings.data.domain}
-        clientId={this.props.authSettings.data.clientId}
+        domain={props.authSettings.data.domain}
+        clientId={props.authSettings.data.clientId}
         redirectUri={window.location.origin} 
         onRedirectCallback={onRedirectCallback}
-        audience={this.props.authSettings.data.audience}
+        audience={props.authSettings.data.audience}
         scope="read:characters" >
         <Router history={history} >
           <div className="App">
@@ -39,8 +37,6 @@ class App extends Component {
           </div>
       </Router>
     </Auth0Provider>
-    );
-  }
-}
+);
 
 export default App;

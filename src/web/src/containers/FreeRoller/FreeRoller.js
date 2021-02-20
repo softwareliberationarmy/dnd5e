@@ -27,14 +27,14 @@ const FreeRoller = () => {
         }
   };
     
-    return (
-        <div className="Page-header">
-          <h1>Roll your fate</h1>
-          <RollResult roll={roll.result} />
-          <ErrorMessage error={roll.error} />              
-          <RollRequestor requested={makeRoll} />
-        </div>
-    );  
+  return (
+      <div className="Page-header">
+        <h1>Roll your fate</h1>
+        <RollResult roll={roll.result} />
+        <ErrorMessage error={roll.error} />              
+        <RollRequestor requested={makeRoll} />
+      </div>
+  );  
 };
 
 export default FreeRoller;
