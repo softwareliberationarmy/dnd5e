@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using DnD_5e.Api.RequestHandlers;
 using DnD_5e.Domain.Common;
-using DnD_5e.Domain.DiceRolls;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,12 +11,10 @@ namespace DnD_5e.Api.Controllers
     [ApiController]
     public class RollController : ControllerBase
     {
-        private readonly DieRoller _roller;
         private readonly IMediator _mediator;
 
-        public RollController(DieRoller roller, IMediator mediator)
+        public RollController(IMediator mediator)
         {
-            _roller = roller;
             _mediator = mediator;
         }
 
@@ -49,17 +46,9 @@ namespace DnD_5e.Api.Controllers
         {
             try
             {
-                switch (rollWith.ToLower())
-                {
-                    case "advantage":
-                        return await _roller.Roll(rollRequest, With.Advantage);
-                    case "disadvantage":
-                        return await _roller.Roll(rollRequest, With.Disadvantage);
-                    default:
-                        return BadRequest();
-                }
+                return await _mediator.Send(new RollWithRequest(rollRequest, rollWith));
             }
-            catch (FormatException)
+            catch (Exception ex) when (ex is ArgumentOutOfRangeException || ex is FormatException)
             {
                 return BadRequest();
             }
