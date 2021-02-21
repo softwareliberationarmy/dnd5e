@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using DnD_5e.Api.RequestHandlers;
 using DnD_5e.Domain.Common;
 using DnD_5e.Domain.DiceRolls;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DnD_5e.Api.Controllers
@@ -11,10 +13,12 @@ namespace DnD_5e.Api.Controllers
     public class RollController : ControllerBase
     {
         private readonly DieRoller _roller;
+        private readonly IMediator _mediator;
 
-        public RollController(DieRoller roller)
+        public RollController(DieRoller roller, IMediator mediator)
         {
             _roller = roller;
+            _mediator = mediator;
         }
 
         // GET: api/<RollController>
@@ -22,7 +26,7 @@ namespace DnD_5e.Api.Controllers
         public async Task<ActionResult<RollResponse>> Roll1d20(string rollRequest)
         {
             //if no roll request is provided, assume the user wants a 1d20 roll
-            return await RollDice(rollRequest ?? "1d20");
+            return await _mediator.Send(new RollRequest(rollRequest ?? "1d20"));
         }
 
         // GET api/<RollController>/1d20
@@ -31,7 +35,7 @@ namespace DnD_5e.Api.Controllers
         {
             try
             {
-                return await _roller.Roll(rollRequest);
+                return await _mediator.Send(new RollRequest(rollRequest));
             }
             catch (FormatException)
             {

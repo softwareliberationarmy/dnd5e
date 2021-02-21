@@ -4,6 +4,7 @@ using DnD_5e.Api.Services;
 using DnD_5e.Api.StartupServices;
 using DnD_5e.Domain.DiceRolls;
 using DnD_5e.Infrastructure.DataAccess;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +41,7 @@ namespace DnD_5e.Api
                     });
             });
             services.AddControllers();
+            services.AddMediatR(typeof(Startup));
             services.AddSingleton<DieRoller>();
             services.AddSingleton<CharacterRollParser>();
             services.AddScoped<CharacterRepository>();

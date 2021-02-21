@@ -16,7 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace DnD_5e.Test.Helpers
 {
-    public class TestClientFactory : WebApplicationFactory<Api.Startup>
+    public class TestClientFactory : WebApplicationFactory<DnD_5e.Api.Startup>
     {
         private readonly string _databaseName = Guid.NewGuid().ToString();
         private string _nameIdentifier;

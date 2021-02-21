@@ -8,7 +8,7 @@ namespace DnD_5e.Domain.DiceRolls
     {
         private static readonly Random _random = new Random();
 
-        public async Task<RollResponse> Roll(string requestString, With? rollType = null)
+        public virtual async Task<RollResponse> Roll(string requestString, With? rollType = null)
         {
             var parsedRequest = await ParseRollRequest(requestString);
             if (rollType == null)
