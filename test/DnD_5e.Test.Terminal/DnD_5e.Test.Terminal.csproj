@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\console\DnD_5e.Terminal\DnD_5e.Terminal.csproj" />
+    <ProjectReference Include="..\DnD_5e.Utilities.Test\DnD_5e.Utilities.Test.csproj" />
   </ItemGroup>
 
 </Project>

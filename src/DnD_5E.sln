@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnD_5e.Terminal", "console\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnD_5e.Test.Terminal", "..\test\DnD_5e.Test.Terminal\DnD_5e.Test.Terminal.csproj", "{D9AC5053-F72C-41B0-8F3D-E891CB20A705}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DnD_5e.Utilities.Test", "..\test\DnD_5e.Utilities.Test\DnD_5e.Utilities.Test.csproj", "{FEB37AE8-8F9D-4C6E-A913-DBFE852810C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{D9AC5053-F72C-41B0-8F3D-E891CB20A705}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9AC5053-F72C-41B0-8F3D-E891CB20A705}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9AC5053-F72C-41B0-8F3D-E891CB20A705}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEB37AE8-8F9D-4C6E-A913-DBFE852810C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEB37AE8-8F9D-4C6E-A913-DBFE852810C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEB37AE8-8F9D-4C6E-A913-DBFE852810C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEB37AE8-8F9D-4C6E-A913-DBFE852810C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +68,7 @@ Global
 		{73EABA89-E54D-4686-98C4-216B84E0E5EF} = {D4472BC4-FC3E-4001-A7E0-0390E1FACA17}
 		{38BE1B84-1A59-419C-8746-57E9837D47E4} = {FD461F14-DDEC-4D3F-8361-F2AEA0141BAC}
 		{D9AC5053-F72C-41B0-8F3D-E891CB20A705} = {D4472BC4-FC3E-4001-A7E0-0390E1FACA17}
+		{FEB37AE8-8F9D-4C6E-A913-DBFE852810C9} = {D4472BC4-FC3E-4001-A7E0-0390E1FACA17}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7E9CB295-860F-4324-8632-0706D58DD463}

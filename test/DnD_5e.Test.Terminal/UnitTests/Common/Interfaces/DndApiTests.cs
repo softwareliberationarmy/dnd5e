@@ -5,9 +5,9 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using DnD_5e.Terminal.Common.Interfaces;
+using DnD_5e.Utilities.Test;
 using FluentAssertions;
 using Moq;
-using Moq.AutoMock;
 using Moq.Protected;
 using Xunit;
 
@@ -15,15 +15,8 @@ namespace DnD_5e.Test.Terminal.UnitTests.Common.Interfaces
 {
     public class DndApiTests
     {
-        public class FreeRoll
+        public class FreeRoll: TestBase
         {
-            private readonly AutoMocker _mocker;
-
-            public FreeRoll()
-            {
-                _mocker = new AutoMocker();
-            }
-
             [Fact]
             public async Task Send_Get_Request_To_Web_Api()
             {
@@ -93,9 +86,9 @@ namespace DnD_5e.Test.Terminal.UnitTests.Common.Interfaces
                         "SendAsync", filter == null ? ItExpr.IsAny<HttpRequestMessage>() : ItExpr.Is(filter),
                         ItExpr.IsAny<CancellationToken>())
                     .ReturnsAsync(expectedResponse);
-                _mocker.Use(mockHandler);
-                _mocker.Use(new HttpClient(mockHandler.Object) { BaseAddress = new Uri("http://www.dndapi.com/") });
-                var target = _mocker.CreateInstance<DndApi>();
+                Mocker.Use(mockHandler);
+                Mocker.Use(new HttpClient(mockHandler.Object) { BaseAddress = new Uri("http://www.dndapi.com/") });
+                var target = Mocker.CreateInstance<DndApi>();
                 return target;
             }
         }

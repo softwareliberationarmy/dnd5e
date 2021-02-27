@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using DnD_5e.Terminal.Common.Application;
+using DnD_5e.Utilities.Test;
 using FluentAssertions;
 using Moq;
 using Moq.AutoMock;
@@ -9,15 +10,8 @@ using Xunit;
 
 namespace DnD_5e.Test.Terminal.UnitTests.Common.Application
 {
-    public class InputRequestHandlerTests
+    public class InputRequestHandlerTests: TestBase
     {
-        private AutoMocker _mocker;
-
-        public InputRequestHandlerTests()
-        {
-            _mocker = new AutoMocker();
-        }
-
         [InlineData("q")]
         [InlineData("Quit")]
         [InlineData("quit")]
@@ -29,7 +23,7 @@ namespace DnD_5e.Test.Terminal.UnitTests.Common.Application
         [Theory]
         public async Task ReturnsFalseWhenUserEntersExitWord(string entry)
         {
-            var target = _mocker.CreateInstance<InputRequestHandler>();
+            var target = Mocker.CreateInstance<InputRequestHandler>();
             var result = await target.Handle(new InputRequest(entry), CancellationToken.None);
 
             result.Should().BeFalse();
@@ -41,7 +35,7 @@ namespace DnD_5e.Test.Terminal.UnitTests.Common.Application
         [Theory]
         public async Task ReturnsTrueWhenNotAnExitWord(string entry)
         {
-            var target = _mocker.CreateInstance<InputRequestHandler>();
+            var target = Mocker.CreateInstance<InputRequestHandler>();
             var result = await target.Handle(new InputRequest(entry), CancellationToken.None);
 
             result.Should().BeTrue();
@@ -57,8 +51,8 @@ namespace DnD_5e.Test.Terminal.UnitTests.Common.Application
             );
             Mock.Get(processor).Setup(p => p.Process(It.IsAny<string>()))
                 .Callback((string s) => { actualCommand = s; });
-            _mocker.Use(typeof(IEnumerable<ICommandProcessor>), new[] { processor });
-            var target = _mocker.CreateInstance<InputRequestHandler>();
+            Mocker.Use(typeof(IEnumerable<ICommandProcessor>), new[] { processor });
+            var target = Mocker.CreateInstance<InputRequestHandler>();
 
             await target.Handle(new InputRequest(expectedCommand), CancellationToken.None);
 
