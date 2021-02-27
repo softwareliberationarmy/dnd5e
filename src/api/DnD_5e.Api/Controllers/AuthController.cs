@@ -1,7 +1,8 @@
-﻿using System;
-using DnD_5e.Api.Security;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using DnD_5e.Api.RequestHandlers;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 namespace DnD_5e.Api.Controllers
 {
@@ -9,29 +10,17 @@ namespace DnD_5e.Api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly Auth0Settings _settings;
+        private readonly IMediator _mediator;
 
-        public AuthController(IOptions<Auth0Settings> settings)
+        public AuthController(IMediator mediator)
         {
-            _settings = settings.Value;
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public IActionResult GetAuthConfigInfo()
+        public async Task<ActionResult<GetAuthValues.Response>> GetAuthConfigInfo()
         {
-            try
-            {
-                return Ok(new
-                {
-                    Domain = _settings.Domain,
-                    ClientId = _settings.ClientId,
-                    Audience = _settings.Audience
-                });
-            }
-            catch (Exception)
-            {
-                return new StatusCodeResult(500);
-            }
+            return await _mediator.Send(new GetAuthValues.Request(), CancellationToken.None);
         }
     }
 }
