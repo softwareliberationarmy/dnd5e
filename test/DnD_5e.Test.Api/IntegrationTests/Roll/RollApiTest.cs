@@ -1,13 +1,14 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 using DnD_5e.Test.Helpers;
+using DnD_5e.Utilities.Test;
 using FluentAssertions;
 using Xunit;
 
 namespace DnD_5e.Test.IntegrationTests.Roll
 {
 
-    public class RollApiTest : IClassFixture<TestClientFactory>
+    public class RollApiTest : TestBase, IClassFixture<TestClientFactory>
     {
         private readonly TestClientFactory _factory;
 

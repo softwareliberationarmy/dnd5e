@@ -3,15 +3,15 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
 using DnD_5e.Domain.Common;
-using DnD_5e.Infrastructure.DataAccess;
 using DnD_5e.Infrastructure.DataAccess.Entities;
 using DnD_5e.Test.Helpers;
+using DnD_5e.Utilities.Test;
 using FluentAssertions;
 using Xunit;
 
-namespace DnD_5e.Test.IntegrationTests.Characters
+namespace DnD_5e.Test.Api.IntegrationTests.Characters
 {
-    public class GetMyCharactersTest
+    public class GetMyCharactersTest: TestBase
     {
         [Fact]
         public async Task ReturnsJustMyCharacters()

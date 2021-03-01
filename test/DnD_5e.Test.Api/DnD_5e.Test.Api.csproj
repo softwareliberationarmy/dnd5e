@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\api\DnD_5e.Api\DnD_5e.Api.csproj" />
+    <ProjectReference Include="..\DnD_5e.Utilities.Test\DnD_5e.Utilities.Test.csproj" />
   </ItemGroup>
 
 </Project>

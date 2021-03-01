@@ -2,12 +2,13 @@
 using System.Text.Json;
 using System.Threading.Tasks;
 using DnD_5e.Test.Helpers;
+using DnD_5e.Utilities.Test;
 using FluentAssertions;
 using Xunit;
 
-namespace DnD_5e.Test.IntegrationTests.Auth
+namespace DnD_5e.Test.Api.IntegrationTests.Auth
 {
-    public class AuthApiTest: IDisposable
+    public class AuthApiTest: TestBase, IDisposable
     {
         private readonly TestClientFactory _factory;
 

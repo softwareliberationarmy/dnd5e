@@ -1,12 +1,12 @@
 ﻿using DnD_5e.Api.Services;
 using DnD_5e.Domain.CharacterRolls;
-using DnD_5e.Test.IntegrationTests;
+using DnD_5e.Utilities.Test;
 using FluentAssertions;
 using Xunit;
 
-namespace DnD_5e.Test.UnitTests.Api.Services
+namespace DnD_5e.Test.Api.UnitTests.Api.Services
 {
-    public class RollTypeParserTests
+    public class RollTypeParserTests: TestBase
     {
         private CharacterRollParser _target = new CharacterRollParser();
 

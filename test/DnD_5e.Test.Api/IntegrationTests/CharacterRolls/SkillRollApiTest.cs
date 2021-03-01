@@ -1,17 +1,14 @@
 ﻿using System.Collections.Generic;
-using System.Net;
-using System.Text.Json;
 using System.Threading.Tasks;
 using DnD_5e.Domain.CharacterRolls;
-using DnD_5e.Infrastructure.DataAccess;
 using DnD_5e.Infrastructure.DataAccess.Entities;
 using DnD_5e.Test.Helpers;
-using FluentAssertions;
+using DnD_5e.Utilities.Test;
 using Xunit;
 
-namespace DnD_5e.Test.IntegrationTests.CharacterRolls
+namespace DnD_5e.Test.Api.IntegrationTests.CharacterRolls
 {
-    public class SkillRollApiTest : IClassFixture<TestClientFactory>
+    public class SkillRollApiTest : TestBase, IClassFixture<TestClientFactory>
     {
         private readonly TestClientFactory _factory;
 

@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks;
-using DnD_5e.Infrastructure.DataAccess;
 using DnD_5e.Infrastructure.DataAccess.Entities;
 using DnD_5e.Test.Helpers;
+using DnD_5e.Utilities.Test;
 using Xunit;
 
-namespace DnD_5e.Test.IntegrationTests.CharacterRolls
+namespace DnD_5e.Test.Api.IntegrationTests.CharacterRolls
 {
-    public class AbilityRollApiTest : IClassFixture<TestClientFactory>
+    public class AbilityRollApiTest : TestBase, IClassFixture<TestClientFactory>
     {
         private readonly TestClientFactory _factory;
 

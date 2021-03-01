@@ -1,16 +1,12 @@
-﻿using System.Net.Mime;
-using System.Runtime.CompilerServices;
-using System.Text.Json;
-using System.Threading.Tasks;
-using DnD_5e.Infrastructure.DataAccess;
+﻿using System.Threading.Tasks;
 using DnD_5e.Infrastructure.DataAccess.Entities;
 using DnD_5e.Test.Helpers;
-using FluentAssertions;
+using DnD_5e.Utilities.Test;
 using Xunit;
 
-namespace DnD_5e.Test.IntegrationTests.CharacterRolls
+namespace DnD_5e.Test.Api.IntegrationTests.CharacterRolls
 {
-    public class InitiativeRollApiTest: IClassFixture<TestClientFactory>
+    public class InitiativeRollApiTest: TestBase, IClassFixture<TestClientFactory>
     {
         private readonly TestClientFactory _clientFactory;
 

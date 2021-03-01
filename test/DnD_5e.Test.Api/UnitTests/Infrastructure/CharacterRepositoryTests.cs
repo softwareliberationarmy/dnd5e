@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using DnD_5e.Domain.CharacterRolls;
 using DnD_5e.Domain.Common;
 using DnD_5e.Infrastructure.DataAccess;
 using DnD_5e.Infrastructure.DataAccess.Entities;
+using DnD_5e.Utilities.Test;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
-namespace DnD_5e.Test.UnitTests.Infrastructure
+namespace DnD_5e.Test.Api.UnitTests.Infrastructure
 {
-    public class CharacterRepositoryTests
+    public class CharacterRepositoryTests: TestBase
     {
         public class GetById
         {

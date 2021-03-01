@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using DnD_5e.Domain.Common;
 using DnD_5e.Domain.DiceRolls;
+using DnD_5e.Utilities.Test;
 using FluentAssertions;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace DnD_5e.Test.UnitTests.Domain
+namespace DnD_5e.Test.Api.UnitTests.Domain
 {
-    public class DiceRollingTest
+    public class DiceRollingTest: TestBase
     {
         private readonly ITestOutputHelper _testOutputHelper;
         private readonly DieRoller _target = new DieRoller();

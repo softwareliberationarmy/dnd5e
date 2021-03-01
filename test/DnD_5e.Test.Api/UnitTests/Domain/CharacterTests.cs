@@ -1,11 +1,11 @@
-﻿using System.Runtime.InteropServices.ComTypes;
-using DnD_5e.Domain.CharacterRolls;
+﻿using DnD_5e.Domain.CharacterRolls;
+using DnD_5e.Utilities.Test;
 using FluentAssertions;
 using Xunit;
 
-namespace DnD_5e.Test.UnitTests.Domain
+namespace DnD_5e.Test.Api.UnitTests.Domain
 {
-    public class CharacterTests
+    public class CharacterTests: TestBase
     {
         public class AbilityChecks : CharacterTests
         {
