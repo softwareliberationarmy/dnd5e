@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using DnD_5e.Api.RequestHandlers;
 using DnD_5e.Api.Services;
 using DnD_5e.Domain.Common;
 using DnD_5e.Domain.DiceRolls;
 using DnD_5e.Infrastructure.DataAccess;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 
 namespace DnD_5e.Api.Controllers
 {
@@ -15,22 +17,24 @@ namespace DnD_5e.Api.Controllers
     [ApiController]
     public class CharactersController : ControllerBase
     {
-        private readonly CharacterRepository _repository;
+        private readonly ICharacterRepository _repository;
         private readonly DieRoller _roller;
         private readonly CharacterRollParser _rollParser;
+        private readonly IMediator _mediator;
 
-        public CharactersController(CharacterRepository repository, DieRoller roller, CharacterRollParser rollParser)
+        public CharactersController(ICharacterRepository repository, DieRoller roller, CharacterRollParser rollParser, IMediator mediator)
         {
             _repository = repository;
             _roller = roller;
             _rollParser = rollParser;
+            _mediator = mediator;
         }
 
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> GetMyCharacters()
         {
-            var characters = _repository.GetByOwner(User.Identity.Name);
+            var characters = await _mediator.Send(new GetCharactersByOwnerRequest(User?.Identity?.Name), CancellationToken.None);
             return Ok(characters.ToArray());
         }
 

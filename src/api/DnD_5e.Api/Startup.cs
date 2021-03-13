@@ -44,7 +44,7 @@ namespace DnD_5e.Api
             services.AddMediatR(typeof(Startup));
             services.AddSingleton<DieRoller>();
             services.AddSingleton<CharacterRollParser>();
-            services.AddScoped<CharacterRepository>();
+            services.AddScoped<ICharacterRepository,CharacterRepository>();
             services.AddDbContext<CharacterDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));

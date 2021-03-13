@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using DnD_5e.Domain.CharacterRolls;
 using DnD_5e.Infrastructure.DataAccess.Mapping;
 using DnD_5e.Infrastructure.DataAccess.Pocos;
@@ -9,7 +7,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DnD_5e.Infrastructure.DataAccess
 {
-    public class CharacterRepository
+    public interface ICharacterRepository
+    {
+        Character GetById(int id);
+        IEnumerable<CharacterListPoco> GetByOwner(string userName);
+    }
+
+    public class CharacterRepository : ICharacterRepository
     {
         private readonly CharacterDbContext _context;
 
