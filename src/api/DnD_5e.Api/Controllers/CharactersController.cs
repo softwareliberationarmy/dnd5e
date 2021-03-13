@@ -1,13 +1,9 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DnD_5e.Api.Common;
 using DnD_5e.Api.RequestHandlers;
-using DnD_5e.Api.Services;
 using DnD_5e.Domain.Common;
-using DnD_5e.Domain.DiceRolls;
-using DnD_5e.Infrastructure.DataAccess;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,16 +14,10 @@ namespace DnD_5e.Api.Controllers
     [ApiController]
     public class CharactersController : ControllerBase
     {
-        private readonly ICharacterRepository _repository;
-        private readonly DieRoller _roller;
-        private readonly CharacterRollParser _rollParser;
         private readonly IMediator _mediator;
 
-        public CharactersController(ICharacterRepository repository, DieRoller roller, CharacterRollParser rollParser, IMediator mediator)
+        public CharactersController(IMediator mediator)
         {
-            _repository = repository;
-            _roller = roller;
-            _rollParser = rollParser;
             _mediator = mediator;
         }
 
