@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoFixture;
 using DnD_5e.Api.RequestHandlers;
+using DnD_5e.Api.RequestHandlers.Auth;
 using DnD_5e.Api.Security;
 using DnD_5e.Utilities.Test;
 using FluentAssertions;

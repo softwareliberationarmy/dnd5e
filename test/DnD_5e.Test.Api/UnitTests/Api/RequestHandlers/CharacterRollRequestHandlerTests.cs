@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoFixture;
 using DnD_5e.Api.Common;
 using DnD_5e.Api.RequestHandlers;
+using DnD_5e.Api.RequestHandlers.Characters;
 using DnD_5e.Api.Services;
 using DnD_5e.Domain.CharacterRolls;
 using DnD_5e.Domain.Common;

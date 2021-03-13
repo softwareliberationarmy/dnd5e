@@ -3,9 +3,10 @@ using System.Threading.Tasks;
 using DnD_5e.Domain.Common;
 using DnD_5e.Domain.DiceRolls;
 using MediatR;
+
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace DnD_5e.Api.RequestHandlers
+namespace DnD_5e.Api.RequestHandlers.Roll
 {
     public class RollRequest: IRequest<RollResponse>
     {

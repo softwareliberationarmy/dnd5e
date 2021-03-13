@@ -5,7 +5,7 @@ using DnD_5e.Infrastructure.DataAccess;
 using DnD_5e.Infrastructure.DataAccess.Pocos;
 using MediatR;
 
-namespace DnD_5e.Api.RequestHandlers
+namespace DnD_5e.Api.RequestHandlers.Characters
 {
     public class GetCharactersByOwnerRequest: IRequest<IEnumerable<CharacterListPoco>>
     {

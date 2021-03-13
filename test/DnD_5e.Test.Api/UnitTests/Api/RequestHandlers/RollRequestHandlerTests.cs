@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using DnD_5e.Api.RequestHandlers;
+using DnD_5e.Api.RequestHandlers.Roll;
 using DnD_5e.Domain.Common;
 using DnD_5e.Domain.DiceRolls;
 using DnD_5e.Utilities.Test;

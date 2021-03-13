@@ -8,9 +8,9 @@ using DnD_5e.Domain.DiceRolls;
 using DnD_5e.Infrastructure.DataAccess;
 using MediatR;
 
-namespace DnD_5e.Api.RequestHandlers
+namespace DnD_5e.Api.RequestHandlers.Characters
 {
-    public class CharacterSavingThrow
+    public static class CharacterSavingThrow
     {
         public class Request: IRequest<RollResponse>
         {

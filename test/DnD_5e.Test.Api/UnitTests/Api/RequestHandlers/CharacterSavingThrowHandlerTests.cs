@@ -10,6 +10,7 @@ using FluentAssertions;
 using AutoFixture;
 using DnD_5e.Api.Common;
 using DnD_5e.Api.RequestHandlers;
+using DnD_5e.Api.RequestHandlers.Characters;
 using Moq;
 using Xunit;
 

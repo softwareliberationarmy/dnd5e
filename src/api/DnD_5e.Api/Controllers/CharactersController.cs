@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using DnD_5e.Api.Common;
 using DnD_5e.Api.RequestHandlers;
+using DnD_5e.Api.RequestHandlers.Characters;
 using DnD_5e.Domain.Common;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

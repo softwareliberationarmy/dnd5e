@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using DnD_5e.Api.RequestHandlers;
+using DnD_5e.Api.RequestHandlers.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using DnD_5e.Api.RequestHandlers;
+using DnD_5e.Api.RequestHandlers.Characters;
 using DnD_5e.Infrastructure.DataAccess;
 using DnD_5e.Infrastructure.DataAccess.Pocos;
 using DnD_5e.Utilities.Test;

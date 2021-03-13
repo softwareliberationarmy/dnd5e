@@ -4,15 +4,15 @@ using DnD_5e.Api.Security;
 using MediatR;
 using Microsoft.Extensions.Options;
 
-namespace DnD_5e.Api.RequestHandlers
+namespace DnD_5e.Api.RequestHandlers.Auth
 {
     public class GetAuthValuesRequest : IRequest<GetAuthValuesRequest.Response>
     {
         public class Response
         {
-            public string Domain { get; set; }
-            public string ClientId { get; set; }
-            public string Audience { get; set; }
+            public string Domain { get; init; }
+            public string ClientId { get; init; }
+            public string Audience { get; init; }
         }
 
         public class Handler : IRequestHandler<GetAuthValuesRequest, Response>

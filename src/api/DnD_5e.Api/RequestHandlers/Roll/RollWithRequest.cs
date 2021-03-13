@@ -5,7 +5,7 @@ using DnD_5e.Domain.Common;
 using DnD_5e.Domain.DiceRolls;
 using MediatR;
 
-namespace DnD_5e.Api.RequestHandlers
+namespace DnD_5e.Api.RequestHandlers.Roll
 {
     public class RollWithRequest: IRequest<RollResponse>
     {
@@ -36,7 +36,7 @@ namespace DnD_5e.Api.RequestHandlers
                     case "disadvantage":
                         return await _roller.Roll(request.Request, With.Disadvantage);
                     default:
-                        throw new ArgumentOutOfRangeException("AdvantageType");
+                        throw new ArgumentOutOfRangeException(nameof(request.AdvantageType));
                 }
             }
         }
