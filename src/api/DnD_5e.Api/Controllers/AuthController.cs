@@ -18,9 +18,9 @@ namespace DnD_5e.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<GetAuthValues.Response>> GetAuthConfigInfo()
+        public async Task<ActionResult<GetAuthValuesRequest.Response>> GetAuthConfigInfo()
         {
-            return await _mediator.Send(new GetAuthValues.Request(), CancellationToken.None);
+            return await _mediator.Send(new GetAuthValuesRequest(), CancellationToken.None);
         }
     }
 }

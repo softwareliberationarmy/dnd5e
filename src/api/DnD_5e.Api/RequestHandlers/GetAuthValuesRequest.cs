@@ -6,12 +6,8 @@ using Microsoft.Extensions.Options;
 
 namespace DnD_5e.Api.RequestHandlers
 {
-    public class GetAuthValues
+    public class GetAuthValuesRequest : IRequest<GetAuthValuesRequest.Response>
     {
-        public class Request : IRequest<Response>
-        {
-        }
-
         public class Response
         {
             public string Domain { get; set; }
@@ -19,7 +15,7 @@ namespace DnD_5e.Api.RequestHandlers
             public string Audience { get; set; }
         }
 
-        public class Handler : IRequestHandler<Request, Response>
+        public class Handler : IRequestHandler<GetAuthValuesRequest, Response>
         {
             private readonly Auth0Settings _settings;
 
@@ -28,7 +24,7 @@ namespace DnD_5e.Api.RequestHandlers
                 _settings = options.Value;
             }
 
-            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<Response> Handle(GetAuthValuesRequest request, CancellationToken cancellationToken)
             {
                 return new Response
                 {

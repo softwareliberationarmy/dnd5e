@@ -18,8 +18,8 @@ namespace DnD_5e.Test.Api.UnitTests.Api.RequestHandlers
             var settings = Fixture.Create<Auth0Settings>();
             Mocker.GetMock<IOptions<Auth0Settings>>().SetupGet(s => s.Value).Returns(settings);
 
-            var target = Mocker.CreateInstance<GetAuthValues.Handler>();
-            var result = await target.Handle(new GetAuthValues.Request(), CancellationToken.None);
+            var target = Mocker.CreateInstance<GetAuthValuesRequest.Handler>();
+            var result = await target.Handle(new GetAuthValuesRequest(), CancellationToken.None);
 
             result.Domain.Should().Be(settings.Domain);
             result.ClientId.Should().Be(settings.ClientId);
