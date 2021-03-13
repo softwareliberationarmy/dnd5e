@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using DnD_5e.Api.Common;
 using DnD_5e.Api.RequestHandlers;
 using DnD_5e.Api.Services;
 using DnD_5e.Domain.Common;
@@ -44,19 +45,11 @@ namespace DnD_5e.Api.Controllers
         {
             try
             {
-                var request = _rollParser.ParseRequest(rollType);
-                var character = _repository.GetById(id);
-
-                if (character == null)
-                {
-                    return NotFound();
-                }
-                var roll = character.GetRoll(request);
-                return await _roller.Roll(roll);
+                return await _mediator.Send(new CharacterRoll.Request(id, rollType), CancellationToken.None);
             }
-            catch (ArgumentOutOfRangeException)
+            catch (NotFoundException ex)
             {
-                return NotFound($"Ability {rollType} not found");
+                return NotFound(ex.Message);
             }
         }
 
@@ -66,20 +59,11 @@ namespace DnD_5e.Api.Controllers
         {
             try
             {
-                var request = _rollParser.ParseRequest(ability, isSave: true);
-                var character = _repository.GetById(id);
-
-                if (character == null)
-                {
-                    return NotFound();
-                }
-                var roll = character.GetRoll(request);
-
-                return await _roller.Roll(roll);
+                return await _mediator.Send(new CharacterSavingThrow.Request(id, ability), CancellationToken.None);
             }
-            catch (ArgumentOutOfRangeException)
+            catch (NotFoundException ex)
             {
-                return NotFound($"Ability {ability} not found");
+                return NotFound(ex.Message);
             }
         }
     }
