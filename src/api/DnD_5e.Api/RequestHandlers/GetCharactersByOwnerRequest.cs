@@ -9,13 +9,14 @@ namespace DnD_5e.Api.RequestHandlers
 {
     public class GetCharactersByOwnerRequest: IRequest<IEnumerable<CharacterListPoco>>
     {
-        public string UserName { get; }
+        private string UserName { get; }
 
         public GetCharactersByOwnerRequest(string userName)
         {
             UserName = userName;
         }
 
+        // ReSharper disable once ClassNeverInstantiated.Global
         public class Handler: IRequestHandler<GetCharactersByOwnerRequest, IEnumerable<CharacterListPoco>>
         {
             private readonly ICharacterRepository _repository;
@@ -25,9 +26,9 @@ namespace DnD_5e.Api.RequestHandlers
                 _repository = repository;
             }
 
-            public async Task<IEnumerable<CharacterListPoco>> Handle(GetCharactersByOwnerRequest request, CancellationToken cancellationToken)
+            public Task<IEnumerable<CharacterListPoco>> Handle(GetCharactersByOwnerRequest request, CancellationToken cancellationToken)
             {
-                return _repository.GetByOwner(request.UserName);
+                return Task.FromResult(_repository.GetByOwner(request.UserName));
             }
         }
     }
