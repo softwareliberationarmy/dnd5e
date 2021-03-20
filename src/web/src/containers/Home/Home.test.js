@@ -3,10 +3,17 @@ import { shallow } from "enzyme"
 import Home from "./Home"
 
 describe('Home page', () => {
-    it('should show a welcome message', () => {
-        const homePage = shallow(<Home />);
-        const welcomeMsg = homePage.find('h1').first();
-        console.log(welcomeMsg.text);
-        expect(welcomeMsg.text()).toBe("Welcome to my D&D app!");
+    let homePage;
+    beforeEach(() => {
+        homePage = shallow(<Home />);
     })
+
+    it('should show a welcome message', () => {
+        expect(homePage.find('h1').first().text())
+        .toBe("Welcome to my D&D app!");
+    });
+
+    it('should show my die image', () => {
+        expect(homePage.find('img[alt="dice"]').length).toBe(1);
+    });
 })
