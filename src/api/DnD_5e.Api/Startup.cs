@@ -1,3 +1,7 @@
+using System;
+using System.Reflection;
+using System.IO;
+using Microsoft.OpenApi.Models;
 using System.Security.Claims;
 using DnD_5e.Api.Security;
 using DnD_5e.Api.Services;
@@ -63,11 +67,39 @@ namespace DnD_5e.Api
                     NameClaimType = ClaimTypes.NameIdentifier
                 };
             });
+
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "D&D 5e API",
+                    Description = "An API exploring the D&D domain",
+                    //TermsOfService = new Uri("https://example.com/terms"),
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Kerry Patrick",
+                        Email = "themanfromsql at gmail"
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "License Type: GPL-3.0",
+                        Url = new Uri("https://opensource.org/licenses/GPL-3.0"),
+                    }
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "DnD 5e API, v1");
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
