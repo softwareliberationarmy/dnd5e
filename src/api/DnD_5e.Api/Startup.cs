@@ -88,6 +88,10 @@ namespace DnD_5e.Api
                         Url = new Uri("https://opensource.org/licenses/GPL-3.0"),
                     }
                 });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
         }
 

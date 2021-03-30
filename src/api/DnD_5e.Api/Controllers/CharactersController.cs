@@ -22,6 +22,10 @@ namespace DnD_5e.Api.Controllers
             _mediator = mediator;
         }
 
+        /// <summary>
+        /// Gets an authenticated user's characters
+        /// </summary>
+        /// <returns>An array of characters belonging to the caller.</returns>
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> GetMyCharacters()
@@ -30,6 +34,13 @@ namespace DnD_5e.Api.Controllers
             return Ok(characters.ToArray());
         }
 
+        /// <summary>
+        /// Makes an ability, skill, or initiative roll on behalf of a character
+        /// </summary>
+        /// <param name="id">the character ID</param>
+        /// <param name="rollType">the name of the ability or skill being requested,
+        /// or initiative</param>
+        /// <returns>a roll result</returns>
         // GET api/<CharactersController>/5/roll/strength
         [HttpGet("{id}/roll/{rollType}")]
         public async Task<ActionResult<RollResponse>> MakeCharacterRoll(int id, string rollType)
@@ -44,6 +55,12 @@ namespace DnD_5e.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Makes an ability saving throw on behalf of a character 
+        /// </summary>
+        /// <param name="id">the character ID</param>
+        /// <param name="ability">the name of the ability being saved</param>
+        /// <returns>a roll result</returns>
         // GET api/<CharactersController>/5/roll/strength/save
         [HttpGet("{id}/roll/{ability}/save")]
         public async Task<ActionResult<RollResponse>> MakeSavingThrow(int id, string ability)
