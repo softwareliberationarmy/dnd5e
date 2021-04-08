@@ -1,27 +1,40 @@
-import React, {useState} from 'react';
+import React, { useReducer } from 'react';
 import RollResult from '../../components/Roll/RollResult';
 import ErrorMessage from '../../components/Error/ErrorMessage';
 import RollRequestor from '../../components/Roll/RollRequestor';
 import RollService from '../../services/RollService';
 
+export const reducer = (state, action) => {
+  switch(action.type){
+    case 'loading':
+      return { loading: true, roll: null, error: null};
+    case 'success':
+      return { loading: false, roll: action.payload, error: null };
+    case 'error':
+      return { loading: false, roll: null, error: action.payload};
+    default:
+      return {};
+  }
+};
+
 const FreeRoller = () => {
 
-  const [roll, setRoll] = useState({ result: 0, error: null});
+  const [state, dispatch] = useReducer(reducer, {});
 
   const makeRoll = rollType => {
-        if(rollType){
+    dispatch({type: 'loading'});
+    if(rollType){
           RollService.rollDice(rollType)
             .then(result => {
-              const rollResult = result.data;
-              setRoll({ result: rollResult.result, error: null});
+              dispatch({type: 'success', payload: result.data.result});
             })
             .catch(err => {
               if(err.response && err.response.status === 400){
                 //bad request
-                setRoll({ result: 0, error: 'You entered an invalid roll request.'})
+                dispatch({type: 'error', payload: 'You entered an invalid roll request.'});
               }
               else{
-                setRoll({ result: 0, error: 'Error rolling dice. Please try again.'})
+                dispatch({type: 'error', payload: 'Error rolling dice. Please try again.'});
               }
             });  
         }
@@ -30,8 +43,8 @@ const FreeRoller = () => {
   return (
       <div className="Page-header">
         <h1>Roll your fate</h1>
-        <RollResult roll={roll.result} />
-        <ErrorMessage error={roll.error} />              
+        <RollResult roll={state.roll} />
+        <ErrorMessage error={state.error} />              
         <RollRequestor requested={makeRoll} />
       </div>
   );  
