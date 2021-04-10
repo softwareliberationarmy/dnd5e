@@ -1,14 +1,19 @@
 import React from 'react';
 import { shallow } from "enzyme";
-import FreeRoller, { reducer } from "./FreeRoller";
+import FreeRoller, { reducer, makeRoll } from "./FreeRoller";
 import RollResult from '../../components/Roll/RollResult';
 import ErrorMessage from '../../components/Error/ErrorMessage';
+import RollRequestor from '../../components/Roll/RollRequestor';
+import RollService from '../../services/RollService';
 
-describe("Free Roller page", () => {
+jest.mock('../../services/RollService');
+
+describe("Free Roller component", () => {
     it ('should show default values on first render', () => {
         const freeRoller = shallow(<FreeRoller />);
-        expect(freeRoller.find(RollResult).first().props().roll).toBe(0);
+        expect(freeRoller.find(RollResult).first().props().roll).toBeNull();
         expect(freeRoller.find(ErrorMessage).first().props().error).toBeNull();
+        expect(freeRoller.find(RollRequestor).first().props().requested).toBeTruthy();
     });
 });
 
@@ -58,3 +63,32 @@ describe('Free Roller reducer', () => {
         expect(state.error).toEqual(Error('some error'))
     });
 });
+
+describe('FreeRoller makeRoll logic', () => {
+    let dispatch;
+
+    beforeEach(() => {
+        dispatch = jest.fn();
+    });
+
+    it('should not dispatch anything if no rollType', () => {
+        makeRoll("", dispatch);
+        expect(dispatch).not.toHaveBeenCalled();
+     });
+
+     it('should always dispatch loading first', () => {
+        RollService.rollDice.mockImplementation(() =>  Promise.resolve({ data: { result: 20}}));
+        makeRoll("1d20", dispatch);
+         expect(dispatch).toHaveBeenCalledWith({type: 'loading'});
+     });
+
+     it('should dispatch success with the roll result when successful call', async () => {
+         RollService.rollDice.mockImplementation(() =>  Promise.resolve({ data: { result: 20}}));
+         await makeRoll('1d20', dispatch);   
+         expect(dispatch).toHaveBeenCalledTimes(2);
+         expect(dispatch).toHaveBeenCalledWith({type: 'loading'});
+         expect(dispatch).toHaveBeenCalledWith({type: 'success', payload: 20});
+     });
+
+     
+})
