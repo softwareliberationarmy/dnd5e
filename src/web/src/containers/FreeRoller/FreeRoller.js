@@ -34,7 +34,7 @@ export const reducer = (state, action) => {
 export const makeRoll = (rollType, dispatch) => {
   if (rollType) {
     dispatch({ type: "loading" });
-    RollService.rollDice(rollType)
+    return RollService.rollDice(rollType)
       .then((result) => {
         dispatch({ type: "success", payload: result.data.result });
       })

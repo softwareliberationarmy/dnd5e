@@ -90,5 +90,20 @@ describe('FreeRoller makeRoll logic', () => {
          expect(dispatch).toHaveBeenCalledWith({type: 'success', payload: 20});
      });
 
-     
+     it('should dispatch error when service call returns bad request error', async () => {
+         RollService.rollDice.mockImplementation(() => Promise.reject({response: {status: 400}}));
+         await makeRoll('1d20', dispatch);
+         expect(dispatch).toHaveBeenCalledTimes(2);
+         expect(dispatch).toHaveBeenCalledWith({type: 'loading'});
+         expect(dispatch).toHaveBeenCalledWith({type: 'error', payload: 'You entered an invalid roll request.'});
+     });
+
+     it('should dispatch error when service call returns unspecified error', async () => {
+        RollService.rollDice.mockImplementation(() => Promise.reject({response: {status: 500}}));
+        await makeRoll('1d20', dispatch);
+        expect(dispatch).toHaveBeenCalledTimes(2);
+        expect(dispatch).toHaveBeenCalledWith({type: 'loading'});
+        expect(dispatch).toHaveBeenCalledWith({type: 'error', payload: 'Error rolling dice. Please try again.'});
+    });
+
 })
