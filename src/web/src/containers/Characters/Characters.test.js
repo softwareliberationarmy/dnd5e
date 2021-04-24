@@ -1,10 +1,10 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { act } from 'react-dom/test-utils';
+import { render, screen, cleanup, wait } from "@testing-library/react";
 
 import Characters from './Characters';
 import { getMyCharacters } from '../../services/CharacterService';
-import { render, screen, cleanup, wait } from "@testing-library/react";
 
 jest.mock('../../services/CharacterService');
 jest.mock('@auth0/auth0-react');
