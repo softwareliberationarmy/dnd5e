@@ -1,23 +1,36 @@
 import React from 'react';
-import { shallow } from "enzyme";
+import { render, screen, cleanup, wait, act } from "@testing-library/react";
+import userEvent from '@testing-library/user-event';
+
 import FreeRoller, { reducer, makeRoll } from "./FreeRoller";
-import RollResult from '../../components/Roll/RollResult';
-import ErrorMessage from '../../components/Error/ErrorMessage';
-import RollRequestor from '../../components/Roll/RollRequestor';
 import RollService from '../../services/RollService';
 
 jest.mock('../../services/RollService');
 
 describe("Free Roller component", () => {
+    afterEach(cleanup);
+
     it ('should show default values on first render', () => {
-        const freeRoller = shallow(<FreeRoller />);
-        expect(freeRoller.find(RollResult).first().props().roll).toBeNull();
-        expect(freeRoller.find(ErrorMessage).first().props().error).toBeNull();
-        expect(freeRoller.find(RollRequestor).first().props().requested).toBeTruthy();
+        render(<FreeRoller />);
+        expect(screen.getByText("Roll your fate")).toBeDefined();
+        expect(screen.getByRole('button').textContent).toBe('Roll');
+    });
+
+    it('should roll on button click', async () => {
+        RollService.rollDice.mockImplementation(() =>  Promise.resolve({ data: { result: 20}}));
+        render(<FreeRoller />);
+        act(() => {
+            userEvent.type(screen.getByLabelText('Roll'), '1d20');
+        });
+        act(() => {
+            userEvent.click(screen.getByRole('button'));    
+        });
+        
+        await wait(() => expect(screen.getByText('20')).toBeDefined());
     });
 });
 
-describe('Free Roller reducer', () => {
+describe('Free Roller reducer', () => {    
     it('should set loading to true for load', () => {
         const state = reducer({}, {type: 'loading'});
         expect(state.loading).toBe(true);
