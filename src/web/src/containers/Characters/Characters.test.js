@@ -1,11 +1,10 @@
 import React from 'react';
-import { Row, Card } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import { act } from 'react-dom/test-utils';
 
 import Characters from './Characters';
 import { getMyCharacters } from '../../services/CharacterService';
-import { render, fireEvent, screen, getByText, cleanup, wait } from "@testing-library/react";
+import { render, screen, cleanup, wait } from "@testing-library/react";
 
 jest.mock('../../services/CharacterService');
 jest.mock('@auth0/auth0-react');
@@ -27,7 +26,6 @@ describe('Characters container', () => {
     it('should render an empty row if no characters', async () => {
         await act(async () =>{ 
             render(<Characters />);     
-            screen.debug();                   
             expect(screen.getByText("Characters")).toBeDefined();
         });        
     });
@@ -48,6 +46,5 @@ describe('Characters container', () => {
         });        
         expect(screen.getByText("Characters")).toBeDefined();
         await wait(() => expect((screen.getAllByTestId('character')).length).toBe(3));
-        screen.debug();                   
     });
 });
