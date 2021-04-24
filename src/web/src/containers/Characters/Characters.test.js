@@ -13,13 +13,11 @@ jest.mock('@auth0/auth0-react');
 describe('Characters container', () => {
     beforeEach(() => {
         useAuth0.mockImplementation(() => {
-            console.log('calling mock auth0');
             return {
                 getAccessTokenSilently: () => Promise.resolve({})
             };
         });
         getMyCharacters.mockImplementation(() => {
-            console.log('mock 0 characters');
             return Promise.resolve({ data: [] });
         });
     });
@@ -36,7 +34,6 @@ describe('Characters container', () => {
     
     it('should return a character card for each character returned', async () => {
         getMyCharacters.mockImplementation(() => {
-            console.log('mock 3 characters');
             return Promise.resolve({
                 data: [
                     { id: 1, name: 'Bob', level: 1, class: 'Fighter', race: 'Human'},
@@ -48,9 +45,9 @@ describe('Characters container', () => {
 
         await act(async () =>{ 
             await render(<Characters />);     
-            expect(screen.getByText("Characters")).toBeDefined();
-            await wait(() => expect((screen.getAllByTestId('character')).length).toBe(3));
-            screen.debug();                   
         });        
+        expect(screen.getByText("Characters")).toBeDefined();
+        await wait(() => expect((screen.getAllByTestId('character')).length).toBe(3));
+        screen.debug();                   
     });
 });
