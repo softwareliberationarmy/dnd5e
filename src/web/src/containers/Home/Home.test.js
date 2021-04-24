@@ -1,19 +1,19 @@
 import React from 'react';
-import { shallow } from "enzyme"
+import { render, screen, cleanup } from "@testing-library/react";
+
 import Home from "./Home"
 
+
 describe('Home page', () => {
-    let homePage;
-    beforeEach(() => {
-        homePage = shallow(<Home />);
-    })
+    afterEach(cleanup);
 
     it('should show a welcome message', () => {
-        expect(homePage.find('h1').first().text())
-        .toBe("Welcome to my D&D app!");
+        render(<Home />);
+        expect(screen.getByText('Welcome to my D&D app!')).toBeDefined();
     });
 
     it('should show my die image', () => {
-        expect(homePage.find('img[alt="dice"]').length).toBe(1);
+        render(<Home />);
+        expect(screen.getByAltText('dice')).toBeDefined();
     });
 })
