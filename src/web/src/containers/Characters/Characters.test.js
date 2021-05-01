@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { act } from 'react-dom/test-utils';
-import { render, screen, cleanup, wait } from "@testing-library/react";
+import { render, screen, cleanup, waitFor } from "@testing-library/react";
 
 import Characters from './Characters';
 import { getMyCharacters } from '../../services/CharacterService';
@@ -45,6 +45,6 @@ describe('Characters container', () => {
             await render(<Characters />);     
         });        
         expect(screen.getByText("Characters")).toBeDefined();
-        await wait(() => expect((screen.getAllByTestId('character')).length).toBe(3));
+        await waitFor(() => expect((screen.getAllByTestId('character')).length).toBe(3));
     });
 });
