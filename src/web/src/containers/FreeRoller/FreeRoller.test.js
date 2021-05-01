@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, cleanup, wait, act } from "@testing-library/react";
+import { render, screen, cleanup, waitFor, act } from "@testing-library/react";
 import userEvent from '@testing-library/user-event';
 
 import FreeRoller, { reducer, makeRoll } from "./FreeRoller";
@@ -26,7 +26,7 @@ describe("Free Roller component", () => {
             userEvent.click(screen.getByRole('button'));    
         });
         
-        await wait(() => expect(screen.getByText('20')).toBeDefined());
+        await waitFor(() => expect(screen.getByText('20')).toBeDefined());
     });
 });
 
