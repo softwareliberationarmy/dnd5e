@@ -24,17 +24,20 @@ describe('Navigation menu', () => {
     it('should always show Home link', () => {
         render(<NavMenu />);
         expect(screen.getByText('Home')).toBeDefined();
+        expect(screen.getByText('Home').href).toBe('http://localhost/');
     });
 
     it('should always show Free Roll link', () => {
         render(<NavMenu />);
         expect(screen.getByText('Free Roll')).toBeDefined();
+        expect(screen.getByText('Free Roll').href).toBe('http://localhost/roll');
     });
 
     it('should show characters link if user is authenticated', () => {
         useAuth0.mockReturnValue({ isAuthenticated: true});
         render(<NavMenu />);
         expect(screen.getByText('Characters')).toBeDefined();
+        expect(screen.getByText('Characters').href).toBe('http://localhost/characters');
     });
 
     it('should not show characters link if user is not authenticated', () => {
