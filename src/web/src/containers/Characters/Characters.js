@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Card, Container, Row, Col } from 'react-bootstrap';
-import { useAuth0 } from '@auth0/auth0-react';
 
 import { useToken } from '../../hooks/useToken';
 import { getMyCharacters } from '../../services/CharacterService';
@@ -8,8 +7,6 @@ import { getMyCharacters } from '../../services/CharacterService';
 const Characters = () => {
 
     const response = useToken(getMyCharacters);
-
-    console.log(response);
 
     return (
         <>
