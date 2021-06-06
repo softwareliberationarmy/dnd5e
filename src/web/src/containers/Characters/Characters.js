@@ -15,7 +15,7 @@ const Characters = () => {
             <Row>
             { (response && response.data) ? response.data.map(c => 
                 (
-                <Card as={Col} data-testid="character" md="3" className="m-1" text="dark"  key={c.id}>
+                <Card as={Col} data-testid="character" md="3" className="m-1" text="dark" key={c.id}>
                     <Card.Body>
                         <Card.Title>{c.name}</Card.Title>                
                         <Card.Subtitle>Level {c.level} {c.class} ({c.race})</Card.Subtitle>

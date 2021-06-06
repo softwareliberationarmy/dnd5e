@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { act } from 'react-dom/test-utils';
-import { render, screen, cleanup, waitFor } from "@testing-library/react";
+import { render, screen, cleanup, waitFor, getByText } from "@testing-library/react";
 
 import Characters from './Characters';
 import { getMyCharacters } from '../../services/CharacterService';
@@ -34,9 +34,9 @@ describe('Characters container', () => {
         getMyCharacters.mockImplementation(() => {
             return Promise.resolve({
                 data: [
-                    { id: 1, name: 'Bob', level: 1, class: 'Fighter', race: 'Human'},
-                    { id: 2, name: 'Bilbo', level: 1, class: 'Rogue', race: 'Halfling'},
-                    { id: 3, name: 'Wensleydale', level: 1, class: 'Cleric', race: 'Elf'}
+                    { id: 7, name: 'Bob', level: 1, class: 'Fighter', race: 'Human'},
+                    { id: 11, name: 'Bilbo', level: 1, class: 'Rogue', race: 'Halfling'},
+                    { id: 17, name: 'Wensleydale', level: 1, class: 'Cleric', race: 'Elf'}
                 ]
             });
         } );
@@ -45,6 +45,11 @@ describe('Characters container', () => {
             await render(<Characters />);     
         });        
         expect(screen.getByText("Characters")).toBeDefined();
-        await waitFor(() => expect((screen.getAllByTestId('character')).length).toBe(3));
+        await waitFor(() => {
+            const characters = screen.getAllByTestId('character');
+            expect(characters.length).toBe(3);
+            expect(characters[0].querySelector('.card-title').textContent).toBe('Bob');
+            expect(characters[2].querySelector('.card-subtitle').textContent).toBe('Level 1 Cleric (Elf)');
+        });
     });
 });
