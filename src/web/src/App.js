@@ -32,7 +32,8 @@ const App = (props) =>  (
             <Switch>
               <Route path="/" exact component={ Home } />
               <Route path="/roll" component={ FreeRoller } />          
-              <PrivateRoute path="/characters" component={ Characters } />
+              <PrivateRoute path="/characters" exact component={ Characters } />
+              {/* <PrivateRoute path="/characters/:id" exact component={ Character } /> */}
             </Switch>
           </div>
       </Router>
