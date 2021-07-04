@@ -1,8 +1,7 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { act } from 'react-dom/test-utils';
-import { render, screen, cleanup, waitFor, getByText } from "@testing-library/react";
+import { render, screen, cleanup, waitFor } from "@testing-library/react";
 
 import Characters from './Characters';
 import { getMyCharacters } from '../../services/CharacterService';
