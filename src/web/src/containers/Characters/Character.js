@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { useToken } from '../../hooks/useToken';
 import { getCharacter } from '../../services/CharacterService';
 
 const Character = ({id}) => {
-
-    const response = useToken(tk => getCharacter(tk, id));
+    const getCharacterFunc = useMemo(() => { return (tk) => getCharacter(tk, id)}, [id]);
+    const response = useToken(getCharacterFunc);
     if(response && response.data){
         const character = response.data;
         return (
