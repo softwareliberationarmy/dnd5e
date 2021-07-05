@@ -3,7 +3,9 @@ import { act } from "react-dom/test-utils";
 
 import Character from "./Character";
 import { useToken } from "../../hooks/useToken";
-import { getCharacter } from "../../services/CharacterService";
+import { getCharacter, makeAbilityRoll } from "../../services/CharacterService";
+import { abilities } from '../../utilities/abilityConstants';
+import userEvent from "@testing-library/user-event";
 
 jest.mock("../../hooks/useToken");
 jest.mock("../../services/CharacterService");
@@ -25,6 +27,10 @@ describe("Character page", () => {
       return { data: character };
     });
 
+    makeAbilityRoll.mockImplementation((tk, id, ability) => {
+      return { data: { result: abilities.indexOf(ability) + 15}};
+    });
+
     await act(async () => {
       await render(<Character id={5} />);
     });
@@ -44,13 +50,29 @@ describe("Character page", () => {
     });
   });
 
-  // describe('ability scores', () => {
-  //     it('should show character abilities', () => {
+  describe('ability scores', () => {
+      it('should show character abilities', async () => {
+        for (const ability of abilities) {
+          await waitFor(() => {
+            expect(screen.getByText(ability)).toBeDefined();
+          });          
+        }
+      });
 
-  //     });
-  // });
+      it('should allow user to click on an ability to make a roll', async () => {
+        for(const ability of abilities){
+          await waitFor(() => {
+            const abilityButton = screen.getByText(ability);
+            userEvent.click(abilityButton);
+          });
 
-  //should show character abilities
+          await waitFor(() => {
+            expect(makeAbilityRoll).toBeCalledWith(expect.anything(), 5, ability);
+          })
+        }
+      });
+  });
+
   //should allow user to click on an ability to make a roll
   //should show the roll result when clicking an ability
 });
