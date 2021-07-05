@@ -5,6 +5,7 @@ import { Auth0Provider } from '@auth0/auth0-react';
 import FreeRoller from './containers/FreeRoller/FreeRoller';
 import Home from './containers/Home/Home';
 import Characters from './containers/Characters/Characters';
+import Character from './containers/Characters/Character';
 import PrivateRoute from './components/Auth/PrivateRoute';
 
 import './App.css';
@@ -33,7 +34,7 @@ const App = (props) =>  (
               <Route path="/" exact component={ Home } />
               <Route path="/roll" component={ FreeRoller } />          
               <PrivateRoute path="/characters" exact component={ Characters } />
-              {/* <PrivateRoute path="/characters/:id" exact component={ Character } /> */}
+              <PrivateRoute path="/characters/:id" exact component={ Character } />
             </Switch>
           </div>
       </Router>
