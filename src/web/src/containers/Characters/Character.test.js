@@ -68,11 +68,13 @@ describe("Character page", () => {
 
           await waitFor(() => {
             expect(makeAbilityRoll).toBeCalledWith(expect.anything(), 5, ability);
-          })
+          });
+
+          await waitFor(() => {
+            expect(screen.getByText(`${ability} Roll`)).toBeDefined();
+            expect((abilities.indexOf(ability) + 15).toString()).toBeDefined();
+          });
         }
       });
   });
-
-  //should allow user to click on an ability to make a roll
-  //should show the roll result when clicking an ability
 });
